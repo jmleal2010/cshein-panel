@@ -1,6 +1,12 @@
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import "./globals.css";
+import Navbar from "@/components/common/Navbar";
+import { Suspense } from "react";
+import Loading from "@/app/loading";
+import { ApolloWrapper } from "@/app/ApolloWrapper";
+import AuthContextProvider from "@/app/contexts/authContext";
+import {classNames} from "@/app/utils/functions";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -15,8 +21,20 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
-      <body className={inter.className}>{children}</body>
+    <html lang="en" className="h-full bg-gray-50">
+      <body className={classNames(inter.className, 'h-full')} cz-shortcut-listen="true">
+        <AuthContextProvider>
+          <main>
+            <Suspense fallback={<Loading />}>
+              <ApolloWrapper>
+                <div className="mx-auto flex flex-col sm:px-6 lg:px-8 h-screen">
+                  {children}
+                </div>
+              </ApolloWrapper>
+            </Suspense>
+          </main>
+        </AuthContextProvider>
+      </body>
     </html>
   );
 }
