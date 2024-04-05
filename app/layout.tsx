@@ -1,12 +1,16 @@
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import "./globals.css";
-import Navbar from "@/components/common/Navbar";
 import { Suspense } from "react";
 import Loading from "@/app/loading";
 import { ApolloWrapper } from "@/app/ApolloWrapper";
 import AuthContextProvider from "@/app/contexts/authContext";
 import {classNames} from "@/app/utils/functions";
+
+import '@fontsource/roboto/300.css';
+import '@fontsource/roboto/400.css';
+import '@fontsource/roboto/500.css';
+import '@fontsource/roboto/700.css';
 
 const inter = Inter({ subsets: ["latin"] });
 

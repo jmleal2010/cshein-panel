@@ -1,6 +1,4 @@
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+@import 'simplebar-react/dist/simplebar.min.css';
 
 :root {
   --foreground-rgb: 0, 0, 0;
@@ -21,8 +19,3 @@ body {
 
 }
 
-@layer utilities {
-  .text-balance {
-    text-wrap: balance;
-  }
-}
