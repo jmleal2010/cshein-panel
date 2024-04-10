@@ -27,11 +27,9 @@ export default function RootLayout({
         <AuthContextProvider>
             <main>
                 <Suspense fallback={<Loading />}>
-                    <ApolloWrapper>
                         <div className="mx-auto flex flex-col sm:px-6 lg:px-8 h-screen">
                             {children}
                         </div>
-                    </ApolloWrapper>
                 </Suspense>
             </main>
         </AuthContextProvider>
