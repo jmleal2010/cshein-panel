@@ -10,15 +10,11 @@ import Typography from '@mui/joy/Typography';
 
 import HomeRoundedIcon from '@mui/icons-material/HomeRounded';
 import ChevronRightRoundedIcon from '@mui/icons-material/ChevronRightRounded';
-import DownloadRoundedIcon from '@mui/icons-material/DownloadRounded';
 
 import Sidebar from '@/components/common/Sidebar';
-import OrderTable from '@/components/common/OrderTable';
-import OrderList from '@/components/common/OrderList';
 import Header from '@/components/common/Header';
 
 import '@fontsource/inter';
-import { ApolloWrapper } from '../ApolloWrapper';
 
 export default function RootLayout({
                                        children,
@@ -26,7 +22,6 @@ export default function RootLayout({
     children: React.ReactNode;
 }>) {
     return (
-        <ApolloWrapper>
             <CssVarsProvider disableTransitionOnChange>
                 <CssBaseline />
                 <Box sx={{ display: 'flex', minHeight: '100dvh' }}>
@@ -85,7 +80,5 @@ export default function RootLayout({
                     </Box>
                 </Box>
             </CssVarsProvider>
-        </ApolloWrapper>
-
     );
 }

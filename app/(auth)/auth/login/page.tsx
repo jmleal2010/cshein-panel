@@ -8,6 +8,7 @@ import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faCartShopping, faKeyboard, faTimesCircle} from "@fortawesome/free-solid-svg-icons";
 import {useAuthContext} from "@/app/contexts/authContext";
 import {routes} from "@/config/consts";
+import Image from "next/image";
 
 export default function Login() {
     const router = useRouter();
@@ -43,7 +44,7 @@ export default function Login() {
                 <div className="g-6 flex h-full flex-wrap items-center justify-center lg:justify-between  space-y-6">
                     {/* <!-- Left column container with background--> */}
                     <div className="mb-12 md:mb-0 md:w-8/12 lg:w-6/12">
-                        <img
+                        <Image
                             src="https://tecdn.b-cdn.net/img/Photos/new-templates/bootstrap-login-form/draw2.svg"
                             className="w-full"
                             alt="Phone image"
@@ -169,7 +170,6 @@ export default function Login() {
                             </p>
                         </div>
                     </div>
-
                 </div>
             </div>
         </section>
