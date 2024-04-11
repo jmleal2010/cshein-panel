@@ -1,4 +1,4 @@
-
+'use client'
 import * as React from 'react';
 import { CssVarsProvider } from '@mui/joy/styles';
 import CssBaseline from '@mui/joy/CssBaseline';
@@ -10,24 +10,29 @@ import Typography from '@mui/joy/Typography';
 
 import HomeRoundedIcon from '@mui/icons-material/HomeRounded';
 import ChevronRightRoundedIcon from '@mui/icons-material/ChevronRightRounded';
-import DownloadRoundedIcon from '@mui/icons-material/DownloadRounded';
 
 import Sidebar from '@/components/common/Sidebar';
-import OrderTable from '@/components/common/OrderTable';
-import OrderList from '@/components/common/OrderList';
 import Header from '@/components/common/Header';
+import {
+    experimental_extendTheme as extendMaterialTheme,
+    THEME_ID
+} from "@mui/material/styles";
+import {
+    CssVarsProvider as JoyCssVarsProvider,
+} from "@mui/joy/styles";
+
+const materialTheme = extendMaterialTheme();
 
 import '@fontsource/inter';
-import { ApolloWrapper } from '../ApolloWrapper';
-
+import MaterialProvider from "@/components/common/MaterialProvider";
 export default function RootLayout({
                                        children,
                                    }: Readonly<{
     children: React.ReactNode;
 }>) {
     return (
-        <ApolloWrapper>
-            <CssVarsProvider disableTransitionOnChange>
+        <MaterialProvider theme={{ [THEME_ID]: materialTheme }}>
+            <JoyCssVarsProvider>
                 <CssBaseline />
                 <Box sx={{ display: 'flex', minHeight: '100dvh' }}>
                     <Header />
@@ -84,8 +89,7 @@ export default function RootLayout({
                         {children}
                     </Box>
                 </Box>
-            </CssVarsProvider>
-        </ApolloWrapper>
-
+            </JoyCssVarsProvider>
+        </MaterialProvider>
     );
 }

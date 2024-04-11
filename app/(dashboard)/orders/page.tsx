@@ -1,9 +1,3 @@
-"use client";
-
-import {useSuspenseQuery} from "@apollo/experimental-nextjs-app-support/ssr";
-import {LOAD_ORDERS_QUERY} from "@/graphql/queries";
-import {useRouter} from "next/navigation";
-import {routes} from "@/config/consts";
 import Box from "@mui/joy/Box";
 import Typography from "@mui/joy/Typography";
 import Button from "@mui/joy/Button";
@@ -11,7 +5,8 @@ import DownloadRoundedIcon from "@mui/icons-material/DownloadRounded";
 import OrderTable from "@/components/common/OrderTable";
 import OrderList from "@/components/common/OrderList";
 import * as React from "react";
-import {Fragment} from "react";
+import {Fragment, Suspense} from "react";
+import OrderTableSkeleton from "@/components/skeletons/order-table-skeleton";
 
 const columns = [
     {
@@ -43,21 +38,6 @@ const columns = [
 export default function OrdersPage() {
     const input = {status: ""};
 
-    /*Hooks*/
-    const router = useRouter();
-
-    /*Queries*/
-    const {data}: any = useSuspenseQuery(LOAD_ORDERS_QUERY, {
-        variables: {
-            input,
-        },
-    });
-
-    /*Functions*/
-    const onViewOrder = (id: string) => {
-        router.push(`${routes.orders}/${id}`);
-    };
-
     return (
         <Fragment>
             <Box
@@ -82,7 +62,9 @@ export default function OrdersPage() {
                     Download PDF
                 </Button>
             </Box>
-            <OrderTable />
+            <Suspense fallback={<OrderTableSkeleton />}>
+                <OrderTable />
+            </Suspense>
             <OrderList />
         </Fragment>
     );

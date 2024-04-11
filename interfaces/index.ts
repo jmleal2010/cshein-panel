@@ -15,22 +15,24 @@ export interface columnType {
 }
 
 export interface orderType {
-    order: {
-        arrivalAt: string,
-        beneficiary: beneficiaryType,
-        code: string,
-        createdAt: string,
-        deliveryAt: string,
-        deliveryFee: number,
-        deliveryFeeStatus: string,
-        orderItems: orderItemType[],
-        qvapayInvoices: qvapayType[],
-        stage: string,
-        status: string,
-        total: number,
-        updatedAt: string,
-        userId: string,
-    }
+    order: Order
+}
+
+export interface Order {
+    arrivalAt: string,
+    beneficiary: beneficiaryType,
+    code: string,
+    createdAt: string,
+    deliveryAt: string,
+    deliveryFee: number,
+    deliveryFeeStatus: string,
+    orderItems: orderItemType[],
+    qvapayInvoices: qvapayType[],
+    stage: string,
+    status: string,
+    total: number,
+    updatedAt: string,
+    userId: string,
 }
 
 export interface beneficiaryType {

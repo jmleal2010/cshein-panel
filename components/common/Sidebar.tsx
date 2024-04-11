@@ -167,7 +167,7 @@ export default function Sidebar() {
                     }}
                 >
                     {navigation.map((item, index) => !item.nested ? (
-                        <Link className="no-underline" href={item.href} style={{textDecoration: 'none'}}>
+                        <Link key={index} className="no-underline" href={item.href} style={{textDecoration: 'none'}}>
                             <ListItem key={index}>
                                 <ListItemButton>
                                     {item.icon}
