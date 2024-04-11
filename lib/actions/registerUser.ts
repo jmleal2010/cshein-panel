@@ -4,7 +4,7 @@ import {
   REGISTER_MUTATION,
   SEND_EMAIL_CONFIRMATION_MUTATION,
 } from "@/graphql/mutations";
-import { getClient } from "../client";
+import { getClient } from "@/config/apollo";
 import { revalidatePath } from "next/cache";
 import { AUTH_TOKEN, routes } from "@/config/consts";
 import { redirect } from "next/navigation";
