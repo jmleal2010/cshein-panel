@@ -1,25 +1,25 @@
+//el loading no va
 "use client";
 import Link from "next/link";
-import {useRef} from "react";
-import { useRouter } from "next/navigation";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faTimesCircle } from "@fortawesome/free-solid-svg-icons";
 import { routes } from "@/config/consts";
 import Image from "next/image";
 import { registerUser } from "@/lib/actions/registerUser";
-import { useSearchParams } from "next/navigation";
+import { useFormState } from "react-dom";
+ 
+
+//porque me obliga a llamarle message??? y en la accion tambien??
+const initialState = {
+  message: ""
+}
 
 export default function Register() {
-  const router = useRouter();
-  const ref = useRef<HTMLFormElement>(null); //para referenciar el elemento HTML en el DOM
-  const searchParams = useSearchParams();
-  let errorMessage = "";
-
+  // const router = useRouter();
+  const [state, formAction] = useFormState(registerUser, initialState)
+  // const ref = useRef<HTMLFormElement>(null); //para referenciar el elemento HTML en el DOM
+  // console.log(state?.message)
   //si ha habido un error en la peticion recibiremos el mensaje en la url codificado(para caracteres raros)
-  const encodedErrorMessage = searchParams.get("error") || null;
-
-  if (encodedErrorMessage)
-    errorMessage = decodeURIComponent(encodedErrorMessage);
 
   return (
     <section className="h-screen">
@@ -46,7 +46,7 @@ export default function Register() {
 
             <div className="mt-10 sm:mx-auto sm:w-full sm:max-w-[480px]">
                 {/* Porque no se muestra? */}
-              {errorMessage && (
+              {state?.message && (
                 <div className="rounded-md bg-red-50 border border-red-500 my-4 p-4">
                   <div className="flex">
                     <div className="flex-shrink-0">
@@ -63,7 +63,7 @@ export default function Register() {
                       </h3>
                       <div className="mt-2 text-sm text-red-700">
                         <ul role="list" className="list-disc space-y-1 pl-5">
-                          <li>{errorMessage}</li>
+                          <li>{state.message}</li>
                         </ul>
                       </div>
                     </div>
@@ -72,12 +72,13 @@ export default function Register() {
               )}
               <div className="px-6 sm:rounded-lg sm:px-12">
                 <form
-                  ref={ref} //referenciamos el elemento form
+                  // ref={ref} //referenciamos el elemento form
                   className="space-y-6"
-                  action={async (formData) => {
-                    await registerUser(formData);
-                    ref.current?.reset(); //limpiamos el elemento form tras la serverAction
-                  }}
+                  // action={async (formData) => {
+                  //   await registerUser(formData);
+                  //   ref.current?.reset(); //limpiamos el elemento form tras la serverAction
+                  // }}
+                  action={formAction}
                 >
                   <div className="flex flex-row space-x-2">
                     <div>

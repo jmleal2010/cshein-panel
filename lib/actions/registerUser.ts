@@ -6,46 +6,55 @@ import {
 } from "@/graphql/mutations";
 import { getClient } from "@/config/apollo";
 import { revalidatePath } from "next/cache";
-import { routes } from "@/config/consts";
+import { AUTH_TOKEN, routes } from "@/config/consts";
 import { redirect } from "next/navigation";
+import { cookies } from "next/headers"; 
+import * as z from "zod";
 
-export async function registerUser(formdata: FormData) {
-  //tipo formData?
-  const formFields = {
-    firstName: formdata.get("name"),
-    lastName: formdata.get("lastName"),
-    phone: formdata.get("phone"),
-    email: formdata.get("email"),
-    password: formdata.get("password"),
-  };
+const formSchema = z.object({
+  name: z.string(),
+  lastName: z.string(),
+  phone: z.string(),
+  email: z.string().email(),
+  password: z.string(),
+  termsAndConditions: z.coerce.boolean(), //si el checkbox no es marcado, no se envia
+  //por el formulario, con esto se pone a false cuando suceda
+});
+
+export async function registerUser(prevState: any, formdata: FormData) {
+  cookies().set(AUTH_TOKEN,'its me');
+  let errorMessage = ""; //usaremos esta variable para hacer return de mensajes de error
+  const form = Object.fromEntries(formdata.entries());
+
+  const data = formSchema.parse(form); //si el form no tiene la misma estructura que el schema data = null
+
   try {
     await getClient().mutate({
       mutation: REGISTER_MUTATION,
       variables: {
         input: {
-          ...formFields,
+          //terminos y condiciones hay que enviarlo?
+          ...data,
         },
       },
     });
-    try {
-      await getClient().mutate({
-        mutation: SEND_EMAIL_CONFIRMATION_MUTATION,
-        variables: {
-          email: formFields.email,
-        },
-      });
-      revalidatePath(`${routes.register}`);
-      //parametros?
-      redirect(`${routes.verificationCode}?email=${formFields.email}`); //redirije a email page
-    } catch (error : any) {
 
-      revalidatePath(`${routes.register}`);
-      redirect(`${routes.register}?error=${encodeURIComponent(error.message)}`); //redirije al registro
-    }
+    await getClient().mutate({
+      mutation: SEND_EMAIL_CONFIRMATION_MUTATION,
+      variables: {
+        email: data.email,
+      },
+    });
   } catch (error: any) {
-    console.log(error)
-    revalidatePath(`${routes.register}`);
-    redirect(`${routes.register}?error=${encodeURIComponent(error.message)}`); //redirije al registro
-
+    errorMessage = error.message;
+  }
+  revalidatePath(`${routes.register}`);//(limpia cache) hace que el cliente vuelva a hacer las peticiones de nuevo
+  if (errorMessage) {
+    return {
+      //porque me obliga a llamarle errorMessage?
+      message: errorMessage,
+    };
+  } else {
+    redirect(`${routes.verificationCode}?code=${form.email}`)
   }
 }
