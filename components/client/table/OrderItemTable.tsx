@@ -1,10 +1,8 @@
 'use client'
 import * as React from 'react';
-import { ColorPaletteProp } from '@mui/joy/styles';
-import Avatar from '@mui/joy/Avatar';
-import Box from '@mui/joy/Box';
-import Button from '@mui/joy/Button';
-import Chip from '@mui/joy/Chip';
+import Image from 'next/image'
+import Box from '@mui/material/Box';
+import Button from '@mui/material/Button';
 import Divider from '@mui/joy/Divider';
 import FormControl from '@mui/joy/FormControl';
 import FormLabel from '@mui/joy/FormLabel';
@@ -13,13 +11,11 @@ import Input from '@mui/joy/Input';
 import Modal from '@mui/joy/Modal';
 import ModalDialog from '@mui/joy/ModalDialog';
 import ModalClose from '@mui/joy/ModalClose';
-import Select from '@mui/joy/Select';
-import Option from '@mui/joy/Option';
 import Table from '@mui/joy/Table';
 import Sheet from '@mui/joy/Sheet';
 import Checkbox from '@mui/joy/Checkbox';
 import IconButton, { iconButtonClasses } from '@mui/joy/IconButton';
-import Typography from '@mui/joy/Typography';
+import Typography from '@mui/material/Typography';
 import Menu from '@mui/joy/Menu';
 import MenuButton from '@mui/joy/MenuButton';
 import MenuItem from '@mui/joy/MenuItem';
@@ -34,15 +30,11 @@ import AutorenewRoundedIcon from '@mui/icons-material/AutorenewRounded';
 import KeyboardArrowRightIcon from '@mui/icons-material/KeyboardArrowRight';
 import KeyboardArrowLeftIcon from '@mui/icons-material/KeyboardArrowLeft';
 import MoreHorizRoundedIcon from '@mui/icons-material/MoreHorizRounded';
-import Image from "next/image";
 import {routes} from "@/config/consts";
 import {useRouter} from "next/navigation";
-import {useSuspenseQuery} from "@apollo/experimental-nextjs-app-support/ssr";
-import {LOAD_ORDERS_QUERY} from "@/graphql/queries";
-import {Simulate} from "react-dom/test-utils";
-import input = Simulate.input;
 import moment from "moment";
-import {Order as oType, orderType} from "@/interfaces";
+import {Order as OrderT} from '@/interfaces/index'
+import Avatar from "@mui/joy/Avatar";
 
 
 function descendingComparator<T>(a: T, b: T, orderBy: keyof T) {
@@ -62,7 +54,7 @@ function getComparator<Key extends keyof any>(
     orderBy: Key,
 ): (
     a: { [key in Key]: number | string },
-    b: { [key in Key]: number | string },
+    b: { [key in Key]: number | string  },
 ) => number {
   return order === 'desc'
       ? (a, b) => descendingComparator(a, b, orderBy)
@@ -70,7 +62,7 @@ function getComparator<Key extends keyof any>(
 }
 
 
-function stableSort<T>(array: readonly T[], comparator: (a: T, b: T) => number) {
+function stableSort<T>(array: readonly T[], comparator: (a: T, b: T) => number):OrderT[] {
   const stabilizedThis = array.map((el, index) => [el, index] as [T, number]);
   stabilizedThis.sort((a, b) => {
     const order = comparator(a[0], b[0]);
@@ -79,7 +71,7 @@ function stableSort<T>(array: readonly T[], comparator: (a: T, b: T) => number) 
     }
     return a[1] - b[1];
   });
-  return stabilizedThis.map((el) => el[0]);
+  return stabilizedThis.map((el) => el[0]) as OrderT[];
 }
 
 function RowMenu({onView}: {onView: ()=>void}) {
@@ -101,7 +93,7 @@ function RowMenu({onView}: {onView: ()=>void}) {
   );
 }
 
-export default function OrderTable({rows}: any) {
+export default function OrderItemTable({rows}: any) {
 
   const [order, setOrder] = React.useState<Order>('desc');
   const [selected, setSelected] = React.useState<readonly string[]>([]);
@@ -110,53 +102,11 @@ export default function OrderTable({rows}: any) {
   /*Hooks*/
   const router = useRouter();
 
-
-
   /*Functions*/
   const onViewOrder = (id: string) => {
-    console.log(id)
+
     router.push(`${routes.orders}/${id}`)
   };
-
-  const renderFilters = () => (
-      <React.Fragment>
-        <FormControl size="sm">
-          <FormLabel>Status</FormLabel>
-          <Select
-              size="sm"
-              placeholder="Filter by status"
-              slotProps={{ button: { sx: { whiteSpace: 'nowrap' } } }}
-          >
-            <Option value="paid">Paid</Option>
-            <Option value="pending">Pending</Option>
-            <Option value="refunded">Refunded</Option>
-            <Option value="cancelled">Cancelled</Option>
-          </Select>
-        </FormControl>
-        <FormControl size="sm">
-          <FormLabel>Category</FormLabel>
-          <Select size="sm" placeholder="All">
-            <Option value="all">All</Option>
-            <Option value="refund">Refund</Option>
-            <Option value="purchase">Purchase</Option>
-            <Option value="debit">Debit</Option>
-          </Select>
-        </FormControl>
-        <FormControl size="sm">
-          <FormLabel>Customer</FormLabel>
-          <Select size="sm" placeholder="All">
-            <Option value="all">All</Option>
-            <Option value="olivia">Olivia Rhye</Option>
-            <Option value="steve">Steve Hampton</Option>
-            <Option value="ciaran">Ciaran Murray</Option>
-            <Option value="marina">Marina Macdonald</Option>
-            <Option value="charles">Charles Fulton</Option>
-            <Option value="jay">Jay Hoper</Option>
-          </Select>
-        </FormControl>
-      </React.Fragment>
-  );
-
   return (
       <React.Fragment>
         <Sheet
@@ -184,12 +134,12 @@ export default function OrderTable({rows}: any) {
           <Modal open={open} onClose={() => setOpen(false)}>
             <ModalDialog aria-labelledby="filter-modal" layout="fullscreen">
               <ModalClose />
-              <Typography id="filter-modal" level="h2">
+              <Typography id="filter-modal" variant="h2">
                 Filters
               </Typography>
               <Divider sx={{ my: 2 }} />
               <Sheet sx={{ display: 'flex', flexDirection: 'column', gap: 2 }}>
-                {renderFilters()}
+
                 <Button color="primary" onClick={() => setOpen(false)}>
                   Submit
                 </Button>
@@ -214,7 +164,7 @@ export default function OrderTable({rows}: any) {
             <FormLabel>Search for order</FormLabel>
             <Input size="sm" placeholder="Search" startDecorator={<SearchIcon />} />
           </FormControl>
-          {renderFilters()}
+
         </Box>
         <Sheet
             className="OrderTableContainer"
@@ -242,109 +192,36 @@ export default function OrderTable({rows}: any) {
           >
             <thead>
             <tr>
-              <th style={{width: 48, textAlign: 'center', padding: '12px 6px'}}>
-                <Checkbox
-                    size="sm"
-                    indeterminate={
-                        selected.length > 0 && selected.length !== rows.length
-                    }
-                    checked={selected.length === rows.length}
-                    onChange={(event) => {
-                      setSelected(
-                          event.target.checked ? rows.map((row:any) => row.id) : [],
-                      );
-                    }}
-                    color={
-                      selected.length > 0 || selected.length === rows.length
-                          ? 'primary'
-                          : undefined
-                    }
-                    sx={{verticalAlign: 'text-bottom'}}
-                />
-              </th>
               <th style={{width: 120, padding: '12px 6px'}}>
-                <Link
-                    underline="none"
-                    color="primary"
-                    component="button"
-                    onClick={() => setOrder(order === 'asc' ? 'desc' : 'asc')}
-                    fontWeight="lg"
-                    endDecorator={<ArrowDropDownIcon/>}
-                    sx={{
-                      '& svg': {
-                        transition: '0.2s',
-                        transform:
-                            order === 'desc' ? 'rotate(0deg)' : 'rotate(180deg)',
-                      },
-                    }}
-                >
-                  No. Orden
-                </Link>
+                  Ver producto
               </th>
-              <th style={{width: 140, padding: '12px 6px'}}>Estado</th>
-
-              <th style={{width: 140, padding: '12px 6px'}}>Creado</th>
-              <th style={{width: 240, padding: '12px 6px'}}>Entregado</th>
-              <th style={{width: 140, padding: '12px 6px'}}>Operaciones</th>
+              <th style={{width: 140, padding: '12px 6px'}}>Nombre</th>
+              <th style={{width: 140, padding: '12px 6px'}}>Tamanno</th>
+              <th style={{width: 140, padding: '12px 6px'}}>Precio</th>
+              <th style={{width: 140, padding: '12px 6px'}}>Descuentos</th>
             </tr>
             </thead>
             <tbody>
-            {stableSort(rows, getComparator(order, 'id')).map((row: oType,index: number) => (
+            {stableSort(rows, getComparator(order, 'id')).map((row: OrderT| any,index: number) => (
                 <tr key={row.id}>
-                  <td style={{textAlign: 'center', width: 120}}>
-                    <Checkbox
-                        size="sm"
-                        checked={selected.includes(row.id)}
-                        color={selected.includes(row.id) ? 'primary' : undefined}
-                        onChange={(event) => {
-                          setSelected((ids) =>
-                              event.target.checked
-                                  ? ids.concat(row.id)
-                                  : ids.filter((itemId) => itemId !== row.id),
-                          );
-                        }}
-                        slotProps={{checkbox: {sx: {textAlign: 'left'}}}}
-                        sx={{verticalAlign: 'text-bottom'}}
-                    />
+                 <td >
+                     <div style={{textAlign: 'center', margin: '0 auto', display: "flex", flexDirection: 'column', alignItems: 'center', marginTop: 2, justifyContent: 'center'}}>
+                         <Avatar  component="image" src={row.image} alt={row.name} width={60} height={60} className="cshein-avatar" />
+                         <Link href={row.link} > <Typography variant="caption">Ver producto</Typography></Link>
+                     </div>
+
+                 </td>
+                  <td>
+                    <Typography variant="body2">{row.name}</Typography>
                   </td>
                   <td>
-                    <Typography level="body-xs">{row.code}</Typography>
+                    <Typography variant="body2">{row.size}</Typography>
                   </td>
                   <td>
-                    <Chip
-                        variant="soft"
-                        size="sm"
-                        startDecorator={
-                          {
-                            PAID: <CheckRoundedIcon/>,
-                            Refunded: <AutorenewRoundedIcon/>,
-                            UNPAID: <BlockIcon/>,
-                          }[row.status]
-                        }
-                        color={
-                          {
-                            PAID: 'success',
-                            Refunded: 'neutral',
-                            UNPAID: 'danger',
-                          }[row.status] as ColorPaletteProp
-                        }
-                    >
-                      {row.status === 'UNPAID' ? 'SIN PAGAR': row.status === "PAID" ? 'PAGADO' :""}
-                    </Chip>
+                    <Typography variant="body2">{row.price}</Typography>
                   </td>
                   <td>
-                    <Typography level="body-xs">{moment(row.createdAt).format('YYYY-MM-DD HH:mm:ss')}</Typography>
-                  </td>
-                  <td>
-                    <Typography level="body-xs">{moment(row.deliveryAt).format('YYYY-MM-DD HH:mm:ss')}</Typography>
-                  </td>
-                  <td>
-                    <Box sx={{display: 'flex', gap: 2, alignItems: 'center'}}>
-                      <Link level="body-xs" component="button">
-                        Descargar
-                      </Link>
-                      <RowMenu  onView={()=>onViewOrder(row.id)}/>
-                    </Box>
+                    <Typography variant="body2">{row.discount}</Typography>
                   </td>
                 </tr>
             ))}
@@ -364,10 +241,9 @@ export default function OrderTable({rows}: any) {
             }}
         >
           <Button
-              size="sm"
+              size="small"
               variant="outlined"
-              color="neutral"
-              startDecorator={<KeyboardArrowLeftIcon />}
+              color="secondary"
           >
             Previous
           </Button>
@@ -386,10 +262,9 @@ export default function OrderTable({rows}: any) {
           <Box sx={{ flex: 1 }} />
 
           <Button
-              size="sm"
+              size="small"
               variant="outlined"
-              color="neutral"
-              endDecorator={<KeyboardArrowRightIcon />}
+              color="secondary"
           >
             Next
           </Button>

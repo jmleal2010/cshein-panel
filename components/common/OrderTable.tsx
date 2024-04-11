@@ -1,5 +1,5 @@
 import { getClient } from "@/config/apollo";
-import ClientOrderTable from "../clientComponents/Client-Order-Table";
+import ClientOrderTable from "../client/table/OrderTable";
 import { LOAD_ORDERS_QUERY } from "@/graphql/queries";
 
 const input = {status: ""};
