@@ -1,5 +1,5 @@
 import React, { Fragment } from "react";
-import { columnType, dataType } from "@/interfces";
+import { columnType, dataType } from "../../interfaces";
 import Paginator from "@/components/navigation/paginator";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faEye } from "@fortawesome/free-solid-svg-icons";

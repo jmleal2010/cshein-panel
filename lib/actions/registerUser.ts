@@ -4,7 +4,7 @@ import {
   REGISTER_MUTATION,
   SEND_EMAIL_CONFIRMATION_MUTATION,
 } from "@/graphql/mutations";
-import { getClient } from "../client";
+import { getClient } from "@/config/apollo";
 import { revalidatePath } from "next/cache";
 import { routes } from "@/config/consts";
 import { redirect } from "next/navigation";
@@ -34,18 +34,18 @@ export async function registerUser(formdata: FormData) {
           email: formFields.email,
         },
       });
-      revalidatePath(`${routes.register}`); 
+      revalidatePath(`${routes.register}`);
       //parametros?
       redirect(`${routes.verificationCode}?email=${formFields.email}`); //redirije a email page
     } catch (error : any) {
-    
-      revalidatePath(`${routes.register}`); 
+
+      revalidatePath(`${routes.register}`);
       redirect(`${routes.register}?error=${encodeURIComponent(error.message)}`); //redirije al registro
     }
   } catch (error: any) {
     console.log(error)
-    revalidatePath(`${routes.register}`); 
+    revalidatePath(`${routes.register}`);
     redirect(`${routes.register}?error=${encodeURIComponent(error.message)}`); //redirije al registro
-    
+
   }
 }
