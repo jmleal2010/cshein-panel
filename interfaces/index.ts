@@ -19,6 +19,7 @@ export interface orderType {
 }
 
 export interface Order {
+    id: string,
     arrivalAt: string,
     beneficiary: beneficiaryType,
     code: string,

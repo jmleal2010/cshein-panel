@@ -5,9 +5,9 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faTimesCircle } from "@fortawesome/free-solid-svg-icons";
 import { routes } from "@/config/consts";
 import Image from "next/image";
-import { registerUser } from "@/lib/actions/registerUser";
+import { registerUser } from "@/lib/actions/auth";
 import { useFormState } from "react-dom";
- 
+
 
 //porque me obliga a llamarle message??? y en la accion tambien??
 const initialState = {
