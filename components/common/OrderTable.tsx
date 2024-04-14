@@ -17,12 +17,25 @@ const getData = async () =>{
   }
 }
 
-export default async function OrderTable() {
+const getTotalPages = async () => {
+  //query para traer total pages?
+  return 3;
+}
+
+export default async function OrderTable({query, currentPage}:
+  {
+    query? : string
+    currentPage? : number
+  }
+) {
     const response = await getData();
+    const totalPages = await getTotalPages() || 1;
 
     const data = response?.data || {};
+    // console.log(query,currentPage);
 
   return data && (
-   <ClientOrderTable rows = {data.orders}/>
+   <ClientOrderTable rows = {data.orders} totalPages = {totalPages}/>
+  //  <ClientPagination></ClientPagination>
   )
 }
