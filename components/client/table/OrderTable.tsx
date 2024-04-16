@@ -48,6 +48,7 @@ import { useDebouncedCallback } from "use-debounce";
 
 const WAIT_BETWEEN_CHANGE = 1000;
 
+
 function descendingComparator<T>(a: T, b: T, orderBy: keyof T) {
   if (b[orderBy] < a[orderBy]) {
     return -1;
@@ -120,6 +121,7 @@ export default function OrderTable({
   const { replace } = useRouter();
   const pathname = usePathname();
   const currentPage = Number(searchParams.get("page")) || 1;
+
 
   /*Hooks*/
   const router = useRouter();
