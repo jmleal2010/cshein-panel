@@ -36,13 +36,18 @@ import KeyboardArrowLeftIcon from "@mui/icons-material/KeyboardArrowLeft";
 import MoreHorizRoundedIcon from "@mui/icons-material/MoreHorizRounded";
 import Image from "next/image";
 import { routes } from "@/config/consts";
-import { useRouter } from "next/navigation";
+import { usePathname,useRouter , useSearchParams} from "next/navigation";
 import { useSuspenseQuery } from "@apollo/experimental-nextjs-app-support/ssr";
 import { LOAD_ORDERS_QUERY } from "@/graphql/queries";
 import { Simulate } from "react-dom/test-utils";
 import input = Simulate.input;
 import moment from "moment";
 import { Order as oType, orderType } from "@/interfaces";
+
+import { useDebouncedCallback } from "use-debounce";
+
+const WAIT_BETWEEN_CHANGE = 1000;
+
 
 function descendingComparator<T>(a: T, b: T, orderBy: keyof T) {
   if (b[orderBy] < a[orderBy]) {
@@ -102,10 +107,19 @@ function RowMenu({ onView }: { onView: () => void }) {
   );
 }
 
-export default function OrderTable({ rows }: any) {
+export default function OrderTable({ rows,
+  totalPages,
+}: {rows : any;
+  totalPages: number;
+}) {
   const [order, setOrder] = React.useState<Order>("desc");
   const [selected, setSelected] = React.useState<readonly string[]>([]);
   const [open, setOpen] = React.useState(false);
+  const searchParams = useSearchParams();
+  const { replace } = useRouter();
+  const pathname = usePathname();
+  const currentPage = Number(searchParams.get("page")) || 1;
+
 
   /*Hooks*/
   const router = useRouter();
@@ -154,6 +168,27 @@ export default function OrderTable({ rows }: any) {
       </FormControl>
     </React.Fragment>
   );
+
+  const handleSearch = useDebouncedCallback((value: string) => {
+    const params = new URLSearchParams(searchParams);
+    if (value) {
+      params.set("query", value);
+    } else {
+      params.delete("query");
+    }
+    params.set("page", "1");
+    replace(`${pathname}?${params.toString()}`);
+  }, WAIT_BETWEEN_CHANGE);
+
+  const createPageURL = (page: number) => {
+    const params = new URLSearchParams(searchParams);
+    params.set("page", page.toString());
+    return `${pathname}?${params}`;
+  };
+
+  const handlePage = (page: number) => {
+    router.push(createPageURL(page));
+  };
 
   return (
     <React.Fragment>
@@ -211,11 +246,14 @@ export default function OrderTable({ rows }: any) {
         <FormControl sx={{ flex: 1 }} size="sm">
           <FormLabel>Search for order</FormLabel>
           <Input
-            size="sm"
+           onChange={(e) => {
+              handleSearch(e.target.value);
+            }}
+            defaultValue={searchParams.get("query")?.toString()} size="sm"
             placeholder="Search"
             startDecorator={<SearchIcon />}
-          />
-        </FormControl>
+
+        /></FormControl>
         {renderFilters()}
       </Box>
       <Sheet
@@ -380,15 +418,15 @@ export default function OrderTable({ rows }: any) {
         }}
       >
         <Button
-          size="sm"
+          disabled={currentPage <= 1}
           variant="outlined"
           color="neutral"
-          startDecorator={<KeyboardArrowLeftIcon />}
+          startDecorator={<KeyboardArrowLeftIcon />}onClick={() => handlePage(currentPage - 1)}
         >
           Previous
         </Button>
 
-        <Box sx={{ flex: 1 }} />
+        {/*<Box sx={{ flex: 1 }} />
         {["1", "2", "3", "…", "8", "9", "10"].map((page) => (
           <IconButton
             key={page}
@@ -399,14 +437,33 @@ export default function OrderTable({ rows }: any) {
             {page}
           </IconButton>
         ))}
+        <Box sx={{ flex: 1 }} />*/}
+
+        <Box sx={{ flex: 1 }} />
+        {(() => {
+          const elements = [];
+          for (let i = 1; i <= totalPages; i++) {
+            elements.push(
+              <IconButton
+                key={i}
+          size="sm"
+          variant={i == currentPage ? "outlined" : "plain"}
+                color="neutral"
+                onClick={() => handlePage(i)}
+              >
+                {i}
+              </IconButton>
+            );
+          }
+          return elements;
+        })()}
         <Box sx={{ flex: 1 }} />
 
-        <Button
-          size="sm"
-          variant="outlined"
+          <Button
+            disabled = {currentPage >= totalPages}variant="outlined"
           color="neutral"
           endDecorator={<KeyboardArrowRightIcon />}
-        >
+        onClick={() => handlePage(currentPage + 1)}>
           Next
         </Button>
       </Box>

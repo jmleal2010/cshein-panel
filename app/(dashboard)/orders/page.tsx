@@ -35,8 +35,16 @@ const columns = [
   },
 ];
 
-export default function OrdersPage() {
-  const input = { status: "" };
+export default function OrdersPage( {
+  searchParams,
+}: {
+  searchParams?: {
+    query?: string;
+    page?: string;
+  };
+}) {
+  const currentPage = Number(searchParams?.page) || 1;
+  const query = searchParams?.query || "" ;
 
   return (
     <Fragment>
@@ -63,7 +71,9 @@ export default function OrdersPage() {
         </Button>
       </Box>
       <Suspense fallback={<OrderTableSkeleton />}>
-        <OrderTable />
+        {/*para que vuelva a salir el skeleton en cada search */}
+        key = {query + currentPage}
+        <OrderTable query={query} currentPage={currentPage}/>
       </Suspense>
       <OrderList />
     </Fragment>
