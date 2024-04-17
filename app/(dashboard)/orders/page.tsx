@@ -8,34 +8,7 @@ import * as React from "react";
 import { Fragment, Suspense } from "react";
 import OrderTableSkeleton from "@/components/skeletons/order-table-skeleton";
 
-const columns = [
-  {
-    name: "stage",
-    title: "Stage ",
-  },
-  {
-    name: "status",
-    title: "Status",
-  },
-  {
-    name: "code",
-    title: "Code",
-  },
-  {
-    name: "createdAt",
-    title: "Fecha creada",
-  },
-  {
-    name: "deliveryAt",
-    title: "Fecha entrega",
-  },
-  {
-    name: "",
-    title: "Operaciones",
-  },
-];
-
-export default function OrdersPage( {
+export default function OrdersPage({
   searchParams,
 }: {
   searchParams?: {
@@ -44,7 +17,7 @@ export default function OrdersPage( {
   };
 }) {
   const currentPage = Number(searchParams?.page) || 1;
-  const query = searchParams?.query || "" ;
+  const query = searchParams?.query || "";
 
   return (
     <Fragment>
@@ -73,7 +46,7 @@ export default function OrdersPage( {
       <Suspense fallback={<OrderTableSkeleton />}>
         {/*para que vuelva a salir el skeleton en cada search */}
         key = {query + currentPage}
-        <OrderTable query={query} currentPage={currentPage}/>
+        <OrderTable query={query} currentPage={currentPage} />
       </Suspense>
       <OrderList />
     </Fragment>
