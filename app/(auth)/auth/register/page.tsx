@@ -8,15 +8,14 @@ import Image from "next/image";
 import { registerUser } from "@/lib/actions/auth";
 import { useFormState } from "react-dom";
 
-
 //porque me obliga a llamarle message??? y en la accion tambien??
 const initialState = {
-  message: ""
-}
+  message: "",
+};
 
 export default function Register() {
   // const router = useRouter();
-  const [state, formAction] = useFormState(registerUser, initialState)
+  const [state, formAction] = useFormState(registerUser, initialState);
   // const ref = useRef<HTMLFormElement>(null); //para referenciar el elemento HTML en el DOM
   // console.log(state?.message)
   //si ha habido un error en la peticion recibiremos el mensaje en la url codificado(para caracteres raros)
@@ -28,8 +27,8 @@ export default function Register() {
           {/* <!-- Left column container with background--> */}
           <div className="mb-12 md:mb-0 md:w-8/12 lg:w-6/12">
             <img
-            width={500}
-            height={500}
+              width={500}
+              height={500}
               src="https://tecdn.b-cdn.net/img/Photos/new-templates/bootstrap-login-form/draw2.webp"
               className="w-full"
               alt="Phone image"
@@ -45,7 +44,7 @@ export default function Register() {
             </div>
 
             <div className="mt-10 sm:mx-auto sm:w-full sm:max-w-[480px]">
-                {/* Porque no se muestra? */}
+              {/* Porque no se muestra? */}
               {state?.message && (
                 <div className="rounded-md bg-red-50 border border-red-500 my-4 p-4">
                   <div className="flex">

@@ -10,11 +10,11 @@ import {
 import { Dialog, Menu, Transition } from "@headlessui/react";
 import { Fragment, useState } from "react";
 import Link from "next/link";
-import {routes} from "@/config/consts";
+import { routes } from "@/config/consts";
 
 const navigation = [
   { name: "Home", href: routes.dashboard },
-  { name: "Orders", href: routes.orders},
+  { name: "Orders", href: routes.orders },
   { name: "Clients", href: "#" },
   { name: "Expenses", href: "#" },
 ];

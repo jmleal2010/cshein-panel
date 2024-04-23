@@ -1,27 +1,26 @@
-import {NextRequest, NextResponse} from "next/server";
-import {AUTH, routes} from "@/config/consts";
-
+import { NextRequest, NextResponse } from "next/server";
+import { AUTH, AUTH_TOKEN, routes } from "@/config/consts";
 export function middleware(request: NextRequest) {
-  const authToken = request.cookies.get("authTokens")?.value;
+  const cookies = request.cookies;
+  const authToken = cookies.get(AUTH_TOKEN)?.value;
 
   if (!authToken && request.nextUrl.pathname.startsWith(routes.dashboard)) {
     const response = NextResponse.redirect(new URL(routes.login, request.url));
-    response.cookies.delete('authTokens')
+    cookies.delete(AUTH_TOKEN);
     return response;
   }
-
 
   if (!authToken && request.nextUrl.pathname.startsWith(routes.orders)) {
     const response = NextResponse.redirect(new URL(routes.login, request.url));
-    response.cookies.delete('authTokens')
+    cookies.delete(AUTH_TOKEN);
     return response;
   }
 
-  if (authToken && !request.nextUrl.pathname.startsWith(routes.auth)) {
+  if (authToken && request.nextUrl.pathname.startsWith(routes.auth)) {
     return NextResponse.redirect(new URL(routes.dashboard, request.url));
   }
 }
 
 export const config = {
-  matcher: ["/daa"],
+  matcher: ["/dashboard(.*)", "/orders(.*)", "/auth(.*)"],
 };
