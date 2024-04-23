@@ -43,9 +43,7 @@ export default function OrdersPage({
           Download PDF
         </Button>
       </Box>
-      <Suspense fallback={<OrderTableSkeleton />}>
-        {/*para que vuelva a salir el skeleton en cada search */}
-        key = {query + currentPage}
+      <Suspense fallback={<OrderTableSkeleton />} key={query + currentPage}>
         <OrderTable query={query} currentPage={currentPage} />
       </Suspense>
       <OrderList />
