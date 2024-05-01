@@ -1,12 +1,15 @@
-import Box from "@mui/joy/Box";
-import Typography from "@mui/joy/Typography";
-import Button from "@mui/joy/Button";
-import DownloadRoundedIcon from "@mui/icons-material/DownloadRounded";
-import OrderTable from "@/components/common/OrderTable";
-import OrderList from "@/components/common/OrderList";
 import * as React from "react";
-import { Fragment, Suspense } from "react";
+import Container from "@mui/material/Container";
+import Typography from "@mui/material/Typography";
+import Box from "@mui/material/Box";
+import Link from "@mui/material/Link";
+import NextLink from "next/link";
+import { Button, TextField } from "@mui/material";
+import DownloadRoundedIcon from "@mui/icons-material/DownloadRounded";
 import OrderTableSkeleton from "@/components/skeletons/order-table-skeleton";
+import OrderTable from "@/components/common/OrderTable";
+import { Suspense } from "react";
+import OrderList from "@/components/common/OrderList";
 
 export default function OrdersPage({
   searchParams,
@@ -20,33 +23,28 @@ export default function OrdersPage({
   const query = searchParams?.query || "";
 
   return (
-    <Fragment>
+    <Container maxWidth="lg">
       <Box
         sx={{
+          my: 4,
           display: "flex",
-          mb: 1,
-          gap: 1,
-          flexDirection: { xs: "column", sm: "row" },
-          alignItems: { xs: "start", sm: "center" },
-          flexWrap: "wrap",
+          flexDirection: "row",
           justifyContent: "space-between",
+          alignItems: "center",
         }}
       >
-        <Typography level="h2" component="h1">
+        <Typography variant="h3" component="h1" align="left">
           Orders
         </Typography>
-        <Button
-          color="primary"
-          startDecorator={<DownloadRoundedIcon />}
-          size="sm"
-        >
+        <Button variant="contained" color="primary" size="small">
           Download PDF
         </Button>
       </Box>
+      
       <Suspense fallback={<OrderTableSkeleton />} key={query + currentPage}>
         <OrderTable query={query} currentPage={currentPage} />
       </Suspense>
-      <OrderList />
-    </Fragment>
+      {/* <OrderList /> */}
+    </Container>
   );
 }
