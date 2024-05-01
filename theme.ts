@@ -11,11 +11,26 @@ const roboto = Roboto({
 const theme = createTheme({
   palette: {
     mode: "light",
+    background: {
+      default: "#fcfbfd",
+    },
   },
   typography: {
     fontFamily: roboto.style.fontFamily,
   },
   components: {
+    MuiButtonBase: {
+      defaultProps: {
+        disableRipple: true,
+      },
+    },
+    MuiTable: {
+      styleOverrides: {
+        root: {
+          background: "#fcfbfd", // Establece el fondo de todas las tablas
+        },
+      },
+    },
     MuiAlert: {
       styleOverrides: {
         root: ({ ownerState }) => ({
@@ -26,6 +41,7 @@ const theme = createTheme({
       },
     },
   },
+  
 });
 
 export default theme;

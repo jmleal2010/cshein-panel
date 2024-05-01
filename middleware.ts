@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from "next/server";
-import { AUTH, AUTH_TOKEN, routes } from "@/config/consts";
+import { AUTH, AUTH_TOKEN, routes } from "@/utils/consts";
 export function middleware(request: NextRequest) {
   const cookies = request.cookies;
   const authToken = cookies.get(AUTH_TOKEN)?.value;

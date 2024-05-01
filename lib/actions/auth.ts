@@ -8,7 +8,7 @@ import {
 } from "@/graphql/mutations";
 import { revalidatePath } from "next/cache";
 import * as z from "zod";
-import { AUTH_TOKEN, routes } from "@/config/consts";
+import { AUTH_TOKEN, routes } from "@/utils/consts";
 import { permanentRedirect, redirect } from "next/navigation";
 import { cookies } from "next/headers";
 

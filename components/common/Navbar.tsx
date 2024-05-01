@@ -10,7 +10,7 @@ import {
 import { Dialog, Menu, Transition } from "@headlessui/react";
 import { Fragment, useState } from "react";
 import Link from "next/link";
-import { routes } from "@/config/consts";
+import { routes } from "@/utils/consts";
 
 const navigation = [
   { name: "Home", href: routes.dashboard },

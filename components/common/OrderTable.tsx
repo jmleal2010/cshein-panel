@@ -39,8 +39,8 @@ export default async function OrderTable({
   const response = await getData();
   const totalOrders = response?.data.orders;
   const orders = query ? getFilterOrders(totalOrders, query) : totalOrders;
-  const startIndex = ITEMS_X_PAGE * (currentPage - 1); 
-  const pageItems = orders?.slice(startIndex, startIndex + ITEMS_X_PAGE); 
+  const startIndex = ITEMS_X_PAGE * (currentPage - 1);
+  const pageItems = orders?.slice(startIndex, startIndex + ITEMS_X_PAGE);
   const totalPages = await getTotalPages(orders.length);
 
   return (

@@ -30,7 +30,7 @@ import AutorenewRoundedIcon from "@mui/icons-material/AutorenewRounded";
 import KeyboardArrowRightIcon from "@mui/icons-material/KeyboardArrowRight";
 import KeyboardArrowLeftIcon from "@mui/icons-material/KeyboardArrowLeft";
 import MoreHorizRoundedIcon from "@mui/icons-material/MoreHorizRounded";
-import { routes } from "@/config/consts";
+import { routes } from "@/utils/consts";
 import { useRouter } from "next/navigation";
 import moment from "moment";
 import { Order as OrderT } from "@/interfaces/index";
