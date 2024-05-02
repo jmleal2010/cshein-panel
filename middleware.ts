@@ -10,11 +10,11 @@ export function middleware(request: NextRequest) {
     return response;
   }
 
-  if (!authToken && request.nextUrl.pathname.startsWith(routes.orders)) {
-    const response = NextResponse.redirect(new URL(routes.login, request.url));
-    cookies.delete(AUTH_TOKEN);
-    return response;
-  }
+  // if (!authToken && request.nextUrl.pathname.startsWith(routes.orders)) {
+  //   const response = NextResponse.redirect(new URL(routes.login, request.url));
+  //   cookies.delete(AUTH_TOKEN);
+  //   return response;
+  // }
 
   if (authToken && request.nextUrl.pathname.startsWith(routes.auth)) {
     return NextResponse.redirect(new URL(routes.dashboard, request.url));
