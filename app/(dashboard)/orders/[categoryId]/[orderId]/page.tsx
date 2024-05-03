@@ -6,9 +6,11 @@ import {
   CardContent,
   CardHeader,
   Collapse,
+  Container,
   Grid,
   ListItemAvatar,
   ListItemText,
+  Paper,
   Stack,
   Typography,
 } from "@mui/material";
@@ -22,6 +24,10 @@ import ListItem from "@mui/joy/ListItem";
 import { Order } from "@/interfaces";
 import { Fragment } from "react";
 import OrderItemTable from "@/components/client/table/OrderItemTable";
+import OrderTitle from "@/components/client/orderTitle";
+import SpanningTable from "@/components/client/table/SpanningTable";
+import OrderHistory from "@/components/client/OrderHistory";
+import CustomerInfo from "@/components/client/CustomerInfo";
 
 const activity = [
   { id: 1, type: "creada", date: "7d ago", dateTime: "2023-01-23T10:32" },
@@ -57,46 +63,52 @@ const Header = async () => {
 };
 
 export default async function OrderId({ params }: { params: { id: string } }) {
+  // console.log(params);
   const response = await getOrder(params);
   const order = response?.data.order || {};
 
-  console.log(order.orderItems[0]);
+  console.log(order);
   let orderItems = order.orderItems.map((item: any) => {
     const { product, quantity } = item;
     return { ...product, quantity };
   });
+  const persona = {};
 
   return (
-    <>
-      <OrderHeader order={order} />
-      <Box sx={{ flexGrow: 2 }}>
-        <Grid
-          container
-          spacing={{ xs: 2, md: 3 }}
-          direction={{
-            xs: "row",
-            md: "column",
-          }}
-        >
-          <Grid xs={8} sx={{ marginTop: 4 }}>
-            <Card elevation={6} className="cshein-card">
-              <CardHeader title="Detalles" />
-              <CardContent>
-                <Stack
-                  spacing={{ xs: 2, md: 4 }}
-                  direction={{
-                    xs: "column",
-                    md: "column",
-                  }}
-                >
-                  <OrderItemTable rows={orderItems} />
-                </Stack>
-              </CardContent>
-            </Card>
-          </Grid>
-          <Grid xs={4}></Grid>
+    <Container sx={{ mt: 5 }}>
+      <Grid container>
+        <Grid xs={12}>
+          <OrderTitle orderId={order.id}></OrderTitle>
         </Grid>
-      </Box>
-    </>
+        <Grid xs={8}>
+          <Paper>
+            <SpanningTable items={order.orderItems}></SpanningTable>
+          </Paper>
+        </Grid>
+        <Grid xs={4}>
+          <CustomerInfo beneficiary={order.beneficiary}></CustomerInfo>
+        </Grid>
+        <Grid xs={8} sx={{ mt: 5 }}>
+          {/* <OrderHistory>
+
+                  </OrderHistory> */}
+          <Paper sx={{ p: 1 }}>
+            <Typography variant="h6">Historial</Typography>
+            <Container>
+              <Typography variant="subtitle2" gutterBottom>
+                arrival at
+              </Typography>
+              <Typography>1/1/1</Typography>
+            </Container>
+            <Container>
+              <Typography variant="subtitle2" gutterBottom>
+                delivery at
+              </Typography>
+              <Typography>2/2/2</Typography>
+            </Container>
+          </Paper>
+        </Grid>
+      </Grid>
+    </Container>
   );
 }
