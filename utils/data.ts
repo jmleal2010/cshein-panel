@@ -23,9 +23,9 @@ export const navItems: Navigation[] = [
     children: [
       {
         id: 2.01,
-        title: "Procesando",
+        title: "Pendientes",
         isOpen: false,
-        href: routes.orders.processing,
+        href: routes.orders.pending,
         selected: false,
       },
       {

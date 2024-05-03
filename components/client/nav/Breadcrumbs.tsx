@@ -39,7 +39,7 @@ export default function BreadcrumbsNav() {
       {paths.map((path, index) => {
         const isLast = index === paths.length - 1;
         return isLast ? (
-          <Typography fontWeight={500} fontSize={14}>
+          <Typography fontWeight={500} fontSize={14} key={index}>
             {path.charAt(0).toUpperCase() + path.slice(1)}
           </Typography>
         ) : (

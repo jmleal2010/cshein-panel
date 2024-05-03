@@ -6,6 +6,10 @@ import TimeProvider from "@/components/client/layout/LocalizationProvider";
 import Box from "@mui/material/Box";
 import Sidebar from "@/components/common/Sidebar";
 import BreadcrumbsNav from "@/components/client/nav/Breadcrumbs";
+import "@fontsource/roboto/300.css";
+import "@fontsource/roboto/400.css";
+import "@fontsource/roboto/500.css";
+import "@fontsource/roboto/700.css";
 
 export default function RootLayout({ children}: {children: React.ReactNode }) {
   return (
@@ -19,7 +23,7 @@ export default function RootLayout({ children}: {children: React.ReactNode }) {
                   component="main"
                   className="MainContent"
                   sx={{
-                      px: { xs: 2, md: 6 },
+                      px: { xs: 2, md: 4 },
                       pt: {
                           xs: 'calc(12px + var(--Header-height))',
                           sm: 'calc(12px + var(--Header-height))',

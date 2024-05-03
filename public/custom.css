@@ -40,8 +40,9 @@
 }
 
 .MuiListItemButton-root:hover,
-.MuiButtonBase-root,
-.MuiMenuItemButton-root, .MuiMenuItem-root {
+.MuiMenuItemButton-root,
+.MuiMenuItem-root,
+.MuiList-root .MuiButtonBase-root {
     border-radius: 12px !important;
 }
 

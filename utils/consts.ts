@@ -12,7 +12,7 @@ export const routes = {
   forgotPassword: `${AUTH}/forgot-password`,
   verificationCode: `${AUTH}/verification-code`,
   orders: {
-    processing: `${ORDERS}/processing`,
+    pending: `${ORDERS}/pending`,
     completed: `${ORDERS}/completed`,
   },
 };

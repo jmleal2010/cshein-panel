@@ -30,15 +30,18 @@ import {
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import moment, { Moment } from "moment";
 import { height } from "@fortawesome/free-brands-svg-icons/fa42Group";
+import { faEye } from "@fortawesome/free-solid-svg-icons";
 
 const WAIT_BETWEEN_CHANGE = 1000;
 
 export default function OrderTable({
   rows,
   totalPages,
+  columns,
 }: {
   rows: any;
   totalPages: number;
+  columns: any[];
 }) {
   const [startDate, setStartDate] = React.useState<Moment | null>(moment());
   const [endDate, setEndDate] = React.useState<Moment | null>(moment());
@@ -46,7 +49,6 @@ export default function OrderTable({
   const [rowsPerPage, setRowsPerPage] = React.useState<number>(10);
   const [page, setPage] = React.useState<number>(0);
   const [selected, setSelected] = React.useState<readonly string[]>([]);
-  const [open, setOpen] = React.useState(false);
   const searchParams = useSearchParams();
   const { replace } = useRouter();
   const pathname = usePathname();
@@ -57,48 +59,8 @@ export default function OrderTable({
 
   /*Functions*/
   const onViewOrder = (id: string) => {
-    console.log(id);
     router.push(`${routes.orders}/${id}`);
   };
-
-  const renderFilters = () => (
-    <React.Fragment>
-      <FormControl size="sm">
-        <FormLabel>Status</FormLabel>
-        <Select
-          size="sm"
-          placeholder="Filter by status"
-          slotProps={{ button: { sx: { whiteSpace: "nowrap" } } }}
-        >
-          <Option value="paid">Paid</Option>
-          <Option value="pending">Pending</Option>
-          <Option value="refunded">Refunded</Option>
-          <Option value="cancelled">Cancelled</Option>
-        </Select>
-      </FormControl>
-      <FormControl size="sm">
-        <FormLabel>Category</FormLabel>
-        <Select size="sm" placeholder="All">
-          <Option value="all">All</Option>
-          <Option value="refund">Refund</Option>
-          <Option value="purchase">Purchase</Option>
-          <Option value="debit">Debit</Option>
-        </Select>
-      </FormControl>
-      <FormControl size="sm">
-        <FormLabel>Customer</FormLabel>
-        <Select size="sm" placeholder="All">
-          <Option value="all">All</Option>
-          <Option value="olivia">Olivia Rhye</Option>
-          <Option value="steve">Steve Hampton</Option>
-          <Option value="ciaran">Ciaran Murray</Option>
-          <Option value="marina">Marina Macdonald</Option>
-          <Option value="charles">Charles Fulton</Option>
-          <Option value="jay">Jay Hoper</Option>
-        </Select>
-      </FormControl>
-    </React.Fragment>
-  );
 
   const handleSearch = useDebouncedCallback((value: string) => {
     const params = new URLSearchParams(searchParams);
@@ -194,14 +156,21 @@ export default function OrderTable({
         <Table sx={{ minWidth: 650 }} aria-label="order table" size="small">
           <TableHead>
             <TableRow>
-              <TableCell>ID</TableCell>
-              <TableCell align="right" color="gray">
-                <Typography component="h1" variant="h5"></Typography>
-              </TableCell>
-              <TableCell align="right">Status</TableCell>
-              <TableCell align="right">Created at</TableCell>
-              <TableCell align="right">Delivery at</TableCell>
-              <TableCell align="right"></TableCell>
+              {columns.map((column, index) => (
+                <TableCell align="center" key={index} sx={{
+                  pb: 2,
+                }}>
+                  <Typography
+                    component="span"
+                    fontWeight={700}
+                    color="#6b7280"
+                    variant="caption"
+                  >
+                    {column.title}
+                  </Typography>
+                </TableCell>
+              ))}
+              <TableCell align="center"></TableCell>
             </TableRow>
           </TableHead>
           <TableBody>
@@ -210,20 +179,32 @@ export default function OrderTable({
                 key={index}
                 sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
               >
-                <TableCell component="th" scope="row">
-                  {row.code}
-                </TableCell>
-                <TableCell align="right">{row.stage}</TableCell>
-                <TableCell align="right">{row.status}</TableCell>
-                <TableCell align="right">{row.createdAt}</TableCell>
-                <TableCell align="right">{row.deliveryAt}</TableCell>
-                <TableCell align="right">
-                  <IconButton
-                    size="small"
-                    color="primary"
-                    onClick={() => onViewOrder(row.id)}
+                {columns.map((column, index) => (
+                  <TableCell
+                    align="center"
+                    key={index}
+                    sx={{
+                      py: 0.3,
+                      px: 0,
+                    }}
                   >
-                    <Visibility />
+                    {column.type === "date" ? (
+                      moment(row[column.field]).format(column.format)
+                    ) : column.field === "status" ? (
+                      <Button>{row[column.field]}</Button>
+                    ) : column.type === "string" ? (
+                      column.field
+                        .split(".")
+                        .reduce((acc: any[], part: any) => acc[part], row)
+                    ) : null}
+                    {/* {column.field
+                      .split(".")
+                      .reduce((acc: any[], part: any) => acc[part], row)} */}
+                  </TableCell>
+                ))}
+                <TableCell align="center">
+                  <IconButton onClick={() => onViewOrder(row.id)}>
+                    <FontAwesomeIcon size="xs" icon={faEye} />
                   </IconButton>
                 </TableCell>
               </TableRow>
