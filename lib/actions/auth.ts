@@ -8,7 +8,7 @@ import {
 } from "@/graphql/mutations";
 import { revalidatePath } from "next/cache";
 import * as z from "zod";
-import { AUTH_TOKEN, routes } from "@/config/consts";
+import { AUTH_TOKEN, routes } from "@/utils/consts";
 import { permanentRedirect, redirect } from "next/navigation";
 import { cookies } from "next/headers";
 
@@ -20,7 +20,6 @@ export async function loginUser(prevState: any, formData: FormData) {
     password: z.string(),
   });
 
-  let errorMessage = "";
   const { email, password } = Object.fromEntries(formData.entries());
 
   const parse = formSchema.safeParse({
@@ -46,8 +45,15 @@ export async function loginUser(prevState: any, formData: FormData) {
       },
     });
 
-    const { token } = response.data.login;
+    let token, user;
+
+    if(response.data) {
+      token = response.data.signInWithEmail.token;
+      user = response.data.user
+    } 
+    
     cookieStore.set(AUTH_TOKEN, token);
+
   } catch (error: any) {
     return {
       message: error.message,

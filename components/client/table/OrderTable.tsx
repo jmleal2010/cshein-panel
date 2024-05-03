@@ -1,110 +1,66 @@
 "use client";
 import * as React from "react";
-import Avatar from "@mui/joy/Avatar";
-import Chip from "@mui/joy/Chip";
-import Divider from "@mui/joy/Divider";
-import Link from "@mui/joy/Link";
-import Input from "@mui/joy/Input";
-import Modal from "@mui/joy/Modal";
-import ModalDialog from "@mui/joy/ModalDialog";
-import ModalClose from "@mui/joy/ModalClose";
-import Sheet from "@mui/joy/Sheet";
-import Checkbox from "@mui/joy/Checkbox";
-import IconButton, { iconButtonClasses } from "@mui/joy/IconButton";
-import Typography from "@mui/joy/Typography";
-import Menu from "@mui/joy/Menu";
-import MenuButton from "@mui/joy/MenuButton";
-import MenuItem from "@mui/joy/MenuItem";
-import Dropdown from "@mui/joy/Dropdown";
-
-import FilterAltIcon from "@mui/icons-material/FilterAlt";
-import SearchIcon from "@mui/icons-material/Search";
-import ArrowDropDownIcon from "@mui/icons-material/ArrowDropDown";
-import CheckRoundedIcon from "@mui/icons-material/CheckRounded";
-import BlockIcon from "@mui/icons-material/Block";
-import AutorenewRoundedIcon from "@mui/icons-material/AutorenewRounded";
-import KeyboardArrowRightIcon from "@mui/icons-material/KeyboardArrowRight";
-import KeyboardArrowLeftIcon from "@mui/icons-material/KeyboardArrowLeft";
-import MoreHorizRoundedIcon from "@mui/icons-material/MoreHorizRounded";
-import Image from "next/image";
-import { routes } from "@/config/consts";
-import { usePathname,useRouter , useSearchParams} from "next/navigation";
-import { useSuspenseQuery } from "@apollo/experimental-nextjs-app-support/ssr";
-import { LOAD_ORDERS_QUERY } from "@/graphql/queries";
-import { Simulate } from "react-dom/test-utils";
-import input = Simulate.input;
-import moment from "moment";
-import { Order as oType, orderType } from "@/interfaces";
-
+import InputAdornment from "@mui/material/InputAdornment";
+import { routes } from "@/utils/consts";
+import IconButton from "@mui/material/IconButton";
+import InputLabel from "@mui/material/InputLabel";
+import OutlinedInput from "@mui/material/OutlinedInput";
+import FormHelperText from "@mui/material/FormHelperText";
+import FormControl from "@mui/material/FormControl";
+import { usePathname, useRouter, useSearchParams } from "next/navigation";
+import { DatePicker } from "@mui/x-date-pickers/DatePicker";
 import { useDebouncedCallback } from "use-debounce";
-import { Box, Button, Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, TextField } from "@mui/material";
+import { Search, Visibility, VisibilityOff } from "@mui/icons-material";
+import TablePagination from "@mui/material/TablePagination";
+import useMediaQuery from "@mui/material/useMediaQuery";
+import { useTheme } from "@mui/material/styles";
+import Typography from "@mui/material/Typography";
+import {
+  Box,
+  Button,
+  Paper,
+  Table,
+  TableBody,
+  TableCell,
+  TableContainer,
+  TableHead,
+  TableRow,
+  TextField,
+} from "@mui/material";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import moment, { Moment } from "moment";
+import { height } from "@fortawesome/free-brands-svg-icons/fa42Group";
+import { faEye } from "@fortawesome/free-solid-svg-icons";
 
 const WAIT_BETWEEN_CHANGE = 1000;
 
-
-
-export default function OrderTable({ rows,
+export default function OrderTable({
+  rows,
   totalPages,
-}: {rows : any;
+  columns,
+}: {
+  rows: any;
   totalPages: number;
+  columns: any[];
 }) {
-  const [order, setOrder] = React.useState<any>("desc");
+  const [startDate, setStartDate] = React.useState<Moment | null>(moment());
+  const [endDate, setEndDate] = React.useState<Moment | null>(moment());
+  const [query, setQuery] = React.useState<string>("");
+  const [rowsPerPage, setRowsPerPage] = React.useState<number>(10);
+  const [page, setPage] = React.useState<number>(0);
   const [selected, setSelected] = React.useState<readonly string[]>([]);
-  const [open, setOpen] = React.useState(false);
   const searchParams = useSearchParams();
   const { replace } = useRouter();
   const pathname = usePathname();
   const currentPage = Number(searchParams.get("page")) || 1;
 
-
   /*Hooks*/
   const router = useRouter();
 
-  console.log(rows)
   /*Functions*/
   const onViewOrder = (id: string) => {
-    console.log(id);
     router.push(`${routes.orders}/${id}`);
   };
-
-  const renderFilters = () => (
-    <React.Fragment>
-      <FormControl size="sm">
-        <FormLabel>Status</FormLabel>
-        <Select
-          size="sm"
-          placeholder="Filter by status"
-          slotProps={{ button: { sx: { whiteSpace: "nowrap" } } }}
-        >
-          <Option value="paid">Paid</Option>
-          <Option value="pending">Pending</Option>
-          <Option value="refunded">Refunded</Option>
-          <Option value="cancelled">Cancelled</Option>
-        </Select>
-      </FormControl>
-      <FormControl size="sm">
-        <FormLabel>Category</FormLabel>
-        <Select size="sm" placeholder="All">
-          <Option value="all">All</Option>
-          <Option value="refund">Refund</Option>
-          <Option value="purchase">Purchase</Option>
-          <Option value="debit">Debit</Option>
-        </Select>
-      </FormControl>
-      <FormControl size="sm">
-        <FormLabel>Customer</FormLabel>
-        <Select size="sm" placeholder="All">
-          <Option value="all">All</Option>
-          <Option value="olivia">Olivia Rhye</Option>
-          <Option value="steve">Steve Hampton</Option>
-          <Option value="ciaran">Ciaran Murray</Option>
-          <Option value="marina">Marina Macdonald</Option>
-          <Option value="charles">Charles Fulton</Option>
-          <Option value="jay">Jay Hoper</Option>
-        </Select>
-      </FormControl>
-    </React.Fragment>
-  );
 
   const handleSearch = useDebouncedCallback((value: string) => {
     const params = new URLSearchParams(searchParams);
@@ -117,19 +73,38 @@ export default function OrderTable({ rows,
     replace(`${pathname}?${params.toString()}`);
   }, WAIT_BETWEEN_CHANGE);
 
+  const handleChangePage = (event: unknown, newPage: number) => {
+    setPage(newPage);
+  };
+
+  const handleChangeRowsPerPage = (
+    event: React.ChangeEvent<HTMLInputElement>
+  ) => {
+    setRowsPerPage(parseInt(event.target.value, 10));
+    setPage(0);
+  };
+
   const createPageURL = (page: number) => {
     const params = new URLSearchParams(searchParams);
     params.set("page", page.toString());
     return `${pathname}?${params}`;
   };
 
-  const handlePage = (page: number) => {
-    router.push(createPageURL(page));
-  };
+  const visibleRows = React.useMemo(
+    () => rows.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage),
+    [rows, page, rowsPerPage]
+  );
+
+  const theme = useTheme();
+  const isLargeScreen = useMediaQuery(theme.breakpoints.up("md"));
 
   return (
     <React.Fragment>
       <Box
+        display="flex"
+        flexDirection={isLargeScreen ? "row" : "column"}
+        alignItems="center"
+        alignContent="center"
         component="form"
         sx={{
           "& .MuiTextField-root": { m: 1, width: "25ch" },
@@ -137,26 +112,115 @@ export default function OrderTable({ rows,
         noValidate
         autoComplete="off"
       >
-        <div>
-          <TextField
-            size="small"
-            required
-            id="outlined-required"
-            label="Required"
-            defaultValue="Hello World"
+        <FormControl
+          sx={{ m: 1, width: "25ch" }}
+          variant="outlined"
+          size="small"
+        >
+          <InputLabel htmlFor="outlined-adornment-search">Búsqueda</InputLabel>
+          <OutlinedInput
+            id="outlined-adornment-search"
+            type="text"
+            value={query}
+            onChange={(e) => setQuery(e.target.value)}
+            startAdornment={
+              <InputAdornment position="start">
+                <IconButton
+                  aria-label="search orders"
+                  edge="start"
+                  onClick={(e) => handleSearch(query)}
+                >
+                  <Search />
+                </IconButton>
+              </InputAdornment>
+            }
+            label="Búsqueda"
           />
-          <TextField
-            size="small"
-            required
-            id="outlined-required"
-            label="Required"
-            defaultValue="Hello World"
-          />
-        </div>
+        </FormControl>
+        <DatePicker
+          className="datepicker"
+          label="Fecha de inicio"
+          value={startDate}
+          onChange={(newValue) => setStartDate(newValue)}
+        />
+        <DatePicker
+          className="datepicker"
+          label="Fecha Fin"
+          value={endDate}
+          onChange={(newValue) => setEndDate(newValue)}
+        />
 
         {/* <OrderList /> */}
       </Box>
-     
+      <TableContainer elevation={0} component={Paper} style={{ marginTop: 25 }}>
+        <Table sx={{ minWidth: 650 }} aria-label="order table" size="small">
+          <TableHead>
+            <TableRow>
+              {columns.map((column, index) => (
+                <TableCell align="center" key={index} sx={{
+                  pb: 2,
+                }}>
+                  <Typography
+                    component="span"
+                    fontWeight={700}
+                    color="#6b7280"
+                    variant="caption"
+                  >
+                    {column.title}
+                  </Typography>
+                </TableCell>
+              ))}
+              <TableCell align="center"></TableCell>
+            </TableRow>
+          </TableHead>
+          <TableBody>
+            {visibleRows.map((row: any, index: number) => (
+              <TableRow
+                key={index}
+                sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
+              >
+                {columns.map((column, index) => (
+                  <TableCell
+                    align="center"
+                    key={index}
+                    sx={{
+                      py: 0.3,
+                      px: 0,
+                    }}
+                  >
+                    {column.type === "date" ? (
+                      moment(row[column.field]).format(column.format)
+                    ) : column.field === "status" ? (
+                      <Button>{row[column.field]}</Button>
+                    ) : column.type === "string" ? (
+                      column.field
+                        .split(".")
+                        .reduce((acc: any[], part: any) => acc[part], row)
+                    ) : null}
+                    {/* {column.field
+                      .split(".")
+                      .reduce((acc: any[], part: any) => acc[part], row)} */}
+                  </TableCell>
+                ))}
+                <TableCell align="center">
+                  <IconButton onClick={() => onViewOrder(row.id)}>
+                    <FontAwesomeIcon size="xs" icon={faEye} />
+                  </IconButton>
+                </TableCell>
+              </TableRow>
+            ))}
+          </TableBody>
+        </Table>
+      </TableContainer>
+      <TablePagination
+        rowsPerPageOptions={[5, 10, 25]}
+        component="div"
+        count={rows.length}
+        rowsPerPage={rowsPerPage}
+        page={page}
+        onPageChange={handleChangePage}
+        onRowsPerPageChange={handleChangeRowsPerPage}
+      />
     </React.Fragment>
   );
 }

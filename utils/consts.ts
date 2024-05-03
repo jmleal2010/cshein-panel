@@ -11,5 +11,8 @@ export const routes = {
   register: `${AUTH}/register`,
   forgotPassword: `${AUTH}/forgot-password`,
   verificationCode: `${AUTH}/verification-code`,
-  orders: `${ORDERS}`,
+  orders: {
+    pending: `${ORDERS}/pending`,
+    completed: `${ORDERS}/completed`,
+  },
 };

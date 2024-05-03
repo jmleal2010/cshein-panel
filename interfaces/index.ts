@@ -70,3 +70,15 @@ export interface productType {
   size: string;
   skucode: string;
 }
+
+export interface Navigation {
+  id: number;
+  title: string;
+  icon?: any;
+  iconSize?: string;
+  children?: Navigation[];
+  nested?: boolean;
+  isOpen?: boolean;
+  href: string;
+  selected: boolean;
+}

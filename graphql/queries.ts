@@ -1,15 +1,26 @@
 import { gql } from "@apollo/client";
 
 export const LOAD_ORDERS_QUERY = gql`
-  query Orders($input: OrderInput) {
+  query Orders($input: OrderQueryInput) {
     orders(input: $input) {
-      id
-      stage
-      status
-      total
-      code
-      createdAt
-      deliveryAt
+      edges {
+        addressId
+        code
+        createdAt
+        serviceType
+        status
+        transactionId
+        updatedAt
+        beneficiary {
+          firstName
+          lastName
+        }
+      }
+      pageInfo {
+        currentPage
+        hasNextPage
+        totalPages
+      }
     }
   }
 `;

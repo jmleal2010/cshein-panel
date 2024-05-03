@@ -4,7 +4,7 @@ import { VERIFICATION_CODE_MUTATION } from "@/graphql/mutations";
 import { NextRequest, NextResponse } from "next/server";
 import { FormEvent, useEffect, useState } from "react";
 import axios from "axios";
-import { routes } from "@/config/consts";
+import { routes } from "@/utils/consts";
 import { useRouter } from "next/navigation";
 
 export default function VerificationCode() {

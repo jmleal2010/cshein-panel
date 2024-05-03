@@ -1,89 +1,61 @@
 "use client";
 import * as React from "react";
-import Avatar from "@mui/joy/Avatar";
-import Box from "@mui/joy/Box";
-import Divider from "@mui/joy/Divider";
-import IconButton from "@mui/joy/IconButton";
-import Input from "@mui/joy/Input";
-import List from "@mui/joy/List";
-import ListItem from "@mui/joy/ListItem";
-import ListItemButton, { listItemButtonClasses } from "@mui/joy/ListItemButton";
-import ListItemContent from "@mui/joy/ListItemContent";
-import Typography from "@mui/joy/Typography";
-import Sheet from "@mui/joy/Sheet";
-import SearchRoundedIcon from "@mui/icons-material/SearchRounded";
-import DashboardRoundedIcon from "@mui/icons-material/DashboardRounded";
-import ShoppingCartRoundedIcon from "@mui/icons-material/ShoppingCartRounded";
-import AssignmentRoundedIcon from "@mui/icons-material/AssignmentRounded";
+import Box from "@mui/material/Box";
+import Divider from "@mui/material/Divider";
+import List from "@mui/material/List";
+import ListItem from "@mui/material/ListItem";
+import ListItemButton, {
+  listItemButtonClasses,
+} from "@mui/material/ListItemButton";
+import Paper from "@mui/material/Paper";
 import SettingsRoundedIcon from "@mui/icons-material/SettingsRounded";
-import LogoutRoundedIcon from "@mui/icons-material/LogoutRounded";
-import BrightnessAutoRoundedIcon from "@mui/icons-material/BrightnessAutoRounded";
-import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
+import ListItemText from "@mui/material/ListItemText";
+import ListSubheader from "@mui/material/ListSubheader";
+import ListItemIcon from "@mui/material/ListItemIcon";
+import Collapse from "@mui/material/Collapse";
+import ExpandLess from "@mui/icons-material/ExpandLess";
+import ExpandMore from "@mui/icons-material/ExpandMore";
 
-import ColorSchemeToggle from "./ColorSchemeToggle";
 import { closeSidebar } from "@/utils";
 import Link from "next/link";
-import { routes } from "@/config/consts";
-
-function Toggler({
-  defaultExpanded = false,
-  renderToggle,
-  children,
-}: {
-  defaultExpanded?: boolean;
-  children: React.ReactNode;
-  renderToggle: (params: {
-    open: boolean;
-    setOpen: React.Dispatch<React.SetStateAction<boolean>>;
-  }) => React.ReactNode;
-}) {
-  const [open, setOpen] = React.useState(defaultExpanded);
-  return (
-    <React.Fragment>
-      {renderToggle({ open, setOpen })}
-      <Box
-        sx={{
-          display: "grid",
-          gridTemplateRows: open ? "1fr" : "0fr",
-          transition: "0.2s ease",
-          "& > *": {
-            overflow: "hidden",
-          },
-        }}
-      >
-        {children}
-      </Box>
-    </React.Fragment>
-  );
-}
-
-const navigation = [
-  {
-    title: "Inicio",
-    icon: <DashboardRoundedIcon />,
-    children: [],
-    nested: false,
-    href: routes.dashboard,
-  },
-  {
-    title: "Ordenes",
-    icon: <ShoppingCartRoundedIcon />,
-    children: [],
-    nested: false,
-    href: routes.orders,
-  },
-  {
-    title: "Tareas",
-    icon: <AssignmentRoundedIcon />,
-    children: ["Primera", "Segunda", "Tercera"],
-    nested: true,
-    href: routes.orders,
-  },
-];
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { Navigation } from "@/interfaces";
+import { navItems } from "@/utils/data";
 
 export default function Sidebar() {
+  const [navigation, setNavigation] = React.useState<Navigation[]>(navItems);
+
+  const handleListItemClick = (item: Navigation) => {
+    if (!item.nested) {
+      item.selected = !item.nested;
+      unselectedItems(item);
+    } else {
+      handleClick(item);
+    }
+
+    setNavigation([...navigation]);
+  };
+
+  const unselectedItems = (item: Navigation) => {
+    navigation.forEach((nav: Navigation) => {
+      if (nav.id !== item.id) {
+        if (nav.children) {
+          nav.children.forEach((child: Navigation) => {
+            child.selected = child.id === item.id;
+          });
+        } else {
+          nav.selected = false;
+        }
+      }
+    });
+  };
+
+  const handleClick = (item: Navigation) => {
+    item.isOpen = !item.isOpen;
+  };
+
   return (
-    <Sheet
+    <Paper
       className="Sidebar"
       sx={{
         position: { xs: "fixed", md: "sticky" },
@@ -134,18 +106,6 @@ export default function Sidebar() {
         }}
         onClick={() => closeSidebar()}
       />
-      <Box sx={{ display: "flex", gap: 1, alignItems: "center" }}>
-        <IconButton variant="soft" color="primary" size="sm">
-          <BrightnessAutoRoundedIcon />
-        </IconButton>
-        <Typography level="title-lg">Acme Co.</Typography>
-        <ColorSchemeToggle sx={{ ml: "auto" }} />
-      </Box>
-      <Input
-        size="sm"
-        startDecorator={<SearchRoundedIcon />}
-        placeholder="Search"
-      />
       <Box
         sx={{
           minHeight: 0,
@@ -159,65 +119,88 @@ export default function Sidebar() {
         }}
       >
         <List
-          size="sm"
-          sx={{
-            gap: 1,
-            "--List-nestedInsetStart": "30px",
-            "--ListItem-radius": (theme) => theme.vars.radius.sm,
-          }}
+          sx={{ width: "100%", maxWidth: 360, bgcolor: "background.paper" }}
+          component="nav"
+          aria-labelledby="nested-list-subheader"
+          subheader={
+            <ListSubheader component="div" id="nested-list-subheader">
+              Cuba Joy
+            </ListSubheader>
+          }
         >
-          {navigation.map((item, index) =>
-            !item.nested ? (
-              <Link
-                key={index}
-                className="no-underline"
-                href={item.href}
-                style={{ textDecoration: "none" }}
+          {navigation.map((item: Navigation, index) => (
+            <React.Fragment key={index}>
+              <ListItemButton
+                href={item.nested ? "#" : item.href}
+                LinkComponent={Link}
+                onClick={(e) => handleListItemClick(item)}
+                selected={item.selected}
+                dense
+                sx={{
+                  gap: 1,
+                  "& .MuiListItemIcon-root": {
+                    minWidth: 0,
+                    color: item.selected ? "white" : "",
+                  },
+                }}
               >
-                <ListItem key={index}>
-                  <ListItemButton>
-                    {item.icon}
-
-                    <ListItemContent>
-                      <Typography level="title-sm">{item.title}</Typography>
-                    </ListItemContent>
-                  </ListItemButton>
-                </ListItem>
-              </Link>
-            ) : (
-              <ListItem key={index} nested>
-                <Toggler
-                  renderToggle={({ open, setOpen }) => (
-                    <ListItemButton onClick={() => setOpen(!open)}>
-                      <AssignmentRoundedIcon />
-                      <ListItemContent>
-                        <Typography level="title-sm">Tasks</Typography>
-                      </ListItemContent>
-                      <KeyboardArrowDownIcon
-                        sx={{ transform: open ? "rotate(180deg)" : "none" }}
-                      />
-                    </ListItemButton>
-                  )}
+                <ListItemIcon
+                  sx={{
+                    display: "flex",
+                    alignSelf: "center",
+                  }}
                 >
-                  <List sx={{ gap: 0.5 }}>
-                    {item.children.map((child, index) => (
-                      <ListItem sx={{ mt: 0.5 }} key={index}>
-                        <ListItemButton>{child}</ListItemButton>
-                      </ListItem>
+                  <FontAwesomeIcon
+                    alignmentBaseline="central"
+                    icon={item.icon}
+                    style={{
+                      margin: "0 auto",
+                    }}
+                    size={item.icon && item.iconSize}
+                  />
+                </ListItemIcon>
+
+                <ListItemText primary={item.title} />
+                {item.nested && (item.isOpen ? <ExpandLess /> : <ExpandMore />)}
+              </ListItemButton>
+              {item.nested && (
+                <Collapse in={item.isOpen} timeout="auto" unmountOnExit>
+                  <List component="ul" disablePadding>
+                    {item.children?.map((child, i) => (
+                      <ListItemButton
+                        component={Link}
+                        key={i}
+                        href={child.href}
+                        onClick={(e) => handleListItemClick(child)}
+                        selected={child.selected}
+                        dense
+                        sx={{
+                          pl: 4,
+                          pt: 0.5,
+                          pb: 0.5,
+                          mr: 2,
+                            mb:1
+                        }}
+                      >
+                        {/* <ListItemIcon>
+                        <StarBorder />
+                      </ListItemIcon> */}
+                        <ListItemText primary={child.title} />
+                      </ListItemButton>
                     ))}
                   </List>
-                </Toggler>
-              </ListItem>
-            )
-          )}
+                </Collapse>
+              )}
+            </React.Fragment>
+          ))}
         </List>
 
         <List
-          size="sm"
+          component="ul"
           sx={{
             mt: "auto",
             flexGrow: 0,
-            "--ListItem-radius": (theme) => theme.vars.radius.sm,
+            "--ListItem-radius": "4px",
             "--List-gap": "8px",
             mb: 2,
           }}
@@ -231,20 +214,20 @@ export default function Sidebar() {
         </List>
       </Box>
       <Divider />
-      <Box sx={{ display: "flex", gap: 1, alignItems: "center" }}>
+      {/*  <Box sx={{ display: "flex", gap: 1, alignItems: "center" }}>
         <Avatar
-          variant="outlined"
-          size="sm"
+          variant="rounded"
+          component="image"
           src="https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?auto=format&fit=crop&w=286"
         />
         <Box sx={{ minWidth: 0, flex: 1 }}>
-          <Typography level="title-sm">Siriwat K.</Typography>
-          <Typography level="body-xs">siriwatk@test.com</Typography>
+          <Typography variant="caption">Siriwat K.</Typography>
+          <Typography variant="caption">siriwatk@test.com</Typography>
         </Box>
-        <IconButton size="sm" variant="plain" color="neutral">
+        <IconButton size="small" color="default">
           <LogoutRoundedIcon />
         </IconButton>
-      </Box>
-    </Sheet>
+      </Box> */}
+    </Paper>
   );
 }
