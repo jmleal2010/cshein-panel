@@ -38,21 +38,25 @@ export default function OrderTable({
   rows,
   totalPages,
   columns,
+  pageSize,
+  currentPage
 }: {
   rows: any;
   totalPages: number;
-  columns: any[];
+    columns: any[];
+    pageSize: number; 
+    currentPage: number;
 }) {
   const [startDate, setStartDate] = React.useState<Moment | null>(moment());
   const [endDate, setEndDate] = React.useState<Moment | null>(moment());
-  const [query, setQuery] = React.useState<string>("");
+  //const [query, setQuery] = React.useState<string>("");
   const [rowsPerPage, setRowsPerPage] = React.useState<number>(10);
   const [page, setPage] = React.useState<number>(0);
   const [selected, setSelected] = React.useState<readonly string[]>([]);
   const searchParams = useSearchParams();
   const { replace } = useRouter();
   const pathname = usePathname();
-  const currentPage = Number(searchParams.get("page")) || 1;
+  //const currentPage = Number(searchParams.get("page")) || 1;
 
   /*Hooks*/
   const router = useRouter();
@@ -61,7 +65,7 @@ export default function OrderTable({
     router.push(`${pathname}/${id}`);
   };
 
-  const handleSearch = useDebouncedCallback((value: string) => {
+  const handleSearch =  useDebouncedCallback((value: string) => {
     const params = new URLSearchParams(searchParams);
     if (value) {
       params.set("query", value);
@@ -72,20 +76,30 @@ export default function OrderTable({
     replace(`${pathname}?${params.toString()}`);
   }, WAIT_BETWEEN_CHANGE);
 
-  const handleChangePage = (event: unknown, newPage: number) => {
+ 
+
+  const handleChangePage = (event: unknown, newPage: number) => { 
     setPage(newPage);
+    replace(createPageURL(newPage + 1));
   };
 
   const handleChangeRowsPerPage = (
     event: React.ChangeEvent<HTMLInputElement>
   ) => {
-    setRowsPerPage(parseInt(event.target.value, 10));
-    setPage(0);
+    if (parseInt(event.target.value, 10) < pageSize) {
+      
+    } 
+    replace(createRowsPerPageURL(parseInt(event.target.value, 10)));
   };
 
   const createPageURL = (page: number) => {
     const params = new URLSearchParams(searchParams);
     params.set("page", page.toString());
+    return `${pathname}?${params}`;
+  };
+  const createRowsPerPageURL = (rows: number) => {
+    const params = new URLSearchParams(searchParams);
+    params.set("rows", rows.toString());
     return `${pathname}?${params}`;
   };
 
@@ -97,60 +111,9 @@ export default function OrderTable({
   const theme = useTheme();
   const isLargeScreen = useMediaQuery(theme.breakpoints.up("md"));
 
+
   return (
     <React.Fragment>
-      <Box
-        display="flex"
-        flexDirection={isLargeScreen ? "row" : "column"}
-        alignItems="center"
-        alignContent="center"
-        component="form"
-        sx={{
-          "& .MuiTextField-root": { m: 1, width: "25ch" },
-        }}
-        noValidate
-        autoComplete="off"
-      >
-        <FormControl
-          sx={{ m: 1, width: "25ch" }}
-          variant="outlined"
-          size="small"
-        >
-          <InputLabel htmlFor="outlined-adornment-search">Búsqueda</InputLabel>
-          <OutlinedInput
-            id="outlined-adornment-search"
-            type="text"
-            value={query}
-            onChange={(e) => setQuery(e.target.value)}
-            startAdornment={
-              <InputAdornment position="start">
-                <IconButton
-                  aria-label="search orders"
-                  edge="start"
-                  onClick={(e) => handleSearch(query)}
-                >
-                  <Search />
-                </IconButton>
-              </InputAdornment>
-            }
-            label="Búsqueda"
-          />
-        </FormControl>
-        <DatePicker
-          className="datepicker"
-          label="Fecha de inicio"
-          value={startDate}
-          onChange={(newValue) => setStartDate(newValue)}
-        />
-        <DatePicker
-          className="datepicker"
-          label="Fecha Fin"
-          value={endDate}
-          onChange={(newValue) => setEndDate(newValue)}
-        />
-
-        {/* <OrderList /> */}
-      </Box>
       <TableContainer elevation={0} component={Paper} style={{ marginTop: 25 }}>
         <Table sx={{ minWidth: 650 }} aria-label="order table" size="small">
           <TableHead>
@@ -213,10 +176,10 @@ export default function OrderTable({
       </TableContainer>
       <TablePagination
         rowsPerPageOptions={[5, 10, 25]}
-        component="div"
-        count={rows.length}
-        rowsPerPage={rowsPerPage}
-        page={page}
+        component="div" 
+        count={(totalPages * pageSize)}
+        rowsPerPage={pageSize}
+        page={currentPage - 1}
         onPageChange={handleChangePage}
         onRowsPerPageChange={handleChangeRowsPerPage}
       />

@@ -36,6 +36,7 @@ export async function loginUser(prevState: any, formData: FormData) {
   const { data } = parse;
 
   try {
+    console.log(data);  
     const response: FetchResult<any> = await getClient().mutate({
       mutation: LOGIN_MUTATION,
       variables: {
@@ -47,7 +48,7 @@ export async function loginUser(prevState: any, formData: FormData) {
 
     let token, user;
 
-    if(response.data) {
+    if (response.data) {
       token = response.data.signInWithEmail.token;
       user = response.data.user
     } 
@@ -55,6 +56,7 @@ export async function loginUser(prevState: any, formData: FormData) {
     cookieStore.set(AUTH_TOKEN, token);
 
   } catch (error: any) {
+    console.log(error); 
     return {
       message: error.message,
     };

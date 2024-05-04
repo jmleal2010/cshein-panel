@@ -7,6 +7,7 @@ import OrderTable from "@/components/server/OrderTable";
 import { Suspense } from "react";
 import { faClipboardList } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import TableInput from "@/components/client/table/TableInput";
 
 export default function OrdersPage({
   params,
@@ -18,13 +19,16 @@ export default function OrdersPage({
   searchParams?: {
     query?: string;
     page?: string;
+    rows?: string;
   };
-}) {
+  }) {
+  //console.log(params, searchParams);  
   const currentPage = Number(searchParams?.page) || 1;
   const query = searchParams?.query || "";
   const pageTitle = `${params.categoryId
     ?.charAt(0)
     .toUpperCase()}${params.categoryId?.slice(1)}`;
+   const rows = searchParams?.rows || "10";  
   const boxStyle = {
     my: 4,
     display: "flex",
@@ -49,12 +53,13 @@ export default function OrdersPage({
           </Typography>
         </Typography>
       </Box>
-
-      <Suspense fallback={<OrderTableSkeleton />} key={query + currentPage}>
+      <TableInput/>
+      <Suspense fallback={<OrderTableSkeleton />} key={query + currentPage + rows}>
         <OrderTable
           query={query}
           currentPage={currentPage}
           status={params.categoryId}
+          pageSize = {rows}
         />
       </Suspense>
       {/* <OrderList /> */}
