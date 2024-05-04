@@ -7,7 +7,14 @@ import { format } from "path";
 
 const ITEMS_X_PAGE = 15;
 
-const getData = async (input) => {
+const getData = async (input:
+  | {
+      page: number;
+      pageSize: number;
+      status: string;
+    }
+  | undefined
+) => {
   try {
     return await getClient().query({
       query: LOAD_ORDERS_QUERY,
@@ -15,8 +22,8 @@ const getData = async (input) => {
         input,
       },
     });
-  } catch (e) {
-    console.log(e.message);
+  } catch (e: any) {
+    console.log(e);
   }
 };
 
@@ -68,18 +75,22 @@ export default async function OrderTable({
   status,
   query,
   currentPage,
+  pageSize
 }: {
   status: string;
   query?: string;
   currentPage: number;
-}) {
+  pageSize?: string;
+  }) {
+  
   const input = {
-    page: 1,
-    pageSize: ITEMS_X_PAGE,
+    page: currentPage,
+    pageSize: pageSize ? parseInt(pageSize) : ITEMS_X_PAGE,
     status: status === "pending" ? "PENDING" : "ACCEPTED",
   };
 
   const response = await getData(input);
+  // console.log(response);
   let data, pageInfo;
 
   if (response?.data) {
@@ -89,15 +100,18 @@ export default async function OrderTable({
   const totalOrders = data;
   const orders = query ? getFilterOrders(totalOrders, query) : totalOrders;
   const startIndex = ITEMS_X_PAGE * (pageInfo.currentPage - 1);
-  const pageItems = orders?.slice(startIndex, startIndex + ITEMS_X_PAGE);
+  // const pageItems = orders?.slice(startIndex, startIndex + ITEMS_X_PAGE);
+  // const pageItems = orders;
   const totalPages = pageInfo.totalPages;
 
   return (
     totalOrders && (
       <ClientOrderTable
-        rows={pageItems}
+        rows={orders}
         totalPages={totalPages}
         columns={columns}
+        pageSize={parseInt(pageSize || "10", 10)}
+        currentPage={currentPage} 
       />
     )
   );
