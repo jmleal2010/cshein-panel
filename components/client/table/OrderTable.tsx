@@ -56,10 +56,9 @@ export default function OrderTable({
 
   /*Hooks*/
   const router = useRouter();
-
   /*Functions*/
   const onViewOrder = (id: string) => {
-    router.push(`${routes.orders}/${id}`);
+    router.push(`${pathname}/${id}`);
   };
 
   const handleSearch = useDebouncedCallback((value: string) => {

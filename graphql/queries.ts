@@ -4,6 +4,7 @@ export const LOAD_ORDERS_QUERY = gql`
   query Orders($input: OrderQueryInput) {
     orders(input: $input) {
       edges {
+        id
         addressId
         code
         createdAt
@@ -26,50 +27,50 @@ export const LOAD_ORDERS_QUERY = gql`
 `;
 
 export const LOAD_ORDER_QUERY = gql`
-  query Orders($orderId: ID!) {
+  query Order($orderId: ID!) {
     order(id: $orderId) {
-      arrivalAt
-      beneficiary {
-        email
-        fullName
+      address {
+        addressLine1
+        addressLine2
+        city
+        country
+        description
         id
+        isDefault
+        postalCode
+        state
+      }
+      beneficiary {
+        address
+        email
+        firstName
+        id
+        lastName
         phone
       }
       code
       createdAt
-      deliveryAt
-      deliveryFee
-      deliveryFeeStatus
-      id
-      stage
-      status
-      total
-      updatedAt
-      userId
-      qvapayInvoices {
-        amount
-        createdAt
+      packages {
+        code
+        content
         id
+        isFragile
         orderId
-        qvapayId
-        status
-        updatedAt
-        url
+        size
+        type
+        weight
       }
-      orderItems {
-        quantity
-        product {
-          id
-          name
-          skucode
-          categoryId
-          size
-          color
-          price
-          discount
-          link
-          image
-        }
+      id
+      serviceType
+      status
+      updatedAt
+      user {
+        email
+        firstName
+        id
+        lastName
+        phone
+        profilePicture
       }
     }
   }

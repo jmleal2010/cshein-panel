@@ -21,7 +21,7 @@ export interface orderType {
 export interface Order {
   id: string;
   arrivalAt: string;
-  beneficiary: beneficiaryType;
+  beneficiary: BeneficiaryType;
   code: string;
   createdAt: string;
   deliveryAt: string;
@@ -36,10 +36,12 @@ export interface Order {
   userId: string;
 }
 
-export interface beneficiaryType {
+export interface BeneficiaryType {
+  address: string;
   email: string;
-  fullName: string;
+  firstName: string;
   id: string;
+  lastName: string;
   phone: string;
 }
 

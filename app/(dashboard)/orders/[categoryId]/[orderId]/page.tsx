@@ -1,33 +1,13 @@
 import { LOAD_ORDER_QUERY } from "@/graphql/queries";
 import * as React from "react";
 import Box from "@mui/material/Box";
-import {
-  Card,
-  CardContent,
-  CardHeader,
-  Collapse,
-  Container,
-  Grid,
-  ListItemAvatar,
-  ListItemText,
-  Paper,
-  Stack,
-  Typography,
-} from "@mui/material";
+import { Button, Container, Grid, Paper, Typography } from "@mui/material";
 import { getClient } from "@/config/apollo";
-import Avatar from "@mui/joy/Avatar";
-import { red } from "@mui/material/colors";
-import IconButton from "@mui/joy/IconButton";
-import { Edit } from "@mui/icons-material";
-import OrderHeader from "@/components/common/orderHeader";
-import ListItem from "@mui/joy/ListItem";
-import { Order } from "@/interfaces";
-import { Fragment } from "react";
-import OrderItemTable from "@/components/client/table/OrderItemTable";
 import OrderTitle from "@/components/client/orderTitle";
 import SpanningTable from "@/components/client/table/SpanningTable";
-import OrderHistory from "@/components/client/OrderHistory";
 import CustomerInfo from "@/components/client/CustomerInfo";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faClipboardList } from "@fortawesome/free-solid-svg-icons";
 
 const activity = [
   { id: 1, type: "creada", date: "7d ago", dateTime: "2023-01-23T10:32" },
@@ -41,7 +21,7 @@ const getOrder = async (params: any) => {
     return await getClient().query({
       query: LOAD_ORDER_QUERY,
       variables: {
-        orderId: params.id,
+        orderId: params.orderId,
       },
     });
   } catch (err) {}
@@ -62,36 +42,67 @@ const Header = async () => {
   );
 };
 
-export default async function OrderId({ params }: { params: { id: string } }) {
-  // console.log(params);
+const boxStyle = {
+  my: 4,
+  display: "flex",
+  flexDirection: "row",
+  alignItems: "center",
+  gap: 4,
+};
+
+export default async function OrderId({
+  params,
+}: {
+  params: { orderId: string };
+}) {
   const response = await getOrder(params);
   const order = response?.data.order || {};
 
-  console.log(order);
-  let orderItems = order.orderItems.map((item: any) => {
-    const { product, quantity } = item;
-    return { ...product, quantity };
-  });
+  console.log(order)
   const persona = {};
 
   return (
-    <Container sx={{ mt: 5 }}>
-      <Grid container>
+    <Container sx={{ mt: 5 }} maxWidth="xl">
+      <Grid container sx={{ gap: 2 }}>
         <Grid xs={12}>
-          <OrderTitle orderId={order.id}></OrderTitle>
+          <Box sx={boxStyle}>
+            <Typography
+              variant="h4"
+              component="h1"
+              align="left"
+              color="#6b7280"
+            >
+              <FontAwesomeIcon icon={faClipboardList} /> Order
+              <Typography
+                variant="h5"
+                component="span"
+                align="left"
+                color="#6b7280"
+                style={{ marginLeft: 4 }}
+              >
+                {"#"} {order.code}
+              </Typography>
+            </Typography>
+            <Button
+              variant="outlined"
+              size="small"
+              color={order.status === "ACCEPTED" ? "primary" : "error"}
+            >
+              {" "}
+              {order.status}
+            </Button>
+          </Box>
         </Grid>
         <Grid xs={8}>
-          <Paper>
-            <SpanningTable items={order.orderItems}></SpanningTable>
+          <SpanningTable items={order.packages}></SpanningTable>
+        </Grid>
+        <Grid xs={3}>
+          <Paper elevation={0} className="cshein-card">
+            <CustomerInfo title="Información del cliente" data={order.beneficiary}></CustomerInfo>
+            <CustomerInfo title="Entrega" data={order.beneficiary}></CustomerInfo>
           </Paper>
         </Grid>
-        <Grid xs={4}>
-          <CustomerInfo beneficiary={order.beneficiary}></CustomerInfo>
-        </Grid>
         <Grid xs={8} sx={{ mt: 5 }}>
-          {/* <OrderHistory>
-
-                  </OrderHistory> */}
           <Paper sx={{ p: 1 }}>
             <Typography variant="h6">Historial</Typography>
             <Container>

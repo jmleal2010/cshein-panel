@@ -5,9 +5,7 @@ import Box from "@mui/material/Box";
 import OrderTableSkeleton from "@/components/skeletons/order-table-skeleton";
 import OrderTable from "@/components/server/OrderTable";
 import { Suspense } from "react";
-import {
-  faClipboardList,
-} from "@fortawesome/free-solid-svg-icons";
+import { faClipboardList } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 export default function OrdersPage({
