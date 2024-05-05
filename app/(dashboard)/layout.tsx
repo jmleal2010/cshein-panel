@@ -17,7 +17,6 @@ export default function RootLayout({ children}: {children: React.ReactNode }) {
       <ThemeProvider theme={theme}>
         <CssBaseline />
           <Box sx={{ display: 'flex', minHeight: '100dvh' }}>
-              {/* <Header /> */}
               <Sidebar />
               <Box
                   component="main"

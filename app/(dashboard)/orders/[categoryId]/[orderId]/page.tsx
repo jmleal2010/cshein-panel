@@ -98,7 +98,7 @@ export default async function OrderId({
           <Paper elevation={0} className="cshein-card">
             <CustomerInfo
               avatar
-              title="Información del cliente"
+              title="Información del beneficiario"
               data={order.beneficiary}
             ></CustomerInfo>
             {order.deliveryOrder && (

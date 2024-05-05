@@ -1,5 +1,5 @@
 "use client";
-import React, { Fragment, useState } from "react";
+import React from "react";
 import { Box, Pagination } from "@mui/material";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
 
@@ -22,7 +22,6 @@ export default function Paginator({
   const searchParams = useSearchParams();
   const { replace } = useRouter();
   const pathname = usePathname();
-  const router = useRouter();
 
   /* Functions */
   const handleChangePage = (event: unknown, newPage: number) => {

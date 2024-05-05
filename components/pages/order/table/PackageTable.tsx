@@ -66,7 +66,7 @@ const columns = [
     type: "category",
   },
   {
-    title: "Peso",
+    title: "Peso (lb)",
     field: "weight",
     type: "string",
   },
@@ -93,7 +93,7 @@ export default function PackageTable({ items }: { items: Package[] }) {
 
   const invoiceSubtotal = subtotal(items);
   const invoiceTaxes = TAX_RATE * invoiceSubtotal;
-  const invoiceTotal = invoiceTaxes + invoiceSubtotal;
+  const invoiceTotal =  invoiceSubtotal;
 
   return (
     <React.Fragment>
@@ -157,28 +157,12 @@ export default function PackageTable({ items }: { items: Package[] }) {
               <TableCell align="right"  sx={{pt:4}}>{ccyFormat(invoiceSubtotal)}</TableCell>
             </TableRow>
             <TableRow>
-              <TableCell>Tax</TableCell>
-              <TableCell align="right">{`${(TAX_RATE * 100).toFixed(
-                0
-              )} %`}</TableCell>
-              <TableCell align="right">{ccyFormat(invoiceTaxes)}</TableCell>
-            </TableRow>
-            <TableRow>
               <TableCell colSpan={2} style={{border: 'none'}}>Total</TableCell>
               <TableCell align="right" style={{border:'none'}}>{ccyFormat(invoiceTotal)}</TableCell>
             </TableRow>
           </TableBody>
         </Table>
       </TableContainer>
-      {/*  <TablePagination
-        rowsPerPageOptions={[5, 10, 25]}
-        component="div"
-        count={items.length}
-        rowsPerPage={rowsPerPage}
-        page={page}
-        onPageChange={handleChangePage}
-        onRowsPerPageChange={handleChangeRowsPerPage}
-      /> */}
     </React.Fragment>
   );
 }

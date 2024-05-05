@@ -170,7 +170,8 @@ export default function Sidebar() {
                           pt: 0.5,
                           pb: 0.5,
                           mr: 2,
-                            mb:1
+                          mb: 0.5,
+                          mt: 0.5,
                         }}
                       >
                         {/* <ListItemIcon>
