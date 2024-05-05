@@ -84,6 +84,7 @@ export interface Navigation {
   isOpen?: boolean;
   href: string;
   selected: boolean;
+  slug?: string;
 }
 
 export interface DeliveryOrder {

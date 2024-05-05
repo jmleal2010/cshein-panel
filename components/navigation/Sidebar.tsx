@@ -21,10 +21,20 @@ import Link from "next/link";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { Navigation } from "@/interfaces";
 import { navItems } from "@/utils/data";
+import { usePathname } from "next/navigation";
 
 export default function Sidebar() {
+
+  /* State */
   const [navigation, setNavigation] = React.useState<Navigation[]>(navItems);
 
+  /* Hooks */
+  const pathname = usePathname();
+  
+  const pathSplit = pathname.split("/");
+  const path = pathSplit[pathSplit.length - 1];
+
+  /* Functions */
   const handleListItemClick = (item: Navigation) => {
     if (!item.nested) {
       item.selected = !item.nested;
@@ -125,13 +135,14 @@ export default function Sidebar() {
                 href={item.nested ? "#" : item.href}
                 LinkComponent={Link}
                 onClick={(e) => handleListItemClick(item)}
-                selected={item.selected}
+                selected={item.selected || item.slug?.includes(path)}
                 dense
                 sx={{
                   gap: 1,
+                  mt: 1,
                   "& .MuiListItemIcon-root": {
                     minWidth: 0,
-                    color: item.selected ? "white" : "",
+                    color: item.selected || item.slug?.includes(path)? "white" : "",
                   },
                 }}
               >
@@ -163,7 +174,7 @@ export default function Sidebar() {
                         key={i}
                         href={child.href}
                         onClick={(e) => handleListItemClick(child)}
-                        selected={child.selected}
+                        selected={child.selected  && child.slug?.includes(path)}
                         dense
                         sx={{
                           pl: 4,

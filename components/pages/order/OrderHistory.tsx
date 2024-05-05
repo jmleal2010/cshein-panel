@@ -3,8 +3,6 @@ import React from "react";
 import {
   Box,
   Button,
-  Container,
-  Grid,
   Paper,
   Step,
   StepContent,
@@ -20,8 +18,6 @@ import moment from "moment";
 const OrderHistory = ({data: order}: any) => {
   const [activeStep, setActiveStep] = React.useState(0);
 
-
-  console.log(order)
   const steps = [
   
     {

@@ -7,7 +7,7 @@ import { getClient } from "@/config/apollo";
 import SpanningTable from "@/components/pages/order/table/PackageTable";
 import CustomerInfo from "@/components/pages/order/CustomerInfo";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faClipboardList } from "@fortawesome/free-solid-svg-icons";
+import { faCartShopping, faClipboardList } from "@fortawesome/free-solid-svg-icons";
 import OrderHistory from "@/components/pages/order/OrderHistory";
 
 const activity = [
@@ -70,7 +70,7 @@ export default async function OrderId({
               align="left"
               color="#6b7280"
             >
-              <FontAwesomeIcon icon={faClipboardList} /> Order
+              <FontAwesomeIcon icon={faCartShopping} /> Order
               <Typography
                 variant="h5"
                 component="span"
