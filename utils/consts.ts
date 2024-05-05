@@ -3,7 +3,7 @@ export const AUTH: string = "/auth";
 const ORDERS: string = "/orders";
 
 export const AUTH_TOKEN: string = "AUTH_TOKEN";
-
+export const ITEMS_X_PAGE = 5;
 export const routes = {
   dashboard: DASHBOARD,
   auth: AUTH,

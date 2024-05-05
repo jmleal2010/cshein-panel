@@ -1,22 +1,10 @@
 "use client";
 import * as React from "react";
-import InputAdornment from "@mui/material/InputAdornment";
-import { routes } from "@/utils/consts";
+import { ITEMS_X_PAGE, routes } from "@/utils/consts";
 import IconButton from "@mui/material/IconButton";
-import InputLabel from "@mui/material/InputLabel";
-import OutlinedInput from "@mui/material/OutlinedInput";
-import FormHelperText from "@mui/material/FormHelperText";
-import FormControl from "@mui/material/FormControl";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
-import { DatePicker } from "@mui/x-date-pickers/DatePicker";
-import { useDebouncedCallback } from "use-debounce";
-import { Search, Visibility, VisibilityOff } from "@mui/icons-material";
-import TablePagination from "@mui/material/TablePagination";
-import useMediaQuery from "@mui/material/useMediaQuery";
-import { useTheme } from "@mui/material/styles";
 import Typography from "@mui/material/Typography";
 import {
-  Box,
   Button,
   Paper,
   Table as MTable,
@@ -25,9 +13,6 @@ import {
   TableContainer,
   TableHead,
   TableRow,
-  TextField,
-  Stack,
-  Pagination,
 } from "@mui/material";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import moment, { Moment } from "moment";
@@ -40,7 +25,7 @@ export default function Table({
   rows,
   totalPages,
   columns,
-  currentPage,
+  currentPage
 }: {
   rows: any;
   totalPages: number;
@@ -48,7 +33,6 @@ export default function Table({
   currentPage: number;
 }) {
   /*States*/
-  const [rowsPerPage, setRowsPerPage] = React.useState<number>(10);
   const [page, setPage] = React.useState<number>(0);
 
   /* Hooks */
@@ -62,45 +46,9 @@ export default function Table({
     router.push(`${pathname}/${id}`);
   };
 
-  const handleSearch = useDebouncedCallback((value: string) => {
-    const params = new URLSearchParams(searchParams);
-    if (value) {
-      params.set("query", value);
-    } else {
-      params.delete("query");
-    }
-    params.set("page", "1");
-    replace(`${pathname}?${params.toString()}`);
-  }, WAIT_BETWEEN_CHANGE);
-
-  const handleChangePage = (event: unknown, newPage: number) => {
-    setPage(newPage);
-    replace(createPageURL(newPage));
-  };
-
-  const handleChangeRowsPerPage = (
-    event: React.ChangeEvent<HTMLInputElement>
-  ) => {
-    if (parseInt(event.target.value, 10) < pageSize) {
-    }
-    replace(createRowsPerPageURL(parseInt(event.target.value, 10)));
-  };
-
-  const createPageURL = (page: number) => {
-    const params = new URLSearchParams(searchParams);
-    params.set("page", page.toString());
-    return `${pathname}?${params}`;
-  };
-
-  const createRowsPerPageURL = (rows: number) => {
-    const params = new URLSearchParams(searchParams);
-    params.set("rows", rows.toString());
-    return `${pathname}?${params}`;
-  };
-
   const visibleRows = React.useMemo(
-    () => rows.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage),
-    [rows, page, rowsPerPage]
+    () => rows.slice(page * ITEMS_X_PAGE, page * ITEMS_X_PAGE + ITEMS_X_PAGE),
+    [rows, page]
   );
 
   return (
@@ -168,19 +116,7 @@ export default function Table({
             ))}
           </TableBody>
         </MTable>
-      </TableContainer>
-      <Box justifyContent="flex-end" alignItems="flex-end" display="flex" sx={{mt: 2}}>
-        <Pagination page={currentPage} count={totalPages} variant="outlined" shape="rounded" onChange={handleChangePage}/>
-      </Box>
-      {/* <TablePagination
-        rowsPerPageOptions={[5, 10, 25]}
-        component="div"
-        count={totalPages * pageSize}
-        rowsPerPage={pageSize}
-        page={currentPage - 1}
-        onPageChange={handleChangePage}
-        onRowsPerPageChange={handleChangeRowsPerPage}
-      /> */}
+        </TableContainer>
     </React.Fragment>
   );
 }

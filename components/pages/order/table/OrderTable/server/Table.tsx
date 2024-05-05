@@ -2,10 +2,10 @@ import { getClient } from "@/config/apollo";
 import ClientOrderTable from "@/components/pages/order/table/OrderTable/client/Table";
 import { LOAD_ORDERS_QUERY } from "@/graphql/queries";
 import { Order } from "@/interfaces";
-import { usePathname } from "next/navigation";
-import { format } from "path";
-
-const ITEMS_X_PAGE = 5;
+import { ITEMS_X_PAGE } from "@/utils/consts";
+import React, { Suspense } from "react";
+import OrderTableSkeleton from "@/components/skeletons/order-table-skeleton";
+import Paginator from "@/components/navigation/paginator";
 
 const getData = async (
   input:
@@ -26,10 +26,6 @@ const getData = async (
   } catch (e: any) {
     console.log(e);
   }
-};
-
-const getTotalPages = async (rows: number) => {
-  return Math.ceil(rows / ITEMS_X_PAGE);
 };
 
 const getFilterOrders = (orders: Order[], query: string) =>
@@ -95,21 +91,27 @@ export default async function Table({
     data = response?.data.orders.edges;
     pageInfo = response?.data.orders.pageInfo;
   }
+  
   const totalOrders = data;
   const orders = query ? getFilterOrders(totalOrders, query) : totalOrders;
-  const startIndex = ITEMS_X_PAGE * (pageInfo.currentPage - 1);
-  // const pageItems = orders?.slice(startIndex, startIndex + ITEMS_X_PAGE);
-  // const pageItems = orders;
   const totalPages = pageInfo.totalPages;
 
   return (
     totalOrders && (
-      <ClientOrderTable
-        rows={orders}
-        totalPages={totalPages}
-        columns={columns}
-        currentPage={currentPage}
-      />
+      <React.Fragment>
+        <Suspense
+          fallback={<OrderTableSkeleton />}
+          key={query! + currentPage + totalOrders}
+        >
+          <ClientOrderTable
+            rows={orders}
+            totalPages={totalPages}
+            columns={columns}
+            currentPage={currentPage}
+          />
+        </Suspense>
+        <Paginator currentPage={currentPage} totalPages={totalPages} />
+      </React.Fragment>
     )
   );
 }

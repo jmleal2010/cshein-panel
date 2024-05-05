@@ -54,16 +54,12 @@ export default function OrdersPage({
         </Typography>
       </Box>
       <FilterForm />
-      <Suspense
-        fallback={<OrderTableSkeleton />}
-        key={query + currentPage + rows}
-      >
-        <Table
-          query={query}
-          currentPage={currentPage}
-          status={params.categoryId}
-        />
-      </Suspense>
+
+      <Table
+        query={query}
+        currentPage={currentPage}
+        status={params.categoryId}
+      />
     </Container>
   );
 }

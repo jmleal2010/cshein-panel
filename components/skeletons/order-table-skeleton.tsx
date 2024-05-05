@@ -6,7 +6,7 @@ const colCount = 3;
 export default function OrderTableSkeleton() {
   return (
  
-     <SkeletonTheme highlightColor="#fff">
+     <SkeletonTheme highlightColor="#000">
        <TableSkeleton colCount={colCount} rowsCount={rowsCount} />
      </SkeletonTheme>
   );

@@ -77,16 +77,6 @@ export default function Sidebar() {
         borderColor: "divider",
       }}
     >
-      {/* <GlobalStyles
-        styles={(theme) => ({
-          ':root': {
-            '--Sidebar-width': '220px',
-            [theme.breakpoints.up('lg')]: {
-              '--Sidebar-width': '240px',
-            },
-          },
-        })}
-      />*/}
       <Box
         className="Sidebar-overlay"
         sx={{
@@ -119,6 +109,7 @@ export default function Sidebar() {
         }}
       >
         <List
+          className="Sidebar-list"
           sx={{ width: "100%", maxWidth: 360, bgcolor: "background.paper" }}
           component="nav"
           aria-labelledby="nested-list-subheader"

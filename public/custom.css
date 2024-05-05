@@ -36,8 +36,14 @@
   height: 7px;
 }
 
-.Mui-selected {
+ul.MuiList-root .Mui-selected {
   border-radius: 12px;
+  background-color: #0369a1 !important;
+  color: white !important;
+  border: thin solid #0369a1 !important;  
+}
+
+.Mui-selected {
   background-color: #0369a1 !important;
   color: white !important;
 }
@@ -45,7 +51,7 @@
 .MuiListItemButton-root:hover,
 .MuiMenuItemButton-root,
 .MuiMenuItem-root,
-.MuiList-root .MuiButtonBase-root {
+.MuiList-root  .MuiButtonBase-root {
   border-radius: 12px !important;
 }
 
