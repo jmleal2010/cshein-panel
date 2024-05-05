@@ -3,11 +3,11 @@ import Container from "@mui/material/Container";
 import Typography from "@mui/material/Typography";
 import Box from "@mui/material/Box";
 import OrderTableSkeleton from "@/components/skeletons/order-table-skeleton";
-import OrderTable from "@/components/server/OrderTable";
+import Table from "@/components/pages/order/table/OrderTable/server/Table";
 import { Suspense } from "react";
 import { faClipboardList } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import TableInput from "@/components/client/table/TableInput";
+import FilterForm from "@/components/pages/order/table/FilterForm";
 
 export default function OrdersPage({
   params,
@@ -21,14 +21,14 @@ export default function OrdersPage({
     page?: string;
     rows?: string;
   };
-  }) {
-  //console.log(params, searchParams);  
+}) {
+  //console.log(params, searchParams);
   const currentPage = Number(searchParams?.page) || 1;
   const query = searchParams?.query || "";
   const pageTitle = `${params.categoryId
     ?.charAt(0)
     .toUpperCase()}${params.categoryId?.slice(1)}`;
-   const rows = searchParams?.rows || "10";  
+  const rows = searchParams?.rows || "10";
   const boxStyle = {
     my: 4,
     display: "flex",
@@ -53,16 +53,17 @@ export default function OrdersPage({
           </Typography>
         </Typography>
       </Box>
-      <TableInput/>
-      <Suspense fallback={<OrderTableSkeleton />} key={query + currentPage + rows}>
-        <OrderTable
+      <FilterForm />
+      <Suspense
+        fallback={<OrderTableSkeleton />}
+        key={query + currentPage + rows}
+      >
+        <Table
           query={query}
           currentPage={currentPage}
           status={params.categoryId}
-          pageSize = {rows}
         />
       </Suspense>
-      {/* <OrderList /> */}
     </Container>
   );
 }

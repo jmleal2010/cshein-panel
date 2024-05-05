@@ -6,17 +6,11 @@ import TableContainer from "@mui/material/TableContainer";
 import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
 import Paper from "@mui/material/Paper";
-import Link from "next/link";
-import Image from "next/image";
 import {
-  Box,
   Button,
-  IconButton,
-  TablePagination,
   Typography,
 } from "@mui/material";
 import moment from "moment";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 const TAX_RATE = 0.07;
 
@@ -39,7 +33,7 @@ interface Package {
   weight: number;
 }
 
-function subtotal(items: readonly Row[]) {
+function subtotal(items: readonly any[]) {
   return items.map(({ weight }) => weight).reduce((sum, i) => sum + i, 0);
 }
 
@@ -92,7 +86,7 @@ const getCategory = (category: string) => {
     case "REJECTED":
       return "error";
     default:
-      return "default";
+      return "POR DEFECTO";
   }
 };
 export default function PackageTable({ items }: { items: Package[] }) {

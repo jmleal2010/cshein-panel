@@ -1,7 +1,7 @@
 import { BeneficiaryType } from "@/interfaces";
 import { Avatar, Box, Divider, Grid, Paper, Typography } from "@mui/material";
 
-const CustomerInfo = ({ data, title }: { title: string, data: BeneficiaryType }) => {
+const CustomerInfo = ({ data, title, avatar }: { title: string, data: BeneficiaryType, avatar?: boolean }) => {
     console.log(data);
     return (
         <Paper sx={{ ml: 2, p: 2 }} elevation={0} style={{
@@ -18,7 +18,7 @@ const CustomerInfo = ({ data, title }: { title: string, data: BeneficiaryType })
             justifyContent: "flex-start",
           }}
         >
-          <Avatar src="/broken-image.jpg" />
+            {avatar && <Avatar src="/broken-image.jpg" />}
         </Box>
         <Box width={'100%'}>
           {Object.keys(data).map((key, index: number) => {

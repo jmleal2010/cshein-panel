@@ -1,19 +1,20 @@
 import { getClient } from "@/config/apollo";
-import ClientOrderTable from "../client/table/OrderTable";
+import ClientOrderTable from "@/components/pages/order/table/OrderTable/client/Table";
 import { LOAD_ORDERS_QUERY } from "@/graphql/queries";
 import { Order } from "@/interfaces";
 import { usePathname } from "next/navigation";
 import { format } from "path";
 
-const ITEMS_X_PAGE = 15;
+const ITEMS_X_PAGE = 5;
 
-const getData = async (input:
-  | {
-      page: number;
-      pageSize: number;
-      status: string;
-    }
-  | undefined
+const getData = async (
+  input:
+    | {
+        page: number;
+        pageSize: number;
+        status: string;
+      }
+    | undefined
 ) => {
   try {
     return await getClient().query({
@@ -71,26 +72,23 @@ const columns = [
   },
 ];
 
-export default async function OrderTable({
+export default async function Table({
   status,
   query,
   currentPage,
-  pageSize
 }: {
   status: string;
   query?: string;
   currentPage: number;
-  pageSize?: string;
-  }) {
-  
+}) {
   const input = {
     page: currentPage,
-    pageSize: pageSize ? parseInt(pageSize) : ITEMS_X_PAGE,
+    pageSize: ITEMS_X_PAGE,
     status: status === "pending" ? "PENDING" : "ACCEPTED",
   };
 
   const response = await getData(input);
-  // console.log(response);
+
   let data, pageInfo;
 
   if (response?.data) {
@@ -110,8 +108,7 @@ export default async function OrderTable({
         rows={orders}
         totalPages={totalPages}
         columns={columns}
-        pageSize={parseInt(pageSize || "10", 10)}
-        currentPage={currentPage} 
+        currentPage={currentPage}
       />
     )
   );

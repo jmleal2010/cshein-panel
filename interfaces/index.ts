@@ -22,6 +22,7 @@ export interface Order {
   id: string;
   arrivalAt: string;
   beneficiary: BeneficiaryType;
+  deliveryOrder: DeliveryOrder;
   code: string;
   createdAt: string;
   deliveryAt: string;
@@ -83,4 +84,14 @@ export interface Navigation {
   isOpen?: boolean;
   href: string;
   selected: boolean;
+}
+
+export interface DeliveryOrder {
+  code: string;
+  createdAt: string;
+  id: string;
+  order: Order;
+  packageType: string;
+  status: string;
+  updatedAt: string;
 }

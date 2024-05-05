@@ -4,7 +4,6 @@ export const LOAD_ORDERS_QUERY = gql`
   query Orders($input: OrderQueryInput) {
     orders(input: $input) {
       edges {
-        id
         addressId
         code
         createdAt
@@ -16,6 +15,7 @@ export const LOAD_ORDERS_QUERY = gql`
           firstName
           lastName
         }
+        id
       }
       pageInfo {
         currentPage
@@ -45,6 +45,7 @@ export const LOAD_ORDER_QUERY = gql`
         email
         firstName
         id
+        isDefault
         lastName
         phone
       }
@@ -71,6 +72,24 @@ export const LOAD_ORDER_QUERY = gql`
         lastName
         phone
         profilePicture
+      }
+      deliveryOrder {
+        code
+        status
+        updatedAt
+        packageType
+        id
+        order {
+          id
+        }
+        createdAt
+      }
+      pickupOrder {
+        code
+        createdAt
+        packageType
+        status
+        updatedAt
       }
     }
   }

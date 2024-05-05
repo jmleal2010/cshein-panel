@@ -1,13 +1,14 @@
+
 import { LOAD_ORDER_QUERY } from "@/graphql/queries";
 import * as React from "react";
 import Box from "@mui/material/Box";
-import { Button, Container, Grid, Paper, Typography } from "@mui/material";
+import { Button, Container, Grid, Paper, Step, StepContent, StepLabel, Stepper, Typography } from "@mui/material";
 import { getClient } from "@/config/apollo";
-import OrderTitle from "@/components/client/orderTitle";
-import SpanningTable from "@/components/client/table/SpanningTable";
-import CustomerInfo from "@/components/client/CustomerInfo";
+import SpanningTable from "@/components/pages/order/table/PackageTable";
+import CustomerInfo from "@/components/pages/order/CustomerInfo";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faClipboardList } from "@fortawesome/free-solid-svg-icons";
+import OrderHistory from "@/components/pages/order/OrderHistory";
 
 const activity = [
   { id: 1, type: "creada", date: "7d ago", dateTime: "2023-01-23T10:32" },
@@ -58,9 +59,6 @@ export default async function OrderId({
   const response = await getOrder(params);
   const order = response?.data.order || {};
 
-  console.log(order)
-  const persona = {};
-
   return (
     <Container sx={{ mt: 5 }} maxWidth="xl">
       <Grid container sx={{ gap: 2 }}>
@@ -98,26 +96,27 @@ export default async function OrderId({
         </Grid>
         <Grid xs={3}>
           <Paper elevation={0} className="cshein-card">
-            <CustomerInfo title="Información del cliente" data={order.beneficiary}></CustomerInfo>
-            <CustomerInfo title="Entrega" data={order.beneficiary}></CustomerInfo>
+            <CustomerInfo
+              avatar
+              title="Información del cliente"
+              data={order.beneficiary}
+            ></CustomerInfo>
+            {order.deliveryOrder && (
+              <CustomerInfo
+                title="Entrega"
+                data={order.deliveryOrder}
+              ></CustomerInfo>
+            )}
+            {order.deliveryOrder && (
+              <CustomerInfo
+                title="Recogida"
+                data={order.pickupOrder}
+              ></CustomerInfo>
+            )}
           </Paper>
         </Grid>
-        <Grid xs={8} sx={{ mt: 5 }}>
-          <Paper sx={{ p: 1 }}>
-            <Typography variant="h6">Historial</Typography>
-            <Container>
-              <Typography variant="subtitle2" gutterBottom>
-                arrival at
-              </Typography>
-              <Typography>1/1/1</Typography>
-            </Container>
-            <Container>
-              <Typography variant="subtitle2" gutterBottom>
-                delivery at
-              </Typography>
-              <Typography>2/2/2</Typography>
-            </Container>
-          </Paper>
+        <Grid xs={8}>
+          {order && <OrderHistory data={order} />}
         </Grid>
       </Grid>
     </Container>

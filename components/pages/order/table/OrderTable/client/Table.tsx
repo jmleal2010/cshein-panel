@@ -19,13 +19,15 @@ import {
   Box,
   Button,
   Paper,
-  Table,
+  Table as MTable,
   TableBody,
   TableCell,
   TableContainer,
   TableHead,
   TableRow,
   TextField,
+  Stack,
+  Pagination,
 } from "@mui/material";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import moment, { Moment } from "moment";
@@ -34,38 +36,33 @@ import { faEye } from "@fortawesome/free-solid-svg-icons";
 
 const WAIT_BETWEEN_CHANGE = 1000;
 
-export default function OrderTable({
+export default function Table({
   rows,
   totalPages,
   columns,
-  pageSize,
-  currentPage
+  currentPage,
 }: {
   rows: any;
   totalPages: number;
-    columns: any[];
-    pageSize: number; 
-    currentPage: number;
+  columns: any[];
+  currentPage: number;
 }) {
-  const [startDate, setStartDate] = React.useState<Moment | null>(moment());
-  const [endDate, setEndDate] = React.useState<Moment | null>(moment());
-  //const [query, setQuery] = React.useState<string>("");
+  /*States*/
   const [rowsPerPage, setRowsPerPage] = React.useState<number>(10);
   const [page, setPage] = React.useState<number>(0);
-  const [selected, setSelected] = React.useState<readonly string[]>([]);
+
+  /* Hooks */
   const searchParams = useSearchParams();
   const { replace } = useRouter();
   const pathname = usePathname();
-  //const currentPage = Number(searchParams.get("page")) || 1;
-
-  /*Hooks*/
   const router = useRouter();
+
   /*Functions*/
   const onViewOrder = (id: string) => {
     router.push(`${pathname}/${id}`);
   };
 
-  const handleSearch =  useDebouncedCallback((value: string) => {
+  const handleSearch = useDebouncedCallback((value: string) => {
     const params = new URLSearchParams(searchParams);
     if (value) {
       params.set("query", value);
@@ -76,19 +73,16 @@ export default function OrderTable({
     replace(`${pathname}?${params.toString()}`);
   }, WAIT_BETWEEN_CHANGE);
 
- 
-
-  const handleChangePage = (event: unknown, newPage: number) => { 
+  const handleChangePage = (event: unknown, newPage: number) => {
     setPage(newPage);
-    replace(createPageURL(newPage + 1));
+    replace(createPageURL(newPage));
   };
 
   const handleChangeRowsPerPage = (
     event: React.ChangeEvent<HTMLInputElement>
   ) => {
     if (parseInt(event.target.value, 10) < pageSize) {
-      
-    } 
+    }
     replace(createRowsPerPageURL(parseInt(event.target.value, 10)));
   };
 
@@ -97,6 +91,7 @@ export default function OrderTable({
     params.set("page", page.toString());
     return `${pathname}?${params}`;
   };
+
   const createRowsPerPageURL = (rows: number) => {
     const params = new URLSearchParams(searchParams);
     params.set("rows", rows.toString());
@@ -108,20 +103,20 @@ export default function OrderTable({
     [rows, page, rowsPerPage]
   );
 
-  const theme = useTheme();
-  const isLargeScreen = useMediaQuery(theme.breakpoints.up("md"));
-
-
   return (
     <React.Fragment>
       <TableContainer elevation={0} component={Paper} style={{ marginTop: 25 }}>
-        <Table sx={{ minWidth: 650 }} aria-label="order table" size="small">
+        <MTable sx={{ minWidth: 650 }} aria-label="order table" size="small">
           <TableHead>
             <TableRow>
               {columns.map((column, index) => (
-                <TableCell align="center" key={index} sx={{
-                  pb: 2,
-                }}>
+                <TableCell
+                  align="center"
+                  key={index}
+                  sx={{
+                    pb: 2,
+                  }}
+                >
                   <Typography
                     component="span"
                     fontWeight={700}
@@ -172,17 +167,20 @@ export default function OrderTable({
               </TableRow>
             ))}
           </TableBody>
-        </Table>
+        </MTable>
       </TableContainer>
-      <TablePagination
+      <Box justifyContent="flex-end" alignItems="flex-end" display="flex" sx={{mt: 2}}>
+        <Pagination page={currentPage} count={totalPages} variant="outlined" shape="rounded" onChange={handleChangePage}/>
+      </Box>
+      {/* <TablePagination
         rowsPerPageOptions={[5, 10, 25]}
-        component="div" 
-        count={(totalPages * pageSize)}
+        component="div"
+        count={totalPages * pageSize}
         rowsPerPage={pageSize}
         page={currentPage - 1}
         onPageChange={handleChangePage}
         onRowsPerPageChange={handleChangeRowsPerPage}
-      />
+      /> */}
     </React.Fragment>
   );
 }

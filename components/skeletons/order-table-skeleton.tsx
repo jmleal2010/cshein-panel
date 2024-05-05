@@ -5,10 +5,10 @@ const colCount = 3;
 
 export default function OrderTableSkeleton() {
   return (
-    <div>Hola</div>
-    // <SkeletonTheme highlightColor="#000">
-    //   <TableSkeleton colCount={colCount} rowsCount={rowsCount} />
-    // </SkeletonTheme>
+ 
+     <SkeletonTheme highlightColor="#fff">
+       <TableSkeleton colCount={colCount} rowsCount={rowsCount} />
+     </SkeletonTheme>
   );
 }
 
