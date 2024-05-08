@@ -1,6 +1,6 @@
 import { Navigation } from "@/interfaces"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faClipboardList, faHomeAlt } from "@fortawesome/free-solid-svg-icons";
+import { faClipboardList, faHomeAlt, faUser, faUsers} from "@fortawesome/free-solid-svg-icons";
 import { routes } from "./consts";
 
 export const navItems: Navigation[] = [
@@ -38,5 +38,14 @@ export const navItems: Navigation[] = [
     ],
     nested: true,
     href: '',
+  },
+  {
+    id: 3,
+    title: "Usuarios",
+    icon: faUsers,
+    iconSize:'lg',
+    nested: false,
+    href: routes.users,
+    selected: false,
   },
 ];
