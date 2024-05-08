@@ -21,10 +21,21 @@ import Link from "next/link";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { Navigation } from "@/interfaces";
 import { navItems } from "@/utils/data";
+import { usePathname } from "next/navigation";
+import Iconify from "../common/iconify";
 
 export default function Sidebar() {
+
+  /* State */
   const [navigation, setNavigation] = React.useState<Navigation[]>(navItems);
 
+  /* Hooks */
+  const pathname = usePathname();
+  
+  const pathSplit = pathname.split("/");
+  const path = pathSplit[pathSplit.length - 1];
+
+  /* Functions */
   const handleListItemClick = (item: Navigation) => {
     if (!item.nested) {
       item.selected = !item.nested;
@@ -55,18 +66,18 @@ export default function Sidebar() {
   };
 
   return (
-    <Paper
+    <Box
       className="Sidebar"
       sx={{
-        position: { xs: "fixed", md: "sticky" },
+        
         transform: {
           xs: "translateX(calc(100% * (var(--SideNavigation-slideIn, 0) - 1)))",
           md: "none",
         },
         transition: "transform 0.4s, width 0.4s",
         zIndex: 10000,
-        height: "100dvh",
-        width: "var(--Sidebar-width)",
+        
+        width: 300,
         top: 0,
         p: 2,
         flexShrink: 0,
@@ -114,7 +125,9 @@ export default function Sidebar() {
           component="nav"
           aria-labelledby="nested-list-subheader"
           subheader={
-            <ListSubheader component="div" id="nested-list-subheader">
+            <ListSubheader component="div" id="nested-list-subheader" sx={{
+              backgroundColor: "#fcfbfd",
+            }}>
               Cuba Joy
             </ListSubheader>
           }
@@ -125,13 +138,14 @@ export default function Sidebar() {
                 href={item.nested ? "#" : item.href}
                 LinkComponent={Link}
                 onClick={(e) => handleListItemClick(item)}
-                selected={item.selected}
+                selected={item.selected || item.slug?.includes(path)}
                 dense
                 sx={{
                   gap: 1,
+                  mt: 1,
                   "& .MuiListItemIcon-root": {
                     minWidth: 0,
-                    color: item.selected ? "white" : "",
+                    color: item.selected || item.slug?.includes(path)? "white" : "",
                   },
                 }}
               >
@@ -141,14 +155,7 @@ export default function Sidebar() {
                     alignSelf: "center",
                   }}
                 >
-                  <FontAwesomeIcon
-                    alignmentBaseline="central"
-                    icon={item.icon}
-                    style={{
-                      margin: "0 auto",
-                    }}
-                    size={item.icon && item.iconSize}
-                  />
+                 <Iconify icon={item.icon} color={item.selected || item.slug?.includes(path)? "white" : ""} width={24} height={24} />
                 </ListItemIcon>
 
                 <ListItemText primary={item.title} />
@@ -163,14 +170,15 @@ export default function Sidebar() {
                         key={i}
                         href={child.href}
                         onClick={(e) => handleListItemClick(child)}
-                        selected={child.selected}
+                        selected={child.selected  && child.slug?.includes(path)}
                         dense
                         sx={{
                           pl: 4,
                           pt: 0.5,
                           pb: 0.5,
                           mr: 2,
-                            mb:1
+                          mb: 0.5,
+                          mt: 0.5,
                         }}
                       >
                         {/* <ListItemIcon>
@@ -219,6 +227,6 @@ export default function Sidebar() {
           <LogoutRoundedIcon />
         </IconButton>
       </Box> */}
-    </Paper>
+    </Box>
   );
 }

@@ -7,7 +7,7 @@ import { useDebouncedCallback } from "use-debounce";
 import IconButton from "@mui/material/IconButton";
 import * as React from "react";
 import useMediaQuery from "@mui/material/useMediaQuery";
-import theme from "@/theme";
+import theme from "@/theme/theme";
 import {useTheme} from "@mui/material/styles";
 import moment, {Moment} from "moment/moment";
 
@@ -17,7 +17,7 @@ const FilterForm = () => {
     const [endDate, setEndDate] = React.useState<Moment | null>(moment());
 
     /* Consts */
-    const WAIT_BETWEEN_CHANGE = 1000;
+    const WAIT_BETWEEN_CHANGE = 500;
     const searchParams = useSearchParams()
 
     /* Hooks */

@@ -1,5 +1,5 @@
 
-import { LOAD_ORDER_QUERY } from "@/graphql/queries";
+import { LOAD_ORDER_QUERY } from "@/graphql/queries/order";
 import * as React from "react";
 import Box from "@mui/material/Box";
 import { Button, Container, Grid, Paper, Step, StepContent, StepLabel, Stepper, Typography } from "@mui/material";
@@ -7,7 +7,7 @@ import { getClient } from "@/config/apollo";
 import SpanningTable from "@/components/pages/order/table/PackageTable";
 import CustomerInfo from "@/components/pages/order/CustomerInfo";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faClipboardList } from "@fortawesome/free-solid-svg-icons";
+import { faCartShopping, faClipboardList } from "@fortawesome/free-solid-svg-icons";
 import OrderHistory from "@/components/pages/order/OrderHistory";
 
 const activity = [
@@ -70,7 +70,7 @@ export default async function OrderId({
               align="left"
               color="#6b7280"
             >
-              <FontAwesomeIcon icon={faClipboardList} /> Order
+              <FontAwesomeIcon icon={faCartShopping} /> Order
               <Typography
                 variant="h5"
                 component="span"
@@ -93,12 +93,15 @@ export default async function OrderId({
         </Grid>
         <Grid xs={8}>
           <SpanningTable items={order.packages}></SpanningTable>
+          <Box sx={{mt: 2}}>
+             {order && <OrderHistory data={order} />}
+          </Box>
         </Grid>
         <Grid xs={3}>
           <Paper elevation={0} className="cshein-card">
             <CustomerInfo
               avatar
-              title="Información del cliente"
+              title="Información del beneficiario"
               data={order.beneficiary}
             ></CustomerInfo>
             {order.deliveryOrder && (
@@ -114,9 +117,6 @@ export default async function OrderId({
               ></CustomerInfo>
             )}
           </Paper>
-        </Grid>
-        <Grid xs={8}>
-          {order && <OrderHistory data={order} />}
         </Grid>
       </Grid>
     </Container>

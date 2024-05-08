@@ -1,7 +1,7 @@
 import Skeleton, { SkeletonTheme } from "react-loading-skeleton";
 
-const rowsCount = 5;
-const colCount = 3;
+const rowsCount = 10;
+const colCount = 6;
 
 export default function OrderTableSkeleton() {
   return (

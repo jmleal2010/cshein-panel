@@ -1,6 +1,8 @@
 const DASHBOARD: string = "/dashboard";
 export const AUTH: string = "/auth";
 const ORDERS: string = "/orders";
+
+const NOTIFICATIONS: string = "/notifications";
 const USERS: string = "/users";
 
 export const AUTH_TOKEN: string = "AUTH_TOKEN";
@@ -12,9 +14,13 @@ export const routes = {
   register: `${AUTH}/register`,
   forgotPassword: `${AUTH}/forgot-password`,
   verificationCode: `${AUTH}/verification-code`,
-  users: USERS,
   orders: {
     pending: `${ORDERS}/pending`,
     completed: `${ORDERS}/completed`,
   },
+  users: {
+    drivers: `${USERS}/drivers`,
+    customers: `${USERS}/customers`,
+  },
+  notifications:  NOTIFICATIONS,
 };

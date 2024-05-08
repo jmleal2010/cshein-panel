@@ -3,8 +3,6 @@ import React from "react";
 import {
   Box,
   Button,
-  Container,
-  Grid,
   Paper,
   Step,
   StepContent,
@@ -20,8 +18,6 @@ import moment from "moment";
 const OrderHistory = ({data: order}: any) => {
   const [activeStep, setActiveStep] = React.useState(0);
 
-
-  console.log(order)
   const steps = [
   
     {
@@ -55,7 +51,7 @@ const OrderHistory = ({data: order}: any) => {
   };
 
   return (
-    <Box sx={{ maxWidth: 400 }} className="cshein-card">
+    <Paper sx={{ maxWidth: 400 }} className="cshein-card">
       <Stepper activeStep={1} orientation="vertical" >
         {steps.map((step, index) => (
           <Step key={step.label}>
@@ -82,7 +78,7 @@ const OrderHistory = ({data: order}: any) => {
           </Button>
         </Paper>
       )}
-    </Box>
+    </Paper>
   );
 };
 
