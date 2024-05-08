@@ -1,6 +1,7 @@
 "use client";
 import ErrorComponent from "@/components/common/error";
 import { routes } from "@/utils/consts";
+import { Typography } from "@mui/material";
 import { useRouter } from "next/navigation";
 import { useEffect } from "react";
 
@@ -32,6 +33,9 @@ export default function Error({
       <title> Error </title>
 
       <ErrorComponent error="500" onPress={(e) => onPressButton(e)} />
+      <Typography variant="h6" align="center">
+        {error.message}
+      </Typography>
     </>
   );
 }

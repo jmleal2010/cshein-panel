@@ -5,7 +5,7 @@ import {
   LOGIN_MUTATION,
   REGISTER_MUTATION,
   SEND_EMAIL_CONFIRMATION_MUTATION,
-} from "@/graphql/mutations";
+} from "@/graphql/mutations/auth";
 import { revalidatePath } from "next/cache";
 import * as z from "zod";
 import { AUTH_TOKEN, routes } from "@/utils/consts";
@@ -36,7 +36,7 @@ export async function loginUser(prevState: any, formData: FormData) {
   const { data } = parse;
 
   try {
-    console.log(data);  
+    console.log(data);
     const response: FetchResult<any> = await getClient().mutate({
       mutation: LOGIN_MUTATION,
       variables: {
@@ -51,12 +51,12 @@ export async function loginUser(prevState: any, formData: FormData) {
     if (response.data) {
       token = response.data.signInWithEmail.token;
       user = response.data.user
-    } 
-    
+    }
+
     cookieStore.set(AUTH_TOKEN, token);
 
   } catch (error: any) {
-    console.log(error); 
+    console.log(error);
     return {
       message: error.message,
     };

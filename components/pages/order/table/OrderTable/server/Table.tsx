@@ -1,6 +1,6 @@
 import { getClient } from "@/config/apollo";
 import ClientOrderTable from "@/components/pages/order/table/OrderTable/client/Table";
-import { LOAD_ORDERS_QUERY } from "@/graphql/queries";
+import { LOAD_ORDERS_QUERY } from "@/graphql/queries/order";
 import { Order } from "@/interfaces";
 import { ITEMS_X_PAGE } from "@/utils/consts";
 import React, { Suspense } from "react";
@@ -91,11 +91,13 @@ export default async function Table({
     data = response?.data.orders.edges;
     pageInfo = response?.data.orders.pageInfo;
   }
-  
+
   const totalOrders = data;
   const orders = query ? getFilterOrders(totalOrders, query) : totalOrders;
-  const totalPages = pageInfo.totalPages;
+  const queryLength = orders.length / ITEMS_X_PAGE  > 1 ? orders.length / ITEMS_X_PAGE : 1;
+  const totalPages = query ? queryLength : pageInfo.totalPages;
 
+  
   return (
     totalOrders && (
       <React.Fragment>

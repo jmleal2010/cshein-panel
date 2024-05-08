@@ -1,7 +1,7 @@
 import { gql } from "@apollo/client";
 
 export const LOAD_ORDERS_QUERY = gql`
-  query Orders($input: OrderQueryInput) {
+  query adminOrders($input: OrderQueryInput) {
   orders(input: $input) {
     edges {
       addressId
@@ -31,7 +31,7 @@ export const LOAD_ORDERS_QUERY = gql`
 `;
 
 export const LOAD_ORDER_QUERY = gql`
-  query Order($orderId: ID!) {
+  query adminOrder($orderId: ID!) {
     order(id: $orderId) {
       address {
         addressLine1

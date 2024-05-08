@@ -1,24 +1,29 @@
-import { Navigation } from "@/interfaces"
+import { Navigation } from "@/interfaces";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faClipboardList, faHomeAlt, faUsers } from "@fortawesome/free-solid-svg-icons";
+import {
+  faClipboardList,
+  faHomeAlt,
+  faUsers,
+} from "@fortawesome/free-solid-svg-icons";
 import { routes } from "./consts";
+import DeleteIcon from "@mui/icons-material/Delete";
 
 export const navItems: Navigation[] = [
   {
     id: 1,
     title: "Inicio",
-    icon: faHomeAlt,
-    iconSize:'lg',
+    icon: "mynaui:home",
+    iconSize: "lg",
     nested: false,
     href: routes.dashboard,
     selected: false,
-    slug: 'dashboard',
+    slug: "dashboard",
   },
   {
     id: 2,
     title: "Ordenes",
-    icon: faClipboardList,
-    iconSize: 'lg',
+    icon: "mynaui:clipboard",
+    iconSize: "lg",
     isOpen: false,
     selected: false,
     children: [
@@ -28,7 +33,7 @@ export const navItems: Navigation[] = [
         isOpen: false,
         href: routes.orders.pending,
         selected: false,
-        slug:"pending"
+        slug: "pending",
       },
       {
         id: 2.2,
@@ -36,39 +41,49 @@ export const navItems: Navigation[] = [
         isOpen: false,
         href: routes.orders.completed,
         selected: false,
-        slug: "completed"
+        slug: "completed",
       },
     ],
     nested: true,
-    href: '',
+    href: "",
   },
 
   {
     id: 3,
     title: "Usuarios",
-    icon: faUsers,
-    iconSize: 'lg',
+    icon: "mynaui:users-group",
+    iconSize: "lg",
     isOpen: false,
     selected: false,
     children: [
       {
         id: 3.1,
-        title: "Pendientes",
+        title: "Drivers",
         isOpen: false,
-        href: routes.orders.pending,
+        href: routes.users.drivers,
         selected: false,
-        slug:"pending"
+        slug: "pending",
       },
       {
         id: 3.2,
         title: "Ordenes completadas",
         isOpen: false,
-        href: routes.orders.completed,
+        href: routes.users.customers,
         selected: false,
-        slug: "completed"
+        slug: "completed",
       },
     ],
     nested: true,
-    href: '',
+    href: "",
+  },
+  {
+    id: 4,
+    title: "Notificaciones",
+    icon: "mynaui:bell",
+    iconSize: "lg",
+    nested: false,
+    href: routes.notifications,
+    selected: false,
+    slug: "notifications",
   },
 ];

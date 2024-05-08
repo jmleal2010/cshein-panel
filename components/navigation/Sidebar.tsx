@@ -22,6 +22,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { Navigation } from "@/interfaces";
 import { navItems } from "@/utils/data";
 import { usePathname } from "next/navigation";
+import Iconify from "../common/iconify";
 
 export default function Sidebar() {
 
@@ -65,18 +66,18 @@ export default function Sidebar() {
   };
 
   return (
-    <Paper
+    <Box
       className="Sidebar"
       sx={{
-        position: { xs: "fixed", md: "sticky" },
+        
         transform: {
           xs: "translateX(calc(100% * (var(--SideNavigation-slideIn, 0) - 1)))",
           md: "none",
         },
         transition: "transform 0.4s, width 0.4s",
         zIndex: 10000,
-        height: "100dvh",
-        width: "var(--Sidebar-width)",
+        
+        width: 300,
         top: 0,
         p: 2,
         flexShrink: 0,
@@ -124,7 +125,9 @@ export default function Sidebar() {
           component="nav"
           aria-labelledby="nested-list-subheader"
           subheader={
-            <ListSubheader component="div" id="nested-list-subheader">
+            <ListSubheader component="div" id="nested-list-subheader" sx={{
+              backgroundColor: "#fcfbfd",
+            }}>
               Cuba Joy
             </ListSubheader>
           }
@@ -152,14 +155,7 @@ export default function Sidebar() {
                     alignSelf: "center",
                   }}
                 >
-                  <FontAwesomeIcon
-                    alignmentBaseline="central"
-                    icon={item.icon}
-                    style={{
-                      margin: "0 auto",
-                    }}
-                    size={item.icon && item.iconSize}
-                  />
+                 <Iconify icon={item.icon} color={item.selected || item.slug?.includes(path)? "white" : ""} width={24} height={24} />
                 </ListItemIcon>
 
                 <ListItemText primary={item.title} />
@@ -231,6 +227,6 @@ export default function Sidebar() {
           <LogoutRoundedIcon />
         </IconButton>
       </Box> */}
-    </Paper>
+    </Box>
   );
 }

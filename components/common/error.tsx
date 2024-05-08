@@ -28,7 +28,7 @@ export default function ErrorComponent({ error, onPress }: { error: string, onPr
         break;
       case "500":
         img = Error500;
-        title = "Error interno del servidor";
+        title = "Error interno";
         description =
           "Lo sentimos, algo salió mal. Nuestro equipo técnico ha sido notificado y estamos trabajando para solucionar el problema.";
         break;

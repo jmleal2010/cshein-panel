@@ -51,7 +51,7 @@ const OrderHistory = ({data: order}: any) => {
   };
 
   return (
-    <Box sx={{ maxWidth: 400 }} className="cshein-card">
+    <Paper sx={{ maxWidth: 400 }} className="cshein-card">
       <Stepper activeStep={1} orientation="vertical" >
         {steps.map((step, index) => (
           <Step key={step.label}>
@@ -78,7 +78,7 @@ const OrderHistory = ({data: order}: any) => {
           </Button>
         </Paper>
       )}
-    </Box>
+    </Paper>
   );
 };
 

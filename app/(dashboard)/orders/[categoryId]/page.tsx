@@ -4,10 +4,8 @@ import Typography from "@mui/material/Typography";
 import Box from "@mui/material/Box";
 import OrderTableSkeleton from "@/components/skeletons/order-table-skeleton";
 import Table from "@/components/pages/order/table/OrderTable/server/Table";
-import { Suspense } from "react";
-import { faClipboardList } from "@fortawesome/free-solid-svg-icons";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import FilterForm from "@/components/pages/order/table/FilterForm";
+import Iconify from "@/components/common/iconify";
 
 export default function OrdersPage({
   params,
@@ -33,16 +31,22 @@ export default function OrdersPage({
     my: 4,
     display: "flex",
     flexDirection: "row",
-    justifyContent: "space-between",
+    justifyContent: "flex-start",
     alignItems: "center",
   };
 
   return (
     <Container maxWidth="xl">
       <Box sx={boxStyle}>
+        <Iconify icon="mynaui:clipboard" width={40} sx={{
+          color: "#6b7280",
+        }} />
         <Typography variant="h4" component="h1" align="left" color="#6b7280">
-          <FontAwesomeIcon icon={faClipboardList} /> Orders
-          <Typography
+         Orders
+         
+        </Typography>
+         
+         <Typography
             variant="h5"
             component="span"
             align="left"
@@ -51,7 +55,6 @@ export default function OrdersPage({
           >
             -{">"} {pageTitle}
           </Typography>
-        </Typography>
       </Box>
       <FilterForm />
 

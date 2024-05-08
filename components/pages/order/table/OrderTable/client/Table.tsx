@@ -25,7 +25,7 @@ export default function Table({
   rows,
   totalPages,
   columns,
-  currentPage
+  currentPage,
 }: {
   rows: any;
   totalPages: number;
@@ -53,7 +53,7 @@ export default function Table({
 
   return (
     <React.Fragment>
-      <TableContainer elevation={0} component={Paper} style={{ marginTop: 25 }}>
+      <TableContainer  component={Paper} style={{ marginTop: 25 }}>
         <MTable sx={{ minWidth: 650 }} aria-label="order table" size="small">
           <TableHead>
             <TableRow>
@@ -63,6 +63,7 @@ export default function Table({
                   key={index}
                   sx={{
                     pb: 2,
+                    pt:1
                   }}
                 >
                   <Typography

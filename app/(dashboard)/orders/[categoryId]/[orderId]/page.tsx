@@ -1,5 +1,5 @@
 
-import { LOAD_ORDER_QUERY } from "@/graphql/queries";
+import { LOAD_ORDER_QUERY } from "@/graphql/queries/order";
 import * as React from "react";
 import Box from "@mui/material/Box";
 import { Button, Container, Grid, Paper, Step, StepContent, StepLabel, Stepper, Typography } from "@mui/material";
@@ -93,6 +93,9 @@ export default async function OrderId({
         </Grid>
         <Grid xs={8}>
           <SpanningTable items={order.packages}></SpanningTable>
+          <Box sx={{mt: 2}}>
+             {order && <OrderHistory data={order} />}
+          </Box>
         </Grid>
         <Grid xs={3}>
           <Paper elevation={0} className="cshein-card">
@@ -114,9 +117,6 @@ export default async function OrderId({
               ></CustomerInfo>
             )}
           </Paper>
-        </Grid>
-        <Grid xs={8}>
-          {order && <OrderHistory data={order} />}
         </Grid>
       </Grid>
     </Container>

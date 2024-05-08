@@ -1,7 +1,6 @@
 "use client";
 import { useMutation } from "@apollo/client";
-import { VERIFICATION_CODE_MUTATION } from "@/graphql/mutations";
-import { NextRequest, NextResponse } from "next/server";
+import { VERIFICATION_CODE_MUTATION } from "@/graphql/mutations/auth";
 import { FormEvent, useEffect, useState } from "react";
 import axios from "axios";
 import { routes } from "@/utils/consts";
