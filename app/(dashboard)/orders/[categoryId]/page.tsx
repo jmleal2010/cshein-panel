@@ -8,6 +8,7 @@ import FilterForm from "@/components/pages/order/table/FilterForm";
 import Iconify from "@/components/common/iconify";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faEye } from "@fortawesome/free-solid-svg-icons";
+import VisibilityIcon from "@mui/icons-material/Visibility";
 
 
 const tableColumns = [
@@ -109,7 +110,7 @@ export default function OrdersPage({
         currentPage={currentPage}
         status={params.categoryId}
         columns={tableColumns}
-        icon={<FontAwesomeIcon size="xs" icon={faEye} />}
+        icon={VisibilityIcon} //<FontAwesomeIcon size="xs" icon={faEye} />
       />
     </Container>
   );

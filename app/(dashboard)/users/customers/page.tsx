@@ -60,7 +60,7 @@ export default function Page () {
           currentPage={currentPage}
           status={params.categoryId}
           columns={tableColumns}
-          icon = {EditIcon}
+         icon = {EditIcon}
         />
       </Container>
     );
