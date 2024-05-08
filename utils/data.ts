@@ -58,7 +58,7 @@ export const navItems: Navigation[] = [
     children: [
       {
         id: 3.1,
-        title: "Drivers",
+        title: "Personal",
         isOpen: false,
         href: routes.users.drivers,
         selected: false,
@@ -66,7 +66,7 @@ export const navItems: Navigation[] = [
       },
       {
         id: 3.2,
-        title: "Ordenes completadas",
+        title: "Clientes",
         isOpen: false,
         href: routes.users.customers,
         selected: false,

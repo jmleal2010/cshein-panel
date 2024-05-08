@@ -7,6 +7,41 @@ import Table from "@/components/pages/order/table/OrderTable/server/Table";
 import FilterForm from "@/components/pages/order/table/FilterForm";
 import Iconify from "@/components/common/iconify";
 
+const tableColumns = [
+  {
+    title: "Code",
+    field: "code",
+    type: "string",
+  },
+  {
+    title: "Service Type",
+    field: "serviceType",
+    type: "string",
+  },
+  {
+    title: "Status",
+    field: "status",
+    type: "string",
+  },
+  {
+    title: "Created At",
+    field: "createdAt",
+    type: "date",
+    format: "YYYY-MM-DD HH:mm:ss",
+  },
+  {
+    title: "Updated At",
+    field: "updatedAt",
+    type: "date",
+    format: "YYYY-MM-DD HH:mm:ss",
+  },
+  {
+    title: "Beneficiary",
+    field: "beneficiary.firstName",
+    type: "string",
+  },
+];
+
 export default function OrdersPage({
   params,
   searchParams,
@@ -38,30 +73,35 @@ export default function OrdersPage({
   return (
     <Container maxWidth="xl">
       <Box sx={boxStyle}>
-        <Iconify icon="mynaui:clipboard" width={40} sx={{
-          color: "#6b7280",
-        }} />
+        <Iconify
+          icon="mynaui:clipboard"
+          width={40}
+          sx={{
+            color: "#6b7280",
+          }}
+        />
         <Typography variant="h4" component="h1" align="left" color="#6b7280">
-         Orders
-         
+          Orders
         </Typography>
-         
-         <Typography
-            variant="h5"
-            component="span"
-            align="left"
-            color="#6b7280"
-            style={{ marginLeft: 4 }}
-          >
-            -{">"} {pageTitle}
-          </Typography>
+
+        <Typography
+          variant="h5"
+          component="span"
+          align="left"
+          color="#6b7280"
+          style={{ marginLeft: 4 }}
+        >
+          -{">"} {pageTitle}
+        </Typography>
       </Box>
-      <FilterForm />
+      <FilterForm placeholder="orden" />
 
       <Table
+        type="orders"
         query={query}
         currentPage={currentPage}
         status={params.categoryId}
+        columns={tableColumns}
       />
     </Container>
   );

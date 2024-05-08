@@ -4,6 +4,8 @@ import { ITEMS_X_PAGE, routes } from "@/utils/consts";
 import IconButton from "@mui/material/IconButton";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import Typography from "@mui/material/Typography";
+import CheckIcon from '@mui/icons-material/Check';
+import CloseIcon from '@mui/icons-material/Close';
 import {
   Button,
   Paper,
@@ -21,19 +23,23 @@ import { faEye } from "@fortawesome/free-solid-svg-icons";
 
 const WAIT_BETWEEN_CHANGE = 1000;
 
+
+
 export default function Table({
   rows,
   totalPages,
   columns,
   currentPage,
 }: {
-  rows: any;
+    rows: any;
   totalPages: number;
   columns: any[];
   currentPage: number;
 }) {
   /*States*/
   const [page, setPage] = React.useState<number>(0);
+
+  // console.log(rows);
 
   /* Hooks */
   const searchParams = useSearchParams();
@@ -46,10 +52,10 @@ export default function Table({
     router.push(`${pathname}/${id}`);
   };
 
-  const visibleRows = React.useMemo(
-    () => rows.slice(page * ITEMS_X_PAGE, page * ITEMS_X_PAGE + ITEMS_X_PAGE),
-    [rows, page]
-  );
+  // const visibleRows = React.useMemo(
+  //   () => rows.slice(page * ITEMS_X_PAGE, page * ITEMS_X_PAGE + ITEMS_X_PAGE),
+  //   [rows, page]
+  // );
 
   return (
     <React.Fragment>
@@ -80,7 +86,7 @@ export default function Table({
             </TableRow>
           </TableHead>
           <TableBody>
-            {visibleRows.map((row: any, index: number) => (
+            {rows.map((row: any, index: number) => (
               <TableRow
                 key={index}
                 sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
@@ -102,10 +108,9 @@ export default function Table({
                       column.field
                         .split(".")
                         .reduce((acc: any[], part: any) => acc[part], row)
+                    ) : column.type === "boolean" ? (
+                      (row[column.field]) ? <CheckIcon color="success"/> : <CloseIcon color="error"/>
                     ) : null}
-                    {/* {column.field
-                      .split(".")
-                      .reduce((acc: any[], part: any) => acc[part], row)} */}
                   </TableCell>
                 ))}
                 <TableCell align="center">

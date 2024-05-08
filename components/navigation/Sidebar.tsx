@@ -23,6 +23,7 @@ import { Navigation } from "@/interfaces";
 import { navItems } from "@/utils/data";
 import { usePathname } from "next/navigation";
 import Iconify from "../common/iconify";
+import { Typography } from "@mui/material";
 
 export default function Sidebar() {
 
@@ -66,28 +67,29 @@ export default function Sidebar() {
   };
 
   return (
-    <Box
-      className="Sidebar"
-      sx={{
+    <>
+    {/* // <Box
+    //   className="Sidebar"
+    //   sx={{
         
-        transform: {
-          xs: "translateX(calc(100% * (var(--SideNavigation-slideIn, 0) - 1)))",
-          md: "none",
-        },
-        transition: "transform 0.4s, width 0.4s",
-        zIndex: 10000,
+    //     transform: {
+    //       xs: "translateX(calc(100% * (var(--SideNavigation-slideIn, 0) - 1)))",
+    //       md: "none",
+    //     },
+    //     transition: "transform 0.4s, width 0.4s",
+    //     zIndex: 10000,
         
-        width: 300,
-        top: 0,
-        p: 2,
-        flexShrink: 0,
-        display: "flex",
-        flexDirection: "column",
-        gap: 2,
-        borderRight: "1px solid",
-        borderColor: "divider",
-      }}
-    >
+    //     width: 300,
+    //     top: 0,
+    //     p: 2,
+    //     flexShrink: 0,
+    //     display: "flex",
+    //     flexDirection: "column",
+    //     gap: 2,
+    //     borderRight: "1px solid",
+    //     borderColor: "divider",
+    //   }}
+    // > */}
       <Box
         className="Sidebar-overlay"
         sx={{
@@ -107,7 +109,7 @@ export default function Sidebar() {
         }}
         onClick={() => closeSidebar()}
       />
-      <Box
+      {/* <Box
         sx={{
           minHeight: 0,
           overflow: "hidden auto",
@@ -118,7 +120,7 @@ export default function Sidebar() {
             gap: 1.5,
           },
         }}
-      >
+      > */}
         <List
           className="Sidebar-list"
           sx={{ width: "100%", maxWidth: 360, bgcolor: "background.paper" }}
@@ -194,6 +196,10 @@ export default function Sidebar() {
           ))}
         </List>
 
+        <Typography variant="caption" sx={{ mt: "auto" }}>
+          © 2021 Cuba Joy. All rights reserved.
+          </Typography>
+
         <List
           component="ul"
           sx={{
@@ -211,7 +217,7 @@ export default function Sidebar() {
             </ListItemButton>
           </ListItem>
         </List>
-      </Box>
+      {/* </Box> */}
       <Divider />
       {/*  <Box sx={{ display: "flex", gap: 1, alignItems: "center" }}>
         <Avatar
@@ -227,6 +233,7 @@ export default function Sidebar() {
           <LogoutRoundedIcon />
         </IconButton>
       </Box> */}
-    </Box>
+      {/* </Box> */}
+    </>
   );
 }
