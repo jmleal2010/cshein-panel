@@ -9,7 +9,9 @@ import Iconify from "@/components/common/iconify";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faEye } from "@fortawesome/free-solid-svg-icons";
 import VisibilityIcon from "@mui/icons-material/Visibility";
-
+import { title } from "process";
+import { fi } from "@faker-js/faker";
+import { chain } from "lodash";
 
 const tableColumns = [
   {
@@ -46,9 +48,9 @@ const tableColumns = [
   },
 ];
 
- {
-   /* <FontAwesomeIcon size="xs" icon={faEye} /> */
- }
+{
+  /* <FontAwesomeIcon size="xs" icon={faEye} /> */
+}
 
 export default function OrdersPage({
   params,

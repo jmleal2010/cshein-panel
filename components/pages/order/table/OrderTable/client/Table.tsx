@@ -27,16 +27,17 @@ export default function Table({
   totalPages,
   columns,
   currentPage,
-  icon: IconComponent,
+  rowIcon: IconComponent,
 }: {
   rows: any;
   totalPages: number;
   columns: any[];
   currentPage: number;
-  icon: any;
+  rowIcon: any;
 }) {
   /*States*/
   const [page, setPage] = React.useState<number>(0);
+
 
   // console.log(rows);
 
