@@ -132,11 +132,12 @@ export default function Sidebar() {
             </ListSubheader>
           }
         >
-          {navigation.map((item: Navigation, index) => (
+          {navigation.map((item: Navigation, index) =>
+          (
             <React.Fragment key={index}>
               <ListItemButton
                 href={item.nested ? "#" : item.href}
-                LinkComponent={Link}
+                component={Link}
                 onClick={(e) => handleListItemClick(item)}
                 selected={item.selected || item.slug?.includes(path)}
                 dense

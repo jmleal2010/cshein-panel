@@ -45,7 +45,7 @@ export const navItems: Navigation[] = [
       },
     ],
     nested: true,
-    href: "",
+    href: "#",
   },
 
   {
@@ -74,7 +74,7 @@ export const navItems: Navigation[] = [
       },
     ],
     nested: true,
-    href: "",
+    href: "#",
   },
   {
     id: 4,
