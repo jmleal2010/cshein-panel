@@ -7,6 +7,7 @@ import React, { Suspense } from "react";
 import OrderTableSkeleton from "@/components/skeletons/order-table-skeleton";
 import Paginator from "@/components/navigation/paginator";
 import { create, update } from "lodash";
+import EditIcon from "@mui/icons-material/Edit";
 
 const getData = async (
   input:
@@ -78,12 +79,14 @@ export default async function Table({
   query,
   currentPage,
   columns,
+  icon,
 }: {
   type: string;
   status: string;
   query?: string;
   currentPage: number;
-  columns: any[];
+    columns: any[];
+    icon: any;
 }) {
   const input = {
     page: currentPage,
@@ -149,6 +152,7 @@ export default async function Table({
             totalPages={totalPages}
             columns={columns}
             currentPage={currentPage}
+            icon = {icon}
           />
         </Suspense>
         <Paginator currentPage={currentPage} totalPages={totalPages} />

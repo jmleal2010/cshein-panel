@@ -4,8 +4,8 @@ import { ITEMS_X_PAGE, routes } from "@/utils/consts";
 import IconButton from "@mui/material/IconButton";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import Typography from "@mui/material/Typography";
-import CheckIcon from '@mui/icons-material/Check';
-import CloseIcon from '@mui/icons-material/Close';
+import CheckIcon from "@mui/icons-material/Check";
+import CloseIcon from "@mui/icons-material/Close";
 import {
   Button,
   Paper,
@@ -19,22 +19,21 @@ import {
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import moment, { Moment } from "moment";
 import { height } from "@fortawesome/free-brands-svg-icons/fa42Group";
-import { faEye } from "@fortawesome/free-solid-svg-icons";
 
 const WAIT_BETWEEN_CHANGE = 1000;
-
-
 
 export default function Table({
   rows,
   totalPages,
   columns,
   currentPage,
+  icon: IconComponent,
 }: {
-    rows: any;
+  rows: any;
   totalPages: number;
   columns: any[];
   currentPage: number;
+  icon: any;
 }) {
   /*States*/
   const [page, setPage] = React.useState<number>(0);
@@ -59,7 +58,7 @@ export default function Table({
 
   return (
     <React.Fragment>
-      <TableContainer  component={Paper} style={{ marginTop: 25 }}>
+      <TableContainer component={Paper} style={{ marginTop: 25 }}>
         <MTable sx={{ minWidth: 650 }} aria-label="order table" size="small">
           <TableHead>
             <TableRow>
@@ -69,7 +68,7 @@ export default function Table({
                   key={index}
                   sx={{
                     pb: 2,
-                    pt:1
+                    pt: 1,
                   }}
                 >
                   <Typography
@@ -109,20 +108,24 @@ export default function Table({
                         .split(".")
                         .reduce((acc: any[], part: any) => acc[part], row)
                     ) : column.type === "boolean" ? (
-                      (row[column.field]) ? <CheckIcon color="success"/> : <CloseIcon color="error"/>
+                      row[column.field] ? (
+                        <CheckIcon color="success" />
+                      ) : (
+                        <CloseIcon color="error" />
+                      )
                     ) : null}
                   </TableCell>
                 ))}
                 <TableCell align="center">
                   <IconButton onClick={() => onViewOrder(row.id)}>
-                    <FontAwesomeIcon size="xs" icon={faEye} />
+                    <IconComponent />
                   </IconButton>
                 </TableCell>
               </TableRow>
             ))}
           </TableBody>
         </MTable>
-        </TableContainer>
+      </TableContainer>
     </React.Fragment>
   );
 }

@@ -6,6 +6,9 @@ import OrderTableSkeleton from "@/components/skeletons/order-table-skeleton";
 import Table from "@/components/pages/order/table/OrderTable/server/Table";
 import FilterForm from "@/components/pages/order/table/FilterForm";
 import Iconify from "@/components/common/iconify";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faEye } from "@fortawesome/free-solid-svg-icons";
+
 
 const tableColumns = [
   {
@@ -41,6 +44,10 @@ const tableColumns = [
     type: "string",
   },
 ];
+
+ {
+   /* <FontAwesomeIcon size="xs" icon={faEye} /> */
+ }
 
 export default function OrdersPage({
   params,
@@ -102,6 +109,7 @@ export default function OrdersPage({
         currentPage={currentPage}
         status={params.categoryId}
         columns={tableColumns}
+        icon={<FontAwesomeIcon size="xs" icon={faEye} />}
       />
     </Container>
   );

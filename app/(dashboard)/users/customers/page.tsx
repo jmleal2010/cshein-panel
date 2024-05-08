@@ -6,6 +6,7 @@ import MouseOverPopover from "@/components/pages/users/Popover";
 import { Box, List, Typography } from "@mui/material";
 import UserCard from "@/components/pages/users/UserCard";
 import UserModal from "@/components/pages/users/UserModal";
+import EditIcon from "@mui/icons-material/Edit";
 
 const tableColumns = [
   {
@@ -47,11 +48,11 @@ export default function Page () {
           <Typography variant="h4">Usuarios</Typography>
 
         </List>
-        <Box>
+        {/* <Box>
           <MouseOverPopover />
         </Box>
         <UserCard user={user} />
-        <UserModal/>
+        <UserModal/> */}
         <FilterForm placeholder="usuario" />
         <Table
           type="users"
@@ -59,6 +60,7 @@ export default function Page () {
           currentPage={currentPage}
           status={params.categoryId}
           columns={tableColumns}
+          icon = {EditIcon}
         />
       </Container>
     );
