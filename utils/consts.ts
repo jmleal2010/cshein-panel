@@ -1,6 +1,7 @@
 const DASHBOARD: string = "/dashboard";
 export const AUTH: string = "/auth";
 const ORDERS: string = "/orders";
+
 const NOTIFICATIONS: string = "/notifications";
 const USERS: string = "/users";
 
