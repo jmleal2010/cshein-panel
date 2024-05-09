@@ -2,7 +2,6 @@
 import * as React from "react";
 import TimeProvider from "@/components/common/layout/LocalizationProvider";
 import Box from "@mui/material/Box";
-import Sidebar from "@/components/navigation/Sidebar";
 import "@fontsource/roboto/300.css";
 import "@fontsource/roboto/400.css";
 import "@fontsource/roboto/500.css";
@@ -19,7 +18,6 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   const [openNav, setOpenNav] = React.useState(false);
-  const lgUp = useResponsive("up", "lg");
 
   return (
     <TimeProvider>

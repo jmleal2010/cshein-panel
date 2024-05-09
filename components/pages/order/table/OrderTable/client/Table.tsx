@@ -26,11 +26,10 @@ import {
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import moment, { Moment } from "moment";
 import { height } from "@fortawesome/free-brands-svg-icons/fa42Group";
-<<<<<<< HEAD
-=======
+
 import { faEye, faPencil } from "@fortawesome/free-solid-svg-icons";
 import { Visibility, VisibilityOff } from "@mui/icons-material";
->>>>>>> refs/heads/develop
+
 
 const WAIT_BETWEEN_CHANGE = 1000;
 
@@ -67,13 +66,8 @@ export default function Table({
     router.push(`${pathname}/${id}`);
   };
 
-<<<<<<< HEAD
-  // const visibleRows = React.useMemo(
-  //   () => rows.slice(page * ITEMS_X_PAGE, page * ITEMS_X_PAGE + ITEMS_X_PAGE),
-  //   [rows, page]
-  // );
-=======
-  const onOrderEdit = (id: string) => { 
+
+  const onOrderEdit = (id: string) => {
 
   }
 
@@ -81,7 +75,6 @@ export default function Table({
     () => rows.slice(page * ITEMS_X_PAGE, page * ITEMS_X_PAGE + ITEMS_X_PAGE),
     [rows, page]
   );
->>>>>>> refs/heads/develop
 
   const style = {
     position: "absolute" as "absolute",
@@ -103,7 +96,7 @@ export default function Table({
     showPassword: false,
   });
 
-  const handleChange = (event) => {
+  const handleChange = (event:any) => {
     setFormData({ ...formData, [event.target.name]: event.target.value });
   };
 
@@ -111,11 +104,11 @@ export default function Table({
     setFormData({ ...formData, showPassword: !formData.showPassword });
   };
 
-  const handleMouseDownPassword = (event) => {
+  const handleMouseDownPassword = (event: any) => {
     event.preventDefault();
   };
 
-  const handleSubmit = (event) => {
+  const handleSubmit = (event: any) => {
     event.preventDefault();
     // Aquí puedes manejar la lógica para enviar el formulario
     console.log(formData);
@@ -194,8 +187,6 @@ export default function Table({
           </TableBody>
         </MTable>
       </TableContainer>
-<<<<<<< HEAD
-=======
 
       <Modal
         open={open}
@@ -273,7 +264,6 @@ export default function Table({
           </form>
         </Box>
       </Modal>
->>>>>>> refs/heads/develop
     </React.Fragment>
   );
 }
