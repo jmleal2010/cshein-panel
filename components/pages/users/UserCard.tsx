@@ -15,37 +15,43 @@ const bull = (
   </Box>
 );
 
-
-
-export default function UserCard({ user }:
-    { user: { name: string; email: string; phone: string; verified: boolean } }
-) {
+export default function UserCard({
+  user,
+}: {
+  user?: { fullName: string; email: string; phone: string; verified: boolean };
+}) {
   return (
-    <Box sx={{ minWidth: 275, width: "max-content"}}>
-          <Card variant="outlined">
-              <React.Fragment>
-    <CardContent>
-      <Typography variant="h6" component="div">
-       Juan miguel perez
-      </Typography>
-      <Typography sx={{ fontSize: 14 }} color="text.secondary" gutterBottom>
-        juanmi@gmail.com
-      </Typography>
-      <Typography sx={{ mb: 1.5 }}>
-        1234566789
-      </Typography>
-      <Typography variant="body2">
-        verified
-      </Typography>
-    </CardContent>
-    <CardActions>
-      <Button size="small" color="error">
-        Borrar
-      </Button>
-      <Button size="small">Editar</Button>
-    </CardActions>
-  </React.Fragment>
-      </Card>
-    </Box>
+    
+      <Box >
+        <Card variant="outlined" sx={{width: "fit-content"}}>
+          <React.Fragment>
+            <CardContent sx={{ display: "flex", flexDirection: "column" }}>
+              <Typography variant="h6" component="div" >
+                {user?.fullName}
+              </Typography>
+              <Typography
+                
+                sx={{ fontSize: 14 }}
+                color="text.secondary"
+                gutterBottom
+              >
+                {user?.email}
+              </Typography>
+              <Typography  sx={{ mb: 1.5 }}>
+                {user?.phone}
+              </Typography>
+              <Typography   variant="body2">
+                {user?.verified ? "Verificado" : "No verificado"}
+              </Typography>
+            </CardContent>
+            <CardActions>
+              <Button size="small" color="error">
+                Borrar
+              </Button>
+              <Button size="small">Editar</Button>
+            </CardActions>
+          </React.Fragment>
+        </Card>
+      </Box>
   );
 }

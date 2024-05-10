@@ -22,6 +22,7 @@ import {
   OutlinedInput,
   InputAdornment,
   FormHelperText,
+  Popover,
 } from "@mui/material";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import moment, { Moment } from "moment";
@@ -29,9 +30,17 @@ import { height } from "@fortawesome/free-brands-svg-icons/fa42Group";
 
 import { faEye, faPencil } from "@fortawesome/free-solid-svg-icons";
 import { Visibility, VisibilityOff } from "@mui/icons-material";
-
+import UserCard from "@/components/pages/users/UserCard";
+import { set } from "lodash";
 
 const WAIT_BETWEEN_CHANGE = 1000;
+
+interface User {
+  fullName: string;
+  email: string;
+  phone: string;
+  verified: boolean;
+}
 
 export default function Table({
   rows,
@@ -39,19 +48,25 @@ export default function Table({
   columns,
   currentPage,
   rowIcon: IconComponent,
+  popover = false,
 }: {
   rows: any;
   totalPages: number;
   columns: any[];
   currentPage: number;
   rowIcon: any;
+  popover: boolean;
 }) {
   /*States*/
-  const [page, setPage] = React.useState<number>(0);
-   const [open, setOpen] = React.useState(false);
-   const handleOpen = () => setOpen(true);
-   const handleClose = () => setOpen(false);
-
+  const [open, setOpen] = React.useState(false);
+  const handleOpen = () => setOpen(true);
+  const handleClose = () => setOpen(false);
+  const [mousePosition, setMousePosition] = React.useState({ X: 0, Y: 0 });
+  const [anchorEl, setAnchorEl] = React.useState<HTMLElement | null>(null);
+  const [actualUser, setActualUser] = React.useState<User | undefined>(
+    undefined
+  );
+  const myDivRef = React.useRef(null);
 
   // console.log(rows);
 
@@ -66,15 +81,23 @@ export default function Table({
     router.push(`${pathname}/${id}`);
   };
 
+  const onOrderEdit = (id: string) => {};
 
-  const onOrderEdit = (id: string) => {
+  const handlePopoverOpen = (
+    event: React.MouseEvent<HTMLElement>,
+    row: any
+  ) => {
+    setAnchorEl(event.currentTarget);
+    setMousePosition({ X: event.clientX, Y: event.clientY });
+    setActualUser(row);
+    console.log(event.clientX, event.clientY);
+  };
 
-  }
+  const handlePopoverClose = () => {
+    setAnchorEl(null);
+  };
 
-  const visibleRows = React.useMemo(
-    () => rows.slice(page * ITEMS_X_PAGE, page * ITEMS_X_PAGE + ITEMS_X_PAGE),
-    [rows, page]
-  );
+  const popoverOpen = Boolean(anchorEl);
 
   const style = {
     position: "absolute" as "absolute",
@@ -96,7 +119,7 @@ export default function Table({
     showPassword: false,
   });
 
-  const handleChange = (event:any) => {
+  const handleChange = (event: any) => {
     setFormData({ ...formData, [event.target.name]: event.target.value });
   };
 
@@ -145,6 +168,7 @@ export default function Table({
           <TableBody>
             {rows.map((row: any, index: number) => (
               <TableRow
+                onMouseOver={(e) => handlePopoverOpen(e, row)}
                 key={index}
                 sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
               >
@@ -162,9 +186,17 @@ export default function Table({
                     ) : column.field === "status" ? (
                       <Button>{row[column.field]}</Button>
                     ) : column.type === "string" ? (
-                      column.field
-                        .split(".")
-                        .reduce((acc: any[], part: any) => acc[part], row)
+                      <Typography
+                        sx={{ color: "black", fontSize: "1em" }}
+                        aria-owns={
+                          popoverOpen ? "mouse-over-popover" : undefined
+                        }
+                        aria-haspopup="true"
+                      >
+                        {column.field
+                          .split(".")
+                          .reduce((acc: any[], part: any) => acc[part], row)}
+                      </Typography>
                     ) : column.type === "boolean" ? (
                       row[column.field] ? (
                         <CheckIcon color="success" />
@@ -264,6 +296,37 @@ export default function Table({
           </form>
         </Box>
       </Modal>
+      {popover && (
+        <Popover
+          id="mouse-over-popover"
+          sx={{
+            pointerEvents: "none",
+            position: "fixed", // Asegúrate de que el Popover esté posicionado de manera fija
+            left: mousePosition.X - 15, // Establece la posición horizontal basada en la coordenada X del mouse
+            top: mousePosition.Y - 19, // Establece la posición vertical basada en la coordenada Y del mouse
+            zIndex: 9999, // Asegúrate de que el Popover esté por encima de otros elementos
+          }}
+          open={popoverOpen}
+          anchorEl={myDivRef.current}
+          anchorOrigin={{
+            vertical: "bottom",
+            horizontal: "left",
+          }}
+          transformOrigin={{
+            vertical: "top",
+            horizontal: "left",
+          }}
+          onClose={handlePopoverClose}
+          disableRestoreFocus
+        >
+          <UserCard user={actualUser} />
+        </Popover>
+      )}
+
+      <div
+        ref={myDivRef}
+        style={{ position: "absolute", top: 0, left: 0 }}
+      ></div>
     </React.Fragment>
   );
 }
