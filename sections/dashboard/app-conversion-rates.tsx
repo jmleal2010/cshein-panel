@@ -1,5 +1,3 @@
-import PropTypes from 'prop-types';
-
 import Box from '@mui/material/Box';
 import Card from '@mui/material/Card';
 import CardHeader from '@mui/material/CardHeader';
@@ -9,18 +7,23 @@ import { fNumber } from '@/utils/format-number';
 import Chart, { useChart } from '@/components/chart';
 
 // ----------------------------------------------------------------------
+type AppConversionRatesProps = {
+  title: string;
+  subheader: string;
+  chart: object;
+};
 
-export default function AppConversionRates({ title, subheader, chart, ...other }) {
+export default function AppConversionRates({ title, subheader, chart, ...other }: AppConversionRatesProps & any) {
   const { colors, series, options } = chart;
 
-  const chartSeries = series.map((i) => i.value);
+  const chartSeries = series.map((i:any) => i.value);
 
   const chartOptions = useChart({
     colors,
     tooltip: {
       marker: { show: false },
       y: {
-        formatter: (value) => fNumber(value),
+        formatter: (value:number) => fNumber(value),
         title: {
           formatter: () => '',
         },
@@ -34,7 +37,7 @@ export default function AppConversionRates({ title, subheader, chart, ...other }
       },
     },
     xaxis: {
-      categories: series.map((i) => i.label),
+      categories: series.map((i: any) => i.label),
     },
     ...options,
   });
@@ -56,9 +59,3 @@ export default function AppConversionRates({ title, subheader, chart, ...other }
     </Card>
   );
 }
-
-AppConversionRates.propTypes = {
-  chart: PropTypes.object,
-  subheader: PropTypes.string,
-  title: PropTypes.string,
-};

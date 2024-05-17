@@ -23,12 +23,15 @@ import { navItems } from "@/utils/data";
 import { Navigation } from "@/interfaces";
 
 // ----------------------------------------------------------------------
+type NavProps = {
+  openNav: boolean;
+  onCloseNav: () => void;
+};
 
-export default function Nav({ openNav, onCloseNav }: any) {
-
+export default function Nav({ openNav, onCloseNav }: NavProps) {
   /* Hooks */
   const pathname = usePathname();
-  const upLg = useResponsive("up", "lg", 'xl');
+  const upLg = useResponsive("up", "lg", "xl");
 
   useEffect(() => {
     if (openNav) {
@@ -81,7 +84,7 @@ export default function Nav({ openNav, onCloseNav }: any) {
         },
       }}
     >
-     {/*  <Logo sx={{ mt: 3, ml: 4 }} /> */}
+      {/*  <Logo sx={{ mt: 3, ml: 4 }} /> */}
 
       {renderAccount}
 
@@ -134,12 +137,12 @@ Nav.propTypes = {
 
 // ----------------------------------------------------------------------
 
-function NavItem({ item }: {item: Navigation}) {
+function NavItem({ item }: { item: Navigation }) {
   /* State */
   const [navigation, setNavigation] = React.useState<Navigation[]>(navItems);
 
   /* Hooks */
-  const upLg = useResponsive("up", "lg", 'xl');
+  const upLg = useResponsive("up", "lg", "xl");
   const pathname = usePathname();
 
   const pathSplit = pathname.split("/");
@@ -186,7 +189,7 @@ function NavItem({ item }: {item: Navigation}) {
         dense
         sx={{
           minHeight: 44,
-          borderRadius: '12px',
+          borderRadius: "12px",
           typography: "body2",
           color: "text.secondary",
           textTransform: "capitalize",

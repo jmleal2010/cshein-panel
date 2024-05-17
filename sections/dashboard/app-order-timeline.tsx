@@ -13,8 +13,13 @@ import TimelineItem, { timelineItemClasses } from '@mui/lab/TimelineItem';
 import { fDateTime } from '@/utils/format-time';
 
 // ----------------------------------------------------------------------
+type AnalyticsOrderTimelineProps = {
+  title: string;
+  subheader: string;
+  list: object[];
+};
 
-export default function AnalyticsOrderTimeline({ title, subheader, list, ...other }) {
+export default function AnalyticsOrderTimeline({ title, subheader, list, ...other }: AnalyticsOrderTimelineProps & any) {
   return (
     <Card {...other}>
       <CardHeader title={title} subheader={subheader} />
@@ -29,7 +34,7 @@ export default function AnalyticsOrderTimeline({ title, subheader, list, ...othe
           },
         }}
       >
-        {list.map((item, index) => (
+        {list.map((item: any, index: number) => (
           <OrderItem key={item.id} item={item} lastTimeline={index === list.length - 1} />
         ))}
       </Timeline>
@@ -37,15 +42,14 @@ export default function AnalyticsOrderTimeline({ title, subheader, list, ...othe
   );
 }
 
-AnalyticsOrderTimeline.propTypes = {
-  list: PropTypes.array,
-  subheader: PropTypes.string,
-  title: PropTypes.string,
-};
 
 // ----------------------------------------------------------------------
+type OrderItemProps = {
+  item: object;
+  lastTimeline: boolean;
+};
 
-function OrderItem({ item, lastTimeline }) {
+function OrderItem({ item, lastTimeline }: OrderItemProps & any) {
   const { type, title, time } = item;
   return (
     <TimelineItem>
@@ -72,8 +76,3 @@ function OrderItem({ item, lastTimeline }) {
     </TimelineItem>
   );
 }
-
-OrderItem.propTypes = {
-  item: PropTypes.object,
-  lastTimeline: PropTypes.bool,
-};

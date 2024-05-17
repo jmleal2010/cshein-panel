@@ -1,13 +1,21 @@
-'use client';
+"use client";
 import PropTypes from "prop-types";
-import { forwardRef } from "react";
+import { Component, forwardRef } from "react";
 import { Icon } from "@iconify/react";
 
 import Box from "@mui/material/Box";
 
 // ----------------------------------------------------------------------
+type IconifyProps = {
+  icon: string;
+  width?: number;
+  sx?: object;
+};
 
-const Iconify = forwardRef(function Iconify({ icon, width = 20, sx, ...other }: any, ref) {
+const Iconify = forwardRef(function Iconify(
+  { icon, width = 20, sx, ...other }: IconifyProps & any,
+  ref
+) {
   return (
     <Box
       ref={ref}
@@ -19,11 +27,4 @@ const Iconify = forwardRef(function Iconify({ icon, width = 20, sx, ...other }: 
     />
   );
 });
-
-Iconify.propTypes = {
-  icon: PropTypes.oneOfType([PropTypes.element, PropTypes.string]),
-  sx: PropTypes.object,
-  width: PropTypes.number,
-};
-
 export default Iconify;

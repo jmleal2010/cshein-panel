@@ -1,14 +1,21 @@
 import PropTypes from 'prop-types';
 
 import Box from '@mui/material/Box';
-import Card from '@mui/material/Card';
 import Stack from '@mui/material/Stack';
 import Typography from '@mui/material/Typography';
 
 import { fShortenNumber } from '@/utils/format-number';
 import { Paper } from '@mui/material';
 
-export default function AppWidgetSummary({ title, total, icon, color = 'primary', sx, ...other }: any) {
+type AppWidgetSummaryProps = {
+  title: string;
+  total: number;
+  icon: React.ReactNode;
+  color?: 'inherit' | 'primary' | 'secondary' | 'info' | 'success' | 'warning' | 'error';
+  sx?: object;
+};
+
+export default function AppWidgetSummary({ title, total, icon, color = 'primary', sx, ...other }: AppWidgetSummaryProps & any) {
   return (
     <Paper
       elevation={0}
@@ -34,11 +41,3 @@ export default function AppWidgetSummary({ title, total, icon, color = 'primary'
     </Paper>
   );
 }
-
-AppWidgetSummary.propTypes = {
-  color: PropTypes.string,
-  icon: PropTypes.oneOfType([PropTypes.element, PropTypes.string]),
-  sx: PropTypes.object,
-  title: PropTypes.string,
-  total: PropTypes.number,
-};

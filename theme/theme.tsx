@@ -4,10 +4,11 @@ import { useMemo } from "react";
 import { palette } from "./palette";
 import { shadows } from "./shadows";
 import { customShadows } from "./custom-shadows";
-import { typography } from "./typography"; 
+import { typography } from "./typography";
 import CssBaseline from '@mui/material/CssBaseline';
 import { createTheme, ThemeProvider as MUIThemeProvider } from '@mui/material/styles';
 
+let theme: any
 export default function ThemeProvider({ children }: { children: React.ReactNode }) {
   const memoizedValue: any = useMemo(
     () => ({
@@ -21,7 +22,7 @@ export default function ThemeProvider({ children }: { children: React.ReactNode 
     []
   );
 
-  const theme = createTheme(memoizedValue);
+theme = createTheme(memoizedValue);
 
   return (
     <MUIThemeProvider theme={theme}>
@@ -31,12 +32,7 @@ export default function ThemeProvider({ children }: { children: React.ReactNode 
   )
 }
 
-const roboto = Roboto({
-  weight: ["300", "400", "500", "700"],
-  subsets: ["latin"],
-  display: "swap",
-});
-
+export { theme };
 
 const components = {
   components: {
@@ -70,7 +66,7 @@ const components = {
     },
     MuiAlert: {
       styleOverrides: {
-        root: ({ ownerState }) => ({
+        root: ({ ownerState }: any) => ({
           ...(ownerState.severity === "info" && {
             backgroundColor: "#60a5fa",
           }),

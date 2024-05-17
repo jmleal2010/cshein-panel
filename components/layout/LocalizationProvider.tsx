@@ -1,9 +1,13 @@
-'use client'
-import React from 'react'
+"use client";
+import React from "react";
 import { LocalizationProvider } from "@mui/x-date-pickers";
 import { AdapterMoment } from "@mui/x-date-pickers/AdapterMoment";
 
-export default function TimeProvider({children}: { children: React.ReactNode }) {
+type TimeProviderProps = {
+  children: React.ReactNode;
+};
+
+export default function TimeProvider({ children }: TimeProviderProps) {
   return (
     <LocalizationProvider dateAdapter={AdapterMoment}>
       {children}

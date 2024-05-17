@@ -5,20 +5,18 @@ const colCount = 6;
 
 export default function OrderTableSkeleton() {
   return (
- 
-     <SkeletonTheme highlightColor="#000">
-       <TableSkeleton colCount={colCount} rowsCount={rowsCount} />
-     </SkeletonTheme>
+    <SkeletonTheme highlightColor="#000">
+      <TableSkeleton colCount={colCount} rowsCount={rowsCount} />
+    </SkeletonTheme>
   );
 }
 
-const TableSkeleton = ({
-  colCount,
-  rowsCount,
-}: {
+type TableSkeletonProps = {
   colCount: number;
   rowsCount: number;
-}) => {
+};
+
+const TableSkeleton = ({ colCount, rowsCount }: TableSkeletonProps) => {
   const columns = Array.from({ length: colCount }, (_, i) => {
     return (
       <th key={i}>

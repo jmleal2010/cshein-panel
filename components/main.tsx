@@ -5,15 +5,14 @@ import { Box } from "@mui/material";
 import React from "react";
 import BreadcrumbsNav from "./navigation/Breadcrumbs";
 
-function Main({
-  children,
-  sx,
-  ...other
-}: {
+type MainProps = {
   children: React.ReactNode;
   sx?: any;
-}) {
-  const lgUp = useResponsive("up", "lg", 'xl');
+};
+
+function Main({ children, sx, ...other }: MainProps & any) {
+  const lgUp = useResponsive("up", "lg", "xl");
+  
   return (
     <Box
       component="main"

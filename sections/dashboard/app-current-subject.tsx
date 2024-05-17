@@ -1,5 +1,3 @@
-import PropTypes from 'prop-types';
-
 import Card from '@mui/material/Card';
 import CardHeader from '@mui/material/CardHeader';
 import { styled, useTheme } from '@mui/material/styles';
@@ -25,8 +23,13 @@ const StyledChart = styled(Chart)(({ theme }) => ({
 }));
 
 // ----------------------------------------------------------------------
+type AppCurrentSubjectProps = {
+  title: string;
+  subheader: string;
+  chart: object;
+};
 
-export default function AppCurrentSubject({ title, subheader, chart, ...other }) {
+export default function AppCurrentSubject({ title, subheader, chart, ...other }: AppCurrentSubjectProps & any) {
   const theme = useTheme();
 
   const { series, colors, categories, options } = chart;
@@ -70,9 +73,3 @@ export default function AppCurrentSubject({ title, subheader, chart, ...other })
     </Card>
   );
 }
-
-AppCurrentSubject.propTypes = {
-  chart: PropTypes.object,
-  subheader: PropTypes.string,
-  title: PropTypes.string,
-};

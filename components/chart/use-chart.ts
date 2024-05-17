@@ -1,13 +1,13 @@
 import merge from 'lodash/merge';
 
-import { alpha, useTheme } from '@mui/material/styles';
-
+import {alpha, Theme, useTheme} from '@mui/material/styles';
+import {theme as muiTheme} from '@/theme/theme';
 import { useResponsive } from '@/hooks/use-responsive';
 
 // ----------------------------------------------------------------------
 
 export default function useChart(options: any) {
-  const theme = useTheme();
+  const theme:Theme = useTheme();
 
   const smUp = useResponsive('up', 'sm', 'xl');
 
@@ -31,15 +31,15 @@ export default function useChart(options: any) {
   const baseOptions = {
     // Colors
     colors: [
-      theme.palette.primary.main,
-      theme.palette.warning.main,
-      theme.palette.info.main,
-      theme.palette.error.main,
-      theme.palette.success.main,
-      theme.palette.warning.dark,
-      theme.palette.success.darker,
-      theme.palette.info.dark,
-      theme.palette.info.darker,
+      muiTheme.palette.primary.main,
+      muiTheme.palette.warning.main,
+      muiTheme.palette.info.main,
+      muiTheme.palette.error.main,
+      muiTheme.palette.success.main,
+      muiTheme.palette.warning.dark,
+      muiTheme.palette.success.darker,
+      muiTheme.palette.info.dark,
+      muiTheme.palette.info.darker,
     ],
 
     // Chart

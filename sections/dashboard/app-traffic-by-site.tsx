@@ -9,8 +9,13 @@ import CardHeader from '@mui/material/CardHeader';
 import { fShortenNumber } from '@/utils/format-number';
 
 // ----------------------------------------------------------------------
+type AppTrafficBySiteProps = {
+  title: string;
+  subheader: string;
+  list: object[];
+};
 
-export default function AppTrafficBySite({ title, subheader, list, ...other }) {
+export default function AppTrafficBySite({ title, subheader, list, ...other }: any) {
   return (
     <Card {...other}>
       <CardHeader title={title} subheader={subheader} />
@@ -23,7 +28,7 @@ export default function AppTrafficBySite({ title, subheader, list, ...other }) {
           gridTemplateColumns: 'repeat(2, 1fr)',
         }}
       >
-        {list.map((site) => (
+        {list.map((site: any) => (
           <Paper
             key={site.name}
             variant="outlined"
@@ -42,9 +47,3 @@ export default function AppTrafficBySite({ title, subheader, list, ...other }) {
     </Card>
   );
 }
-
-AppTrafficBySite.propTypes = {
-  title: PropTypes.string,
-  subheader: PropTypes.string,
-  list: PropTypes.array.isRequired,
-};

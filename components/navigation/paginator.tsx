@@ -5,13 +5,12 @@ import { usePathname, useRouter, useSearchParams } from "next/navigation";
 
 const options = [5, 10, 15, 20];
 
-export default function Paginator({
-  currentPage,
-  totalPages,
-}: {
+type PaginatorProps = {
   currentPage: number;
   totalPages: number;
-}) {
+};
+
+export default function Paginator({ currentPage, totalPages }: PaginatorProps) {
   const [page, setPage] = React.useState<number>(0);
 
   /* Hooks */

@@ -1,5 +1,3 @@
-import PropTypes from "prop-types";
-
 import Box from "@mui/material/Box";
 import Link from "@mui/material/Link";
 import Card from "@mui/material/Card";
@@ -15,13 +13,17 @@ import Iconify from "@/components/common/iconify";
 import Scrollbar from "@/components/scrollbar/scrollbar";
 
 // ----------------------------------------------------------------------
-
+type AppNewsUpdateProps = {
+  title: string;
+  subheader: string;
+  list: object[];
+};
 export default function AppNewsUpdate({
   title,
   subheader,
   list,
   ...other
-}: any) {
+}: AppNewsUpdateProps & any) {
   return (
     <Card {...other} elevation={0}>
       <CardHeader title={title} subheader={subheader} />
@@ -48,15 +50,11 @@ export default function AppNewsUpdate({
   );
 }
 
-AppNewsUpdate.propTypes = {
-  title: PropTypes.string,
-  subheader: PropTypes.string,
-  list: PropTypes.array.isRequired,
-};
-
 // ----------------------------------------------------------------------
-
-function NewsItem({ news }: any) {
+type NewsItemProps = {
+  news: object;
+};
+function NewsItem({ news }: NewsItemProps & any) {
   const { image, title, description, postedAt } = news;
 
   return (
@@ -87,12 +85,3 @@ function NewsItem({ news }: any) {
     </Stack>
   );
 }
-
-NewsItem.propTypes = {
-  news: PropTypes.shape({
-    image: PropTypes.string,
-    title: PropTypes.string,
-    description: PropTypes.string,
-    postedAt: PropTypes.instanceOf(Date),
-  }),
-};
