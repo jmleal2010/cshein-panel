@@ -3,7 +3,7 @@ import { useState } from 'react';
 import Slide from '@mui/material/Slide';
 import Input from '@mui/material/Input';
 import Button from '@mui/material/Button';
-import { styled } from '@mui/material/styles';
+import { Theme, styled } from '@mui/material/styles';
 import IconButton from '@mui/material/IconButton';
 import InputAdornment from '@mui/material/InputAdornment';
 import ClickAwayListener from '@mui/material/ClickAwayListener';
@@ -17,7 +17,7 @@ import Iconify from '@/components/common/iconify';
 const HEADER_MOBILE = 64;
 const HEADER_DESKTOP = 92;
 
-const StyledSearchbar = styled('div')(({ theme }) => ({
+const StyledSearchbar = styled('div')(({ theme }: any) => ({
   ...bgBlur({
     color: theme.palette.background.default,
   }),

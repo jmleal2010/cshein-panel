@@ -21,7 +21,8 @@ import ListItemButton from '@mui/material/ListItemButton';
 import { fToNow } from '@/utils/format-time';
 
 import Iconify from '@/components/common/iconify';
-import Scrollbar from '@/components/common/scrollbar/scrollbar';
+import Scrollbar from '@/components/scrollbar/scrollbar';
+import Image from 'next/image';
 
 // ----------------------------------------------------------------------
 
@@ -80,7 +81,7 @@ export default function NotificationsPopover() {
 
   const [open, setOpen] = useState(null);
 
-  const handleOpen = (event) => {
+  const handleOpen = (event: any) => {
     setOpen(event.currentTarget);
   };
 
@@ -192,7 +193,7 @@ NotificationItem.propTypes = {
   }),
 };
 
-function NotificationItem({ notification }) {
+function NotificationItem({ notification }: any) {
   const { avatar, title } = renderContent(notification);
 
   return (
@@ -232,7 +233,7 @@ function NotificationItem({ notification }) {
 
 // ----------------------------------------------------------------------
 
-function renderContent(notification) {
+function renderContent(notification: any) {
   const title = (
     <Typography variant="subtitle2">
       {notification.title}
@@ -244,30 +245,65 @@ function renderContent(notification) {
 
   if (notification.type === 'order_placed') {
     return {
-      avatar: <img alt={notification.title} src="/assets/icons/ic_notification_package.svg" />,
+      avatar: (
+        <Image
+          width={32}
+          height={32}
+          alt={notification.title}
+          src="/assets/icons/ic_notification_package.svg"
+        />
+      ),
       title,
     };
   }
   if (notification.type === 'order_shipped') {
     return {
-      avatar: <img alt={notification.title} src="/assets/icons/ic_notification_shipping.svg" />,
+      avatar: (
+        <Image
+          width={32}
+          height={32}
+          alt={notification.title}
+          src="/assets/icons/ic_notification_shipping.svg"
+        />
+      ),
       title,
     };
   }
   if (notification.type === 'mail') {
     return {
-      avatar: <img alt={notification.title} src="/assets/icons/ic_notification_mail.svg" />,
+      avatar: (
+        <Image
+          width={32}
+          height={32}
+          alt={notification.title}
+          src="/assets/icons/ic_notification_mail.svg"
+        />
+      ),
       title,
     };
   }
   if (notification.type === 'chat_message') {
     return {
-      avatar: <img alt={notification.title} src="/assets/icons/ic_notification_chat.svg" />,
+      avatar: (
+        <Image
+          width={32}
+          height={32}
+          alt={notification.title}
+          src="/assets/icons/ic_notification_chat.svg"
+        />
+      ),
       title,
     };
   }
   return {
-    avatar: notification.avatar ? <img alt={notification.title} src={notification.avatar} /> : null,
+    avatar: notification.avatar ? (
+      <Image
+        width={32}
+        height={32}
+        alt={notification.title}
+        src={notification.avatar}
+      />
+    ) : null,
     title,
   };
 }

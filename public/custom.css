@@ -9,6 +9,7 @@
     rgba(145, 158, 171, 0.12) 0 12px 24px -4px !important;
   border-radius: 16px !important;
   z-index: 0 !important;
+  padding: 16px !important;
 }
 
 .cshein-avatar {

@@ -1,5 +1,4 @@
 "use client";
-import { routes } from "@/utils/consts";
 import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
 import Container from "@mui/material/Container";
@@ -9,7 +8,7 @@ import { useEffect } from "react";
 import Error403 from "@/public/assets/svg/error403.svg";
 import Error404 from "@/public/assets/svg/error404.svg";
 import Error500 from "@/public/assets/svg/error500.svg";
-import Image from "next/image";
+
 
 export default function ErrorComponent({ error, onPress }: { error: string, onPress:(error: string)=>void }) {
   useEffect(() => {

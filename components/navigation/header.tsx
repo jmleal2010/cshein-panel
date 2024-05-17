@@ -6,13 +6,9 @@ import AppBar from '@mui/material/AppBar';
 import Toolbar from '@mui/material/Toolbar';
 import { useTheme } from '@mui/material/styles';
 import IconButton from '@mui/material/IconButton';
-
 import { useResponsive } from '@/hooks/use-responsive';
-
 import { bgBlur } from '@/theme/css';
-
 import Iconify from '@/components/common/iconify';
-
 import Searchbar from '@/components/common/searchbar';
 import AccountPopover from '@/components/common/account-popover';
 import LanguagePopover from '@/components/common/language-popover';
@@ -21,10 +17,10 @@ import { HEADER, NAV } from '@/utils/consts';
 import { useEffect, useRef } from 'react';
 // ----------------------------------------------------------------------
 
-export default function Header({ onOpenNav }) {
+export default function Header({ onOpenNav }: {onOpenNav: () => void}) {
   const theme = useTheme();
-  const navRef = useRef(null);
-  const lgUp = useResponsive('up', 'lg');
+  const navRef: any = useRef<HTMLElement | null>(null);
+  const lgUp = useResponsive('up', 'lg', 'xl');
 
   useEffect(() => {
     navRef.current.classList.remove('MuiPaper-root')

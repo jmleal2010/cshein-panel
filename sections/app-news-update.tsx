@@ -1,35 +1,41 @@
-import PropTypes from 'prop-types';
+import PropTypes from "prop-types";
 
-import Box from '@mui/material/Box';
-import Link from '@mui/material/Link';
-import Card from '@mui/material/Card';
-import Stack from '@mui/material/Stack';
-import Button from '@mui/material/Button';
-import Divider from '@mui/material/Divider';
-import Typography from '@mui/material/Typography';
-import CardHeader from '@mui/material/CardHeader';
+import Box from "@mui/material/Box";
+import Link from "@mui/material/Link";
+import Card from "@mui/material/Card";
+import Stack from "@mui/material/Stack";
+import Button from "@mui/material/Button";
+import Divider from "@mui/material/Divider";
+import Typography from "@mui/material/Typography";
+import CardHeader from "@mui/material/CardHeader";
 
-import { fToNow } from '@/utils/format-time';
+import { fToNow } from "@/utils/format-time";
 
-import Iconify from '@/components/common/iconify';
-import Scrollbar from '@/components/common/scrollbar/scrollbar';
+import Iconify from "@/components/common/iconify";
+import Scrollbar from "@/components/scrollbar/scrollbar";
 
 // ----------------------------------------------------------------------
 
-export default function AppNewsUpdate({ title, subheader, list, ...other }: any) {
+export default function AppNewsUpdate({
+  title,
+  subheader,
+  list,
+  ...other
+}: any) {
   return (
     <Card {...other} elevation={0}>
       <CardHeader title={title} subheader={subheader} />
-
+      <Scrollbar>
         <Stack spacing={3} sx={{ p: 3, pr: 0 }}>
           {list.map((news: any) => (
             <NewsItem key={news.id} news={news} />
           ))}
         </Stack>
+      </Scrollbar>
 
-      <Divider sx={{ borderStyle: 'dashed' }} />
+      <Divider sx={{ borderStyle: "dashed" }} />
 
-      <Box sx={{ p: 2, textAlign: 'right' }}>
+      <Box sx={{ p: 2, textAlign: "right" }}>
         <Button
           size="small"
           color="inherit"
@@ -67,12 +73,15 @@ function NewsItem({ news }: any) {
           {title}
         </Link>
 
-        <Typography variant="body2" sx={{ color: 'text.secondary' }} noWrap>
+        <Typography variant="body2" sx={{ color: "text.secondary" }} noWrap>
           {description}
         </Typography>
       </Box>
 
-      <Typography variant="caption" sx={{ pr: 3, flexShrink: 0, color: 'text.secondary' }}>
+      <Typography
+        variant="caption"
+        sx={{ pr: 3, flexShrink: 0, color: "text.secondary" }}
+      >
         {fToNow(postedAt)}
       </Typography>
     </Stack>

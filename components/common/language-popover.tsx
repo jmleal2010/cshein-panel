@@ -4,6 +4,7 @@ import Box from '@mui/material/Box';
 import Popover from '@mui/material/Popover';
 import MenuItem from '@mui/material/MenuItem';
 import IconButton from '@mui/material/IconButton';
+import Image from 'next/image';
 
 // ----------------------------------------------------------------------
 
@@ -30,7 +31,7 @@ const LANGS = [
 export default function LanguagePopover() {
   const [open, setOpen] = useState(null);
 
-  const handleOpen = (event) => {
+  const handleOpen = (event: any) => {
     setOpen(event.currentTarget);
   };
 
@@ -45,12 +46,10 @@ export default function LanguagePopover() {
         sx={{
           width: 40,
           height: 40,
-          ...(open && {
-            bgcolor: 'action.selected',
-          }),
+          bgcolor: open ? 'action.selected' : undefined,
         }}
       >
-        <img src={LANGS[0].icon} alt={LANGS[0].label} />
+        <Image src={LANGS[0].icon} alt={LANGS[0].label} width={24} height={24} />
       </IconButton>
 
       <Popover

@@ -6,10 +6,10 @@ import { useResponsive } from '@/hooks/use-responsive';
 
 // ----------------------------------------------------------------------
 
-export default function useChart(options) {
+export default function useChart(options: any) {
   const theme = useTheme();
 
-  const smUp = useResponsive('up', 'sm');
+  const smUp = useResponsive('up', 'sm', 'xl');
 
   const LABEL_TOTAL = {
     show: true,

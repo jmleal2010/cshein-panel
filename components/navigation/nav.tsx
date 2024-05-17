@@ -10,13 +10,9 @@ import Avatar from "@mui/material/Avatar";
 import { alpha } from "@mui/material/styles";
 import Typography from "@mui/material/Typography";
 import ListItemButton from "@mui/material/ListItemButton";
-
 import { useResponsive } from "@/hooks/use-responsive";
-
 import { account } from "@/_mock/account";
-
-import Logo from "@/components/common/logo";
-import Scrollbar from "@/components/common/scrollbar/scrollbar";
+import Scrollbar from "@/components/scrollbar/scrollbar";
 import { NAV } from "@/utils/consts";
 import { usePathname } from "next/navigation";
 import Link from "next/link";
@@ -29,11 +25,11 @@ import { Navigation } from "@/interfaces";
 // ----------------------------------------------------------------------
 
 export default function Nav({ openNav, onCloseNav }: any) {
-  
+
   /* Hooks */
   const pathname = usePathname();
   const upLg = useResponsive("up", "lg", 'xl');
-  
+
   useEffect(() => {
     if (openNav) {
       onCloseNav();
@@ -73,7 +69,7 @@ export default function Nav({ openNav, onCloseNav }: any) {
       ))}
     </Stack>
   );
-  
+
   const renderContent = (
     <Scrollbar
       sx={{
@@ -145,7 +141,7 @@ function NavItem({ item }: {item: Navigation}) {
   /* Hooks */
   const upLg = useResponsive("up", "lg", 'xl');
   const pathname = usePathname();
-  
+
   const pathSplit = pathname.split("/");
   const path = pathSplit[pathSplit.length - 1];
   const active = item.selected || item.slug?.includes(path);
