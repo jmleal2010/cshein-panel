@@ -3,14 +3,14 @@ import { useResponsive } from "@/hooks/use-responsive";
 import { HEADER, NAV, SPACING } from "@/utils/consts";
 import { Box } from "@mui/material";
 import React from "react";
-import BreadcrumbsNav from "./navigation/Breadcrumbs";
+import { BreadcrumbsNav } from "@/components/navigation";
 
 type MainProps = {
   children: React.ReactNode;
   sx?: any;
 };
 
-function Main({ children, sx, ...other }: MainProps & any) {
+export function Main({ children, sx, ...other }: MainProps & any) {
   const lgUp = useResponsive("up", "lg", "xl");
   
   return (
@@ -37,4 +37,3 @@ function Main({ children, sx, ...other }: MainProps & any) {
   );
 }
 
-export default Main;

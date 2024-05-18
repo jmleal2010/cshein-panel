@@ -1,5 +1,5 @@
+'use client'
 import { useState } from "react";
-
 import Box from "@mui/material/Box";
 import Avatar from "@mui/material/Avatar";
 import Divider from "@mui/material/Divider";
@@ -30,7 +30,7 @@ const MENU_OPTIONS = [
 
 // ----------------------------------------------------------------------
 
-export default function AccountPopover() {
+export function AccountPopover() {
   const [open, setOpen] = useState(null);
 
   const handleOpen = (event: any): void => {

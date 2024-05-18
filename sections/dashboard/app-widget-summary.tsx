@@ -15,7 +15,7 @@ type AppWidgetSummaryProps = {
   sx?: object;
 };
 
-export default function AppWidgetSummary({ title, total, icon, color = 'primary', sx, ...other }: AppWidgetSummaryProps & any) {
+export function AppWidgetSummary({ title, total, icon, color = 'primary', sx, ...other }: AppWidgetSummaryProps & any) {
   return (
     <Paper
       elevation={0}

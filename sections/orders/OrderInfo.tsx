@@ -3,7 +3,6 @@ import { BeneficiaryType } from "@/interfaces";
 import { updateOrder } from "@/lib/actions/order";
 import { faPencil } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { Search } from "@mui/icons-material";
 import {
   Alert,
   AlertTitle,
@@ -13,16 +12,14 @@ import {
   FormControl,
   Grid,
   IconButton,
-  InputAdornment,
   InputLabel,
   OutlinedInput,
-  Paper,
   Typography,
 } from "@mui/material";
 import React from "react";
 import { useFormState } from "react-dom";
 
-const CustomerInfo = ({
+export const OrderInfo = ({
   data,
   title,
   avatar,
@@ -183,5 +180,3 @@ const CustomerInfo = ({
     </Box>
   );
 };
-
-export default CustomerInfo;

@@ -10,7 +10,7 @@ type ScrollbarProps = {
   children: React.ReactNode;
   sx: object;
 };
-const Scrollbar = forwardRef(function Scrollbar(
+export const Scrollbar = forwardRef(function Scrollbar(
   { children, sx, ...other }: ScrollbarProps & any,
   ref
 ) {
@@ -51,4 +51,4 @@ Scrollbar.propTypes = {
   sx: PropTypes.object,
 };
 
-export default memo(Scrollbar);
+memo(Scrollbar);

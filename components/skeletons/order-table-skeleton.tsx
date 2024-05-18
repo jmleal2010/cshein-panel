@@ -3,7 +3,7 @@ import Skeleton, { SkeletonTheme } from "react-loading-skeleton";
 const rowsCount = 10;
 const colCount = 6;
 
-export default function OrderTableSkeleton() {
+export function OrderTableSkeleton() {
   return (
     <SkeletonTheme highlightColor="#000">
       <TableSkeleton colCount={colCount} rowsCount={rowsCount} />

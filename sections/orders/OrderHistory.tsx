@@ -1,7 +1,6 @@
 'use client'
 import React from "react";
 import {
-  Box,
   Button,
   Paper,
   Step,
@@ -10,12 +9,9 @@ import {
   Stepper,
   Typography,
 } from "@mui/material";
-import { Order } from "@/interfaces";
 import moment from "moment";
 
-
-
-const OrderHistory = ({data: order}: any) => {
+export const OrderHistory = ({data: order}: any) => {
   const [activeStep, setActiveStep] = React.useState(0);
 
   const steps = [
@@ -81,5 +77,3 @@ const OrderHistory = ({data: order}: any) => {
     </Paper>
   );
 };
-
-export default OrderHistory;

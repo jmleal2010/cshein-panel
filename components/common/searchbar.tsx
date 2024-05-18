@@ -1,5 +1,5 @@
+'use client'
 import { useState } from "react";
-
 import Slide from "@mui/material/Slide";
 import Input from "@mui/material/Input";
 import Button from "@mui/material/Button";
@@ -10,7 +10,7 @@ import ClickAwayListener from "@mui/material/ClickAwayListener";
 
 import { bgBlur } from "@/theme/css";
 
-import Iconify from "@/components/common/iconify";
+import {Iconify} from "@/components/common";
 
 // ----------------------------------------------------------------------
 
@@ -39,7 +39,7 @@ const StyledSearchbar = styled("div")(({ theme }: any) => ({
 
 // ----------------------------------------------------------------------
 
-export default function Searchbar() {
+export function Searchbar() {
   const [open, setOpen] = useState(false);
 
   const handleOpen = () => {

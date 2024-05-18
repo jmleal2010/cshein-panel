@@ -1,17 +1,19 @@
 "use client";
-import AppNewsUpdate from "@/sections/dashboard/app-news-update";
-import AppWebsiteVisits from "@/sections/dashboard/app-website-visits";
-import AppCurrentVisits from "@/sections/dashboard/app-current-visits";
-import AppWidgetSummary from "@/sections/dashboard/app-widget-summary";
-import AppConversionRates from "@/sections/dashboard/app-conversion-rates";
-import AppCurrentSubject from "@/sections/dashboard/app-current-subject";
-import AppOrderTimeline from "@/sections/dashboard/app-order-timeline";
-import AppTrafficBySite from "@/sections/dashboard/app-traffic-by-site";
-import AppTasks from "@/sections//app-tasks";
+import {
+  AppNewsUpdate,
+  AppWebsiteVisits,
+  AnalyticsTasks,
+  AppConversionRates,
+  AppCurrentSubject,
+  AppCurrentVisits,
+  AnalyticsOrderTimeline,
+  AppWidgetSummary,
+  AppTrafficBySite,
+} from "@/sections/dashboard";
 import { Container, Typography } from "@mui/material";
 import Grid from "@mui/material/Unstable_Grid2";
 import { faker } from "@faker-js/faker";
-import Iconify from "@/components/common/iconify";
+import {Iconify} from "@/components/common";
 
 export default function Overview() {
   return (
@@ -175,7 +177,7 @@ export default function Overview() {
         </Grid>
 
         <Grid xs={12} md={6} lg={4}>
-          <AppOrderTimeline
+          <AnalyticsOrderTimeline
             subheader=""
             title="Order Timeline"
             list={[...Array(5)].map((_, index) => ({
@@ -239,7 +241,7 @@ export default function Overview() {
         </Grid>
 
         <Grid xs={12} md={6} lg={8}>
-          <AppTasks
+          <AnalyticsTasks
             subheader=""
             title="Tasks"
             list={[

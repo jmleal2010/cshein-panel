@@ -13,7 +13,7 @@ type AppWebsiteVisitsProps = {
   chart: object;
 };
 
-export default function AppWebsiteVisits({
+export function AppWebsiteVisits({
   title,
   subheader,
   chart,

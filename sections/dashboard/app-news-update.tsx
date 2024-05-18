@@ -9,8 +9,8 @@ import CardHeader from "@mui/material/CardHeader";
 
 import { fToNow } from "@/utils/format-time";
 
-import Iconify from "@/components/common/iconify";
-import Scrollbar from "@/components/scrollbar/scrollbar";
+import {Iconify} from "@/components/common";
+import {Scrollbar} from "@/components/scrollbar";
 
 // ----------------------------------------------------------------------
 type AppNewsUpdateProps = {
@@ -18,7 +18,7 @@ type AppNewsUpdateProps = {
   subheader: string;
   list: object[];
 };
-export default function AppNewsUpdate({
+export function AppNewsUpdate({
   title,
   subheader,
   list,

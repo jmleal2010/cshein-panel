@@ -10,11 +10,11 @@ import IconButton from '@mui/material/IconButton';
 import CardHeader from '@mui/material/CardHeader';
 import FormControlLabel from '@mui/material/FormControlLabel';
 
-import Iconify from '@/components/common/iconify';
+import {Iconify} from '@/components/common';
 
 // ----------------------------------------------------------------------
 
-export default function AnalyticsTasks({ title, subheader, list, ...other }) {
+export function AnalyticsTasks({ title, subheader, list, ...other }) {
   const [selected, setSelected] = useState(['2']);
 
   const handleClickComplete = (taskId) => {

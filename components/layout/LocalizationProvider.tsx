@@ -7,7 +7,8 @@ type TimeProviderProps = {
   children: React.ReactNode;
 };
 
-export default function TimeProvider({ children }: TimeProviderProps) {
+export function TimeProvider({ children }: TimeProviderProps) {
+  
   return (
     <LocalizationProvider dateAdapter={AdapterMoment}>
       {children}

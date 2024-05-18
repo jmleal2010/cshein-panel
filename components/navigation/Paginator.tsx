@@ -10,7 +10,7 @@ type PaginatorProps = {
   totalPages: number;
 };
 
-export default function Paginator({ currentPage, totalPages }: PaginatorProps) {
+export function Paginator({ currentPage, totalPages }: PaginatorProps) {
   const [page, setPage] = React.useState<number>(0);
 
   /* Hooks */

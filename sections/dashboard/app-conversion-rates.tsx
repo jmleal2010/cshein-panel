@@ -13,7 +13,7 @@ type AppConversionRatesProps = {
   chart: object;
 };
 
-export default function AppConversionRates({ title, subheader, chart, ...other }: AppConversionRatesProps & any) {
+export function AppConversionRates({ title, subheader, chart, ...other }: AppConversionRatesProps & any) {
   const { colors, series, options } = chart;
 
   const chartSeries = series.map((i:any) => i.value);

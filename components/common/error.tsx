@@ -3,7 +3,6 @@ import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
 import Container from "@mui/material/Container";
 import Typography from "@mui/material/Typography";
-import Link from "next/link";
 import { useEffect } from "react";
 import Error403 from "@/public/assets/svg/error403.svg";
 import Error404 from "@/public/assets/svg/error404.svg";
@@ -14,7 +13,7 @@ type ErrorProps = {
   onPress: (error: string) => void;
 };
 
-const ErrorComponent = ({ error, onPress }: ErrorProps) => {
+export const ErrorComponent = ({ error, onPress }: ErrorProps) => {
   useEffect(() => {
     getInfo();
   }, []);
@@ -98,4 +97,4 @@ const ErrorComponent = ({ error, onPress }: ErrorProps) => {
   );
 };
 
-export default ErrorComponent;
+

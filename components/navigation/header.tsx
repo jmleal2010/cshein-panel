@@ -1,5 +1,4 @@
 "use client";
-import PropTypes from "prop-types";
 import Box from "@mui/material/Box";
 import Stack from "@mui/material/Stack";
 import AppBar from "@mui/material/AppBar";
@@ -8,21 +7,17 @@ import { useTheme } from "@mui/material/styles";
 import IconButton from "@mui/material/IconButton";
 import { useResponsive } from "@/hooks/use-responsive";
 import { bgBlur } from "@/theme/css";
-import Iconify from "@/components/common/iconify";
-import Searchbar from "@/components/common/searchbar";
-import AccountPopover from "@/components/common/account-popover";
-import LanguagePopover from "@/components/common/language-popover";
+import {Searchbar, AccountPopover, LanguagePopover, Iconify} from "@/components/common";
 import NotificationsPopover from "@/components/common/notifications-popover";
 import { HEADER, NAV } from "@/utils/consts";
 import { useEffect, useRef } from "react";
-import { Header } from "next/dist/lib/load-custom-routes";
 // ----------------------------------------------------------------------
 
 type HeaderProps = {
   onOpenNav: () => void;
 };
 
-export default function Header({ onOpenNav }: HeaderProps) {
+export function Header({ onOpenNav }: HeaderProps) {
   const theme = useTheme();
   const navRef: any = useRef<HTMLElement | null>(null);
   const lgUp = useResponsive("up", "lg", "xl");
@@ -82,7 +77,3 @@ export default function Header({ onOpenNav }: HeaderProps) {
     </AppBar>
   );
 }
-
-Header.propTypes = {
-  onOpenNav: PropTypes.func,
-};

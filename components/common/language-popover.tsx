@@ -1,5 +1,5 @@
+'use client'
 import { useState } from "react";
-
 import Box from "@mui/material/Box";
 import Popover from "@mui/material/Popover";
 import MenuItem from "@mui/material/MenuItem";
@@ -28,7 +28,7 @@ const LANGS = [
 
 // ----------------------------------------------------------------------
 
-export default function LanguagePopover() {
+export function LanguagePopover() {
   const [open, setOpen] = useState(null);
 
   const handleOpen = (event: any) => {

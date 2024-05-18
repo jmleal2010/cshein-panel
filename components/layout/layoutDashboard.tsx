@@ -1,15 +1,14 @@
 "use client";
 import React from "react";
 import { Box } from "@mui/material";
-import Nav from "@/components/navigation/nav";
-import Main from "@/components/main";
-import Header from "@/components/navigation/header";
+import {Nav, Header} from "@/components/navigation";
+import {Main} from "@/components/common";
 
 type LayoutDashboardProps = {
   children: React.ReactNode;
 };
 
-function LayoutDashboard({ children }: LayoutDashboardProps) {
+export function LayoutDashboard({ children }: LayoutDashboardProps) {
   const [openNav, setOpenNav] = React.useState(false);
   return (
     <React.Fragment>
@@ -30,4 +29,3 @@ function LayoutDashboard({ children }: LayoutDashboardProps) {
   );
 }
 
-export default LayoutDashboard;

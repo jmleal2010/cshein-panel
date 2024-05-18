@@ -5,10 +5,9 @@ import Box from "@mui/material/Box";
 import { Button, Container, Grid, Paper, Step, StepContent, StepLabel, Stepper, Typography } from "@mui/material";
 import { getClient } from "@/config/apollo";
 import SpanningTable from "@/components/pages/order/table/PackageTable";
-import CustomerInfo from "@/components/pages/order/CustomerInfo";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faCartShopping, faClipboardList } from "@fortawesome/free-solid-svg-icons";
-import OrderHistory from "@/components/pages/order/OrderHistory";
+import { faCartShopping } from "@fortawesome/free-solid-svg-icons";
+import { OrderHistory, OrderInfo } from "@/sections/orders";
 
 const activity = [
   { id: 1, type: "creada", date: "7d ago", dateTime: "2023-01-23T10:32" },
@@ -93,28 +92,20 @@ export default async function OrderId({
         </Grid>
         <Grid xs={8}>
           <SpanningTable items={order.packages}></SpanningTable>
-          <Box sx={{mt: 2}}>
-             {order && <OrderHistory data={order} />}
-          </Box>
+          <Box sx={{ mt: 2 }}>{order && <OrderHistory data={order} />}</Box>
         </Grid>
         <Grid xs={3}>
           <Paper elevation={0} className="cshein-card">
-            <CustomerInfo
+            <OrderInfo
               avatar
               title="Información del beneficiario"
               data={order.beneficiary}
-            ></CustomerInfo>
+            ></OrderInfo>
             {order.deliveryOrder && (
-              <CustomerInfo
-                title="Entrega"
-                data={order.deliveryOrder}
-              ></CustomerInfo>
+              <OrderInfo title="Entrega" data={order.deliveryOrder}></OrderInfo>
             )}
             {order.deliveryOrder && (
-              <CustomerInfo
-                title="Recogida"
-                data={order.pickupOrder}
-              ></CustomerInfo>
+              <OrderInfo title="Recogida" data={order.pickupOrder}></OrderInfo>
             )}
           </Paper>
         </Grid>

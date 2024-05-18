@@ -5,18 +5,17 @@ import PropTypes from "prop-types";
 import Box from "@mui/material/Box";
 import Stack from "@mui/material/Stack";
 import Drawer from "@mui/material/Drawer";
-import Button from "@mui/material/Button";
 import Avatar from "@mui/material/Avatar";
 import { alpha } from "@mui/material/styles";
 import Typography from "@mui/material/Typography";
 import ListItemButton from "@mui/material/ListItemButton";
 import { useResponsive } from "@/hooks/use-responsive";
 import { account } from "@/_mock/account";
-import Scrollbar from "@/components/scrollbar/scrollbar";
+import { Scrollbar } from "@/components/scrollbar";
 import { NAV } from "@/utils/consts";
 import { usePathname } from "next/navigation";
 import Link from "next/link";
-import Iconify from "../common/iconify";
+import {Iconify} from "@/components/common";
 import { ExpandLess, ExpandMore } from "@mui/icons-material";
 import { Collapse, List, ListItemText } from "@mui/material";
 import { navItems } from "@/utils/data";
@@ -28,7 +27,7 @@ type NavProps = {
   onCloseNav: () => void;
 };
 
-export default function Nav({ openNav, onCloseNav }: NavProps) {
+export function Nav({ openNav, onCloseNav }: NavProps) {
   /* Hooks */
   const pathname = usePathname();
   const upLg = useResponsive("up", "lg", "xl");
@@ -130,14 +129,10 @@ export default function Nav({ openNav, onCloseNav }: NavProps) {
   );
 }
 
-Nav.propTypes = {
-  openNav: PropTypes.bool,
-  onCloseNav: PropTypes.func,
-};
 
 // ----------------------------------------------------------------------
 
-function NavItem({ item }: { item: Navigation }) {
+export function NavItem({ item }: { item: Navigation }) {
   /* State */
   const [navigation, setNavigation] = React.useState<Navigation[]>(navItems);
 
@@ -253,7 +248,3 @@ function NavItem({ item }: { item: Navigation }) {
     </>
   );
 }
-
-NavItem.propTypes = {
-  item: PropTypes.object,
-};

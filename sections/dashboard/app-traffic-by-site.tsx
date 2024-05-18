@@ -15,7 +15,7 @@ type AppTrafficBySiteProps = {
   list: object[];
 };
 
-export default function AppTrafficBySite({ title, subheader, list, ...other }: any) {
+export function AppTrafficBySite({ title, subheader, list, ...other }: any) {
   return (
     <Card {...other}>
       <CardHeader title={title} subheader={subheader} />

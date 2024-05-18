@@ -19,7 +19,7 @@ type AnalyticsOrderTimelineProps = {
   list: object[];
 };
 
-export default function AnalyticsOrderTimeline({ title, subheader, list, ...other }: AnalyticsOrderTimelineProps & any) {
+export function AnalyticsOrderTimeline({ title, subheader, list, ...other }: AnalyticsOrderTimelineProps & any) {
   return (
     <Card {...other}>
       <CardHeader title={title} subheader={subheader} />

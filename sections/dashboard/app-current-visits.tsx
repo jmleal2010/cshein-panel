@@ -30,7 +30,7 @@ type AppCurrentVisitsProps = {
   chart: object;
 };
 
-export default function AppCurrentVisits({ title, subheader, chart, ...other }: AppCurrentVisitsProps & any) {
+export function AppCurrentVisits({ title, subheader, chart, ...other }: AppCurrentVisitsProps & any) {
   const theme = useTheme();
 
   const { colors, series, options } = chart;

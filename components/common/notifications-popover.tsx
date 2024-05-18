@@ -1,5 +1,4 @@
 import { useState } from "react";
-import PropTypes from "prop-types";
 import { set, sub } from "date-fns";
 import { faker } from "@faker-js/faker";
 
@@ -20,8 +19,8 @@ import ListItemButton from "@mui/material/ListItemButton";
 
 import { fToNow } from "@/utils/format-time";
 
-import Iconify from "@/components/common/iconify";
-import Scrollbar from "@/components/scrollbar/scrollbar";
+import {Iconify} from "@/components/common"
+import {Scrollbar} from "@/components/scrollbar";
 import Image from "next/image";
 
 // ----------------------------------------------------------------------
@@ -195,19 +194,19 @@ export default function NotificationsPopover() {
 
 // ----------------------------------------------------------------------
 
-NotificationItem.propTypes = {
-  notification: PropTypes.shape({
-    createdAt: PropTypes.instanceOf(Date),
-    id: PropTypes.string,
-    isUnRead: PropTypes.bool,
-    title: PropTypes.string,
-    description: PropTypes.string,
-    type: PropTypes.string,
-    avatar: PropTypes.any,
-  }),
+type NotificationItemProps = {
+  notification: {
+    createdAt: Date;
+    id: string;
+    isUnRead: boolean;
+    title: string;
+    description: string;
+    type: string;
+    avatar: any;
+  };
 };
 
-function NotificationItem({ notification }: any) {
+function NotificationItem({ notification }: NotificationItemProps) {
   const { avatar, title } = renderContent(notification);
 
   return (
@@ -316,6 +315,7 @@ function renderContent(notification: any) {
       title,
     };
   }
+
   return {
     avatar: notification.avatar ? (
       <Image

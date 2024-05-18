@@ -1,4 +1,4 @@
-import Overview from "@/sections/overview";
+import Overview from "@/sections/dashboard/overview";
 
 
 export default function Home() {

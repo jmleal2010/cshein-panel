@@ -12,7 +12,7 @@ type IconifyProps = {
   sx?: object;
 };
 
-const Iconify = forwardRef(function Iconify(
+export const Iconify = forwardRef(function Iconify(
   { icon, width = 20, sx, ...other }: IconifyProps & any,
   ref
 ) {
@@ -27,4 +27,4 @@ const Iconify = forwardRef(function Iconify(
     />
   );
 });
-export default Iconify;
+

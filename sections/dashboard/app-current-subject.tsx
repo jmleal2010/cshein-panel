@@ -29,7 +29,7 @@ type AppCurrentSubjectProps = {
   chart: object;
 };
 
-export default function AppCurrentSubject({ title, subheader, chart, ...other }: AppCurrentSubjectProps & any) {
+export function AppCurrentSubject({ title, subheader, chart, ...other }: AppCurrentSubjectProps & any) {
   const theme = useTheme();
 
   const { series, colors, categories, options } = chart;
