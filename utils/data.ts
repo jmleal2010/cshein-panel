@@ -1,12 +1,5 @@
 import { Navigation } from "@/interfaces";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import {
-  faClipboardList,
-  faHomeAlt,
-  faUsers,
-} from "@fortawesome/free-solid-svg-icons";
 import { routes } from "./consts";
-import DeleteIcon from "@mui/icons-material/Delete";
 
 export const navItems: Navigation[] = [
   {

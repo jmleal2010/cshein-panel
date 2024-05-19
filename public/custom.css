@@ -80,3 +80,37 @@ ul.MuiList-root .Mui-selected {
 ::-webkit-scrollbar-thumb:active {
   background-color: rgba(136, 136, 136, 1);
 }
+
+
+.showPopover{
+    animation: showPopover 0.4s forwards; 
+}
+
+@keyframes showPopover {
+    from {
+        opacity: 0;
+        display: none;
+    }
+    to {
+        opacity: 1;
+        display: block;
+    }
+}
+
+.hidePopover {
+  animation: hidePopover 0.4s forwards;
+}
+
+@keyframes hidePopover {
+  0% {
+    opacity: 1;
+    display:block
+  }
+  20% {
+    display: none;
+  }
+  to {
+    opacity: 0;
+    display: none;
+  }
+}
