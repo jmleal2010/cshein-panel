@@ -2,16 +2,12 @@ import * as React from "react";
 import Container from "@mui/material/Container";
 import Typography from "@mui/material/Typography";
 import Box from "@mui/material/Box";
-import OrderTableSkeleton from "@/components/skeletons/order-table-skeleton";
+import {OrderTableSkeleton} from "@/components/skeletons";
 import Table from "@/components/pages/order/table/OrderTable/server/Table";
 import FilterForm from "@/components/pages/order/table/FilterForm";
-import Iconify from "@/components/common/iconify";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faEye } from "@fortawesome/free-solid-svg-icons";
+import {Iconify} from "@/components/common";
 import VisibilityIcon from "@mui/icons-material/Visibility";
-import { title } from "process";
-import { fi } from "@faker-js/faker";
-import { chain } from "lodash";
+
 
 const tableColumns = [
   {

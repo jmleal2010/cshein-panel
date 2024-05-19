@@ -4,10 +4,8 @@ import { LOAD_ORDERS_QUERY } from "@/graphql/queries/order";
 import { Order } from "@/interfaces";
 import { ITEMS_X_PAGE } from "@/utils/consts";
 import React, { Suspense } from "react";
-import OrderTableSkeleton from "@/components/skeletons/order-table-skeleton";
-import Paginator from "@/components/navigation/paginator";
-import { create, update } from "lodash";
-import EditIcon from "@mui/icons-material/Edit";
+import {OrderTableSkeleton} from "@/components/skeletons";
+import {Paginator} from "@/components/navigation";
 
 const getData = async (
   input:

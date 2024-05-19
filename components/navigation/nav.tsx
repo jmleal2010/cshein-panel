@@ -5,35 +5,33 @@ import PropTypes from "prop-types";
 import Box from "@mui/material/Box";
 import Stack from "@mui/material/Stack";
 import Drawer from "@mui/material/Drawer";
-import Button from "@mui/material/Button";
 import Avatar from "@mui/material/Avatar";
 import { alpha } from "@mui/material/styles";
 import Typography from "@mui/material/Typography";
 import ListItemButton from "@mui/material/ListItemButton";
-
 import { useResponsive } from "@/hooks/use-responsive";
-
 import { account } from "@/_mock/account";
-
-import Logo from "@/components/common/logo";
-import Scrollbar from "@/components/common/scrollbar/scrollbar";
+import { Scrollbar } from "@/components/scrollbar";
 import { NAV } from "@/utils/consts";
 import { usePathname } from "next/navigation";
 import Link from "next/link";
-import Iconify from "../common/iconify";
+import {Iconify} from "@/components/common";
 import { ExpandLess, ExpandMore } from "@mui/icons-material";
 import { Collapse, List, ListItemText } from "@mui/material";
 import { navItems } from "@/utils/data";
 import { Navigation } from "@/interfaces";
 
 // ----------------------------------------------------------------------
+type NavProps = {
+  openNav: boolean;
+  onCloseNav: () => void;
+};
 
-export default function Nav({ openNav, onCloseNav }: any) {
-  
+export function Nav({ openNav, onCloseNav }: NavProps) {
   /* Hooks */
   const pathname = usePathname();
-  const upLg = useResponsive("up", "lg", 'xl');
-  
+  const upLg = useResponsive("up", "lg", "xl");
+
   useEffect(() => {
     if (openNav) {
       onCloseNav();
@@ -73,7 +71,7 @@ export default function Nav({ openNav, onCloseNav }: any) {
       ))}
     </Stack>
   );
-  
+
   const renderContent = (
     <Scrollbar
       sx={{
@@ -85,7 +83,7 @@ export default function Nav({ openNav, onCloseNav }: any) {
         },
       }}
     >
-     {/*  <Logo sx={{ mt: 3, ml: 4 }} /> */}
+      {/*  <Logo sx={{ mt: 3, ml: 4 }} /> */}
 
       {renderAccount}
 
@@ -131,21 +129,17 @@ export default function Nav({ openNav, onCloseNav }: any) {
   );
 }
 
-Nav.propTypes = {
-  openNav: PropTypes.bool,
-  onCloseNav: PropTypes.func,
-};
 
 // ----------------------------------------------------------------------
 
-function NavItem({ item }: {item: Navigation}) {
+export function NavItem({ item }: { item: Navigation }) {
   /* State */
   const [navigation, setNavigation] = React.useState<Navigation[]>(navItems);
 
   /* Hooks */
-  const upLg = useResponsive("up", "lg", 'xl');
+  const upLg = useResponsive("up", "lg", "xl");
   const pathname = usePathname();
-  
+
   const pathSplit = pathname.split("/");
   const path = pathSplit[pathSplit.length - 1];
   const active = item.selected || item.slug?.includes(path);
@@ -190,7 +184,7 @@ function NavItem({ item }: {item: Navigation}) {
         dense
         sx={{
           minHeight: 44,
-          borderRadius: '12px',
+          borderRadius: "12px",
           typography: "body2",
           color: "text.secondary",
           textTransform: "capitalize",
@@ -254,7 +248,3 @@ function NavItem({ item }: {item: Navigation}) {
     </>
   );
 }
-
-NavItem.propTypes = {
-  item: PropTypes.object,
-};

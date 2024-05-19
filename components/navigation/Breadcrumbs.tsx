@@ -9,7 +9,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faHome } from "@fortawesome/free-solid-svg-icons";
 import { routes } from "@/utils/consts";
 
-export default function BreadcrumbsNav() {
+export function BreadcrumbsNav() {
   const pathname = usePathname();
 
   const paths = pathname.split("/").filter((path) => path);
