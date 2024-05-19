@@ -70,7 +70,7 @@ const components = {
     },
     MuiAlert: {
       styleOverrides: {
-        root: ({ ownerState }) => ({
+        root: ({ ownerState }: any) => ({
           ...(ownerState.severity === "info" && {
             backgroundColor: "#60a5fa",
           }),

@@ -1,6 +1,5 @@
 "use client";
 import * as React from "react";
-import { ITEMS_X_PAGE, routes } from "@/utils/consts";
 import IconButton from "@mui/material/IconButton";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import Typography from "@mui/material/Typography";
@@ -25,13 +24,12 @@ import {
   Popover,
 } from "@mui/material";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import moment, { Moment } from "moment";
-import { height } from "@fortawesome/free-brands-svg-icons/fa42Group";
+import moment from "moment";
 
-import { faEye, faPencil } from "@fortawesome/free-solid-svg-icons";
+import { faPencil } from "@fortawesome/free-solid-svg-icons";
 import { Visibility, VisibilityOff } from "@mui/icons-material";
 import UserCard from "@/components/pages/users/UserCard";
-import { set } from "lodash";
+
 
 const WAIT_BETWEEN_CHANGE = 1000;
 
@@ -48,31 +46,27 @@ export default function Table({
   columns,
   currentPage,
   rowIcon: IconComponent,
-  popover = false,
+  popover,
 }: {
   rows: any;
   totalPages: number;
   columns: any[];
   currentPage: number;
   rowIcon: any;
-  popover: boolean;
+  popover?: boolean;
 }) {
   /*States*/
   const [open, setOpen] = React.useState(false);
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
-  const [mousePosition, setMousePosition] = React.useState({ X: 0, Y: 0 });
-  const [anchorEl, setAnchorEl] = React.useState<HTMLElement | null>(null);
+  const [mousePosition, setMousePosition] = React.useState({ left: 0, top: 0 });
   const [actualUser, setActualUser] = React.useState<User | undefined>(
     undefined
   );
-  const myDivRef = React.useRef(null);
-
-  // console.log(rows);
+  //const [showPopover, setShowPopover] = React.useState(false);
+  const popoverRef: any = React.useRef(null);
 
   /* Hooks */
-  const searchParams = useSearchParams();
-  const { replace } = useRouter();
   const pathname = usePathname();
   const router = useRouter();
 
@@ -80,24 +74,6 @@ export default function Table({
   const onViewOrder = (id: string) => {
     router.push(`${pathname}/${id}`);
   };
-
-  const onOrderEdit = (id: string) => {};
-
-  const handlePopoverOpen = (
-    event: React.MouseEvent<HTMLElement>,
-    row: any
-  ) => {
-    setAnchorEl(event.currentTarget);
-    setMousePosition({ X: event.clientX, Y: event.clientY });
-    setActualUser(row);
-    console.log(event.clientX, event.clientY);
-  };
-
-  const handlePopoverClose = () => {
-    setAnchorEl(null);
-  };
-
-  const popoverOpen = Boolean(anchorEl);
 
   const style = {
     position: "absolute" as "absolute",
@@ -136,89 +112,136 @@ export default function Table({
     // Aquí puedes manejar la lógica para enviar el formulario
     console.log(formData);
   };
+  const hadleMouseOverTableRow = (e: any) => {
+    setMousePosition({ left: e.clientX + 20, top: e.clientY + 30 });
+  };
+  const hidePopover = () => {
+    if (popoverRef.current) {
+      popoverRef.current.classList.remove("showPopover");
+      popoverRef.current.classList.add("hidePopover");
+    }
+  };
+  const showPopover = () => {
+    if (popoverRef.current) {
+      console.log("show");
+      popoverRef.current.classList.remove("hidePopover");
+      popoverRef.current.classList.add("showPopover");
+    }
+  };
 
   return (
     <React.Fragment>
-      <TableContainer component={Paper} style={{ marginTop: 25 }}>
-        <MTable sx={{ minWidth: 650 }} aria-label="order table" size="small">
-          <TableHead>
-            <TableRow>
-              {columns.map((column, index) => (
-                <TableCell
-                  align="center"
-                  key={index}
-                  sx={{
-                    pb: 2,
-                    pt: 1,
-                  }}
-                >
-                  <Typography
-                    component="span"
-                    fontWeight={700}
-                    color="#6b7280"
-                    variant="caption"
-                  >
-                    {column.title}
-                  </Typography>
-                </TableCell>
-              ))}
-              <TableCell align="center"></TableCell>
-            </TableRow>
-          </TableHead>
-          <TableBody>
-            {rows.map((row: any, index: number) => (
-              <TableRow
-                onMouseOver={(e) => handlePopoverOpen(e, row)}
-                key={index}
-                sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
-              >
+      <div>
+        <TableContainer component={Paper} style={{ marginTop: 25 }}>
+          <MTable sx={{ minWidth: 650 }} aria-label="order table" size="small">
+            <TableHead>
+              <TableRow>
                 {columns.map((column, index) => (
                   <TableCell
                     align="center"
                     key={index}
                     sx={{
-                      py: 0.3,
-                      px: 0,
+                      pb: 2,
+                      pt: 1,
                     }}
                   >
-                    {column.type === "date" ? (
-                      moment(row[column.field]).format(column.format)
-                    ) : column.field === "status" ? (
-                      <Button>{row[column.field]}</Button>
-                    ) : column.type === "string" ? (
-                      <Typography
-                        sx={{ color: "black", fontSize: "1em" }}
-                        aria-owns={
-                          popoverOpen ? "mouse-over-popover" : undefined
-                        }
-                        aria-haspopup="true"
-                      >
-                        {column.field
-                          .split(".")
-                          .reduce((acc: any[], part: any) => acc[part], row)}
-                      </Typography>
-                    ) : column.type === "boolean" ? (
-                      row[column.field] ? (
-                        <CheckIcon color="success" />
-                      ) : (
-                        <CloseIcon color="error" />
-                      )
-                    ) : null}
+                    <Typography
+                      component="span"
+                      fontWeight={700}
+                      color="#6b7280"
+                      variant="caption"
+                    >
+                      {column.title}
+                    </Typography>
                   </TableCell>
                 ))}
-                <TableCell align="center">
-                  <IconButton onClick={() => onViewOrder(row.id)}>
-                    <IconComponent />
-                  </IconButton>
-                  <IconButton onClick={handleOpen}>
-                    <FontAwesomeIcon size="xs" icon={faPencil} />
-                  </IconButton>
-                </TableCell>
+                <TableCell align="center"></TableCell>
               </TableRow>
-            ))}
-          </TableBody>
-        </MTable>
-      </TableContainer>
+            </TableHead>
+            <TableBody
+              onMouseEnter={showPopover}
+              onMouseLeave={hidePopover}
+              onMouseOver={(e) => hadleMouseOverTableRow(e)}
+            >
+              {rows.map((row: any, index: number) => (
+                <TableRow
+                  onMouseEnter={() => {
+                    setActualUser(row);
+                  }}
+                  key={index}
+                  sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
+                >
+                  {columns.map((column, index) => (
+                    <TableCell
+                      align="center"
+                      key={index}
+                      sx={{
+                        py: 0.3,
+                        px: 0,
+                      }}
+                    >
+                      {column.type === "date" ? (
+                        moment(row[column.field]).format(column.format)
+                      ) : column.field === "status" ? (
+                        <Button>{row[column.field]}</Button>
+                      ) : column.type === "string" ? (
+                        <Typography sx={{ color: "black", fontSize: "1em" }}>
+                          {column.field
+                            .split(".")
+                            .reduce((acc: any[], part: any) => acc[part], row)}
+                        </Typography>
+                      ) : column.type === "boolean" ? (
+                        row[column.field] ? (
+                          <CheckIcon color="success" />
+                        ) : (
+                          <CloseIcon color="error" />
+                        )
+                      ) : null}
+                    </TableCell>
+                  ))}
+                  <TableCell
+                    align="center"
+                    onMouseEnter={hidePopover} //setShowPopover(false)
+                    onMouseLeave={showPopover} //setShowPopover(true)
+                  >
+                    <IconButton onClick={() => onViewOrder(row.id)}>
+                      <IconComponent />
+                    </IconButton>
+                    <IconButton onClick={handleOpen}>
+                      <FontAwesomeIcon size="xs" icon={faPencil} />
+                    </IconButton>
+                  </TableCell>
+                </TableRow>
+              ))}
+            </TableBody>
+          </MTable>
+        </TableContainer>
+      </div>
+
+      {popover && (
+        <div
+          // onMouseEnter={showPopover}
+          // onMouseLeave={hidePopover}
+          // className="showPopover"
+
+          ref={popoverRef}
+          style={{
+            pointerEvents: "none",
+            color: "black",
+            position: "absolute",
+            top: 0,
+            left: 0,
+            opacity: 0,
+            display: "block",
+            // zIndex: 9999, 
+            overflow: "hidden",
+            transform: `translate(${mousePosition.left}px, ${mousePosition.top}px)`,
+            transition: `transform .15s ease-out, opacity .4s ease-out`,
+          }}
+        >
+          <UserCard user={actualUser} />
+        </div>
+      )}
 
       <Modal
         open={open}
@@ -296,7 +319,7 @@ export default function Table({
           </form>
         </Box>
       </Modal>
-      {popover && (
+      {/* {popover && (
         <Popover
           id="mouse-over-popover"
           sx={{
@@ -325,8 +348,8 @@ export default function Table({
 
       <div
         ref={myDivRef}
-        style={{ position: "absolute", top: 0, left: 0 }}
-      ></div>
+        style ={{ position: "absolute", top: 0, left: 0 }}
+      ></div> */}
     </React.Fragment>
   );
 }
