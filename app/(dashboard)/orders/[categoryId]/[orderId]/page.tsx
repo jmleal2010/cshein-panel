@@ -1,14 +1,29 @@
-
 import { LOAD_ORDER_QUERY } from "@/graphql/queries/order";
 import * as React from "react";
 import Box from "@mui/material/Box";
-import { Button, Container, Grid, Paper, Step, StepContent, StepLabel, Stepper, Typography } from "@mui/material";
+import {
+  Button,
+  Container,
+  FormControlLabel,
+  Grid,
+  Paper,
+  Step,
+  StepContent,
+  StepLabel,
+  Stepper,
+  Switch,
+  Typography,
+} from "@mui/material";
 import { getClient } from "@/config/apollo";
 import SpanningTable from "@/components/pages/order/table/PackageTable";
 import CustomerInfo from "@/components/pages/order/CustomerInfo";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faCartShopping, faClipboardList } from "@fortawesome/free-solid-svg-icons";
+import {
+  faCartShopping,
+  faClipboardList,
+} from "@fortawesome/free-solid-svg-icons";
 import OrderHistory from "@/components/pages/order/OrderHistory";
+import OrderStatus from "@/components/pages/order/status/OrderStatus";
 
 const activity = [
   { id: 1, type: "creada", date: "7d ago", dateTime: "2023-01-23T10:32" },
@@ -81,21 +96,12 @@ export default async function OrderId({
                 {"#"} {order.code}
               </Typography>
             </Typography>
-            <Button
-              variant="outlined"
-              size="small"
-              color={order.status === "ACCEPTED" ? "primary" : "error"}
-            >
-              {" "}
-              {order.status}
-            </Button>
+            <OrderStatus status={order.status} checked={false} />
           </Box>
         </Grid>
         <Grid xs={8}>
           <SpanningTable items={order.packages}></SpanningTable>
-          <Box sx={{mt: 2}}>
-             {order && <OrderHistory data={order} />}
-          </Box>
+          <Box sx={{ mt: 2 }}>{order && <OrderHistory data={order} />}</Box>
         </Grid>
         <Grid xs={3}>
           <Paper elevation={0} className="cshein-card">

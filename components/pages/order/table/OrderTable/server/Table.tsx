@@ -281,7 +281,7 @@ export default async function Table({
   currentPage: number;
   columns: any[];
     icon: any;
-  popover: boolean;
+  popover?: boolean;
   //iconFunction: () => void;
 }) {
   const input = {
