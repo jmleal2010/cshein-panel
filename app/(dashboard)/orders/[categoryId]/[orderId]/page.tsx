@@ -91,7 +91,7 @@ export default async function OrderId({
                 {"#"} {order.code}
               </Typography>
             </Typography>
-            <OrderStatus status={order.status} checked={false} />
+            {/* <OrderStatus status={order.status} checked={false} /> */}
           </Box>
         </Grid>
         <Grid xs={8}>
