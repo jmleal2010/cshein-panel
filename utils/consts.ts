@@ -1,12 +1,12 @@
 import { StatusType } from "@/interfaces";
 
 const DASHBOARD: string = "/dashboard";
-export const AUTH: string = "/auth";
 const ORDERS: string = "/orders";
-
 const NOTIFICATIONS: string = "/notifications";
 const USERS: string = "/users";
+const TOOLS: string = "/tools";
 
+export const AUTH: string = "/auth";
 export const AUTH_TOKEN: string = "AUTH_TOKEN";
 export const ITEMS_X_PAGE = 5;
 export const routes = {
@@ -24,9 +24,14 @@ export const routes = {
   users: {
     drivers: `${USERS}/drivers`,
     customers: `${USERS}/customers`,
-    index: `${USERS}`,
   },
-
+  tools: {
+    index: `${TOOLS}`,
+    services: `${TOOLS}/services`,
+    dimensions: `${TOOLS}/dimensions`,
+    promos: `${TOOLS}/promos`,
+    offers: `${TOOLS}/offers`,
+  },
   notifications:  NOTIFICATIONS,
 };
 
