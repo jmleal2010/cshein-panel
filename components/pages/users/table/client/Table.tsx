@@ -16,6 +16,7 @@ import {
 
 import { Order, columnType } from "@/interfaces";
 import { Iconify, Popover } from "@/components/common";
+import { routes } from "@/utils/consts";
 
 const WAIT_BETWEEN_CHANGE = 1000;
 
@@ -34,8 +35,8 @@ export function Table({ rows, columns, showPopover = false }: TableProps) {
   /* Consts */
 
   /*Functions*/
-  const onViewOrder = (id: string) => {
-    router.push(`${pathname}/${id}`);
+  const onViewUser = (id: string) => {
+    router.push(`${routes.users.index}/${id}`);
   };
 
   return (
@@ -156,7 +157,7 @@ export function Table({ rows, columns, showPopover = false }: TableProps) {
                   <Box
                     component="span"
                     sx={{ width: 24, height: 24, mr: 2, cursor: "pointer" }}
-                    onClick={() => onViewOrder(row.id)}
+                    onClick={() => onViewUser(row.id)}
                   >
                     <Iconify icon="mynaui:pencil" />
                   </Box>

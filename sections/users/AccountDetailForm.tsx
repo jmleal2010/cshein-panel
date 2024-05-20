@@ -122,7 +122,7 @@ export function AccountDetailsForm({ user }: { user: User }) {
                 <InputLabel>Número</InputLabel>
                 <OutlinedInput
                   defaultValue={user.phone}
-                  label="Phone number"
+                  label="phone"
                   name="phone"
                   type="tel"
                 />
@@ -130,15 +130,16 @@ export function AccountDetailsForm({ user }: { user: User }) {
             </Grid>
             <Grid md={6} xs={12}>
               <FormControl fullWidth>
-                <InputLabel>Rol</InputLabel>
+                <InputLabel>Role</InputLabel>
                 <Select
                   defaultValue={user.role}
-                  label="State"
-                  name="state"
+                  label="role"
+                  name="role"
                   variant="outlined"
                 >
-                  {states.map((option) => (
-                    <MenuItem key={option.value} value={option.value}>
+                  {states.map((option, index) => (
+                    
+                    <MenuItem key={option.value} value={option.value} selected = {index == 2} >
                       {option.label}
                     </MenuItem>
                   ))}

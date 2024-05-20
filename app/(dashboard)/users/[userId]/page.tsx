@@ -36,7 +36,6 @@ export default function Page({
 }: {
   params: { userId: string };
 }) {
-  console.log(userId);
   const user = getUser(userId);
   return (
     <Container sx={{ mt: 5 }} maxWidth="xl">
@@ -44,8 +43,8 @@ export default function Page({
         <Box sx={boxStyle} color="#6b7280">
           <Iconify icon="mdi:account-cog-outline" width={30} />
           <Typography variant="h4" component="h1" align="left" color="#6b7280">
-            User
-            {` #${userId}`}
+            Actualizar #
+            {`${user.firstName} ${user.lastName}`}
           </Typography>
         </Box>
         <Grid container gap={5}>

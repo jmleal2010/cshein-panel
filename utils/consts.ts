@@ -24,7 +24,9 @@ export const routes = {
   users: {
     drivers: `${USERS}/drivers`,
     customers: `${USERS}/customers`,
+    index: `${USERS}`,
   },
+
   notifications:  NOTIFICATIONS,
 };
 
