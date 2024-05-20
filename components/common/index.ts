@@ -4,7 +4,9 @@ import { Iconify } from "./iconify";
 import { LanguagePopover } from "./language-popover";
 import { Searchbar } from "./searchbar";
 import { Main } from "./main";
-import {Popover} from './popover'
+import { Popover } from './popover'
+import { FilterForm } from "./FilterForm";
+import { CardTitle } from "./CardTitle";
 
 export {
     AccountPopover,
@@ -13,5 +15,7 @@ export {
     LanguagePopover,
     Searchbar,
     Main,
-    Popover
+    Popover,
+    FilterForm,
+    CardTitle
 }

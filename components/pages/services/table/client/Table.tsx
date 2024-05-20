@@ -68,17 +68,6 @@ export function Table({ rows, columns, showPopover = false }: TableProps) {
                   </Typography>
                 </TableCell>
               ))}
-              <TableCell align="center">
-                {" "}
-                <Typography
-                  component="span"
-                  fontWeight={700}
-                  color="#6b7280"
-                  variant="caption"
-                >
-                  Info
-                </Typography>
-              </TableCell>
               <TableCell align="center"></TableCell>
             </TableRow>
           </TableHead>
@@ -88,14 +77,14 @@ export function Table({ rows, columns, showPopover = false }: TableProps) {
                 key={index}
                 sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
               >
-                <TableCell align="center">{row.firstName}</TableCell>
+                <TableCell align="center">{row.name}</TableCell>
                 <TableCell align="center">
                   <Typography
                     variant="caption"
                     component="span"
                     sx={{ cursor: "pointer" }}
                   >
-                    {row.lastName}
+                    {row.packageType}
                   </Typography>
                 </TableCell>
                 <TableCell align="center">
@@ -106,7 +95,7 @@ export function Table({ rows, columns, showPopover = false }: TableProps) {
                     component="span"
                     sx={{ cursor: "pointer" }}
                   >
-                    {row.phone}
+                    {row.priceBase}
                   </Typography>
                 </TableCell>
                 <TableCell align="center">
@@ -115,7 +104,7 @@ export function Table({ rows, columns, showPopover = false }: TableProps) {
                     component="span"
                     sx={{ cursor: "pointer" }}
                   >
-                    {row.email}
+                    {row.priceExtra ?? "-"}
                   </Typography>
                 </TableCell>
                 <TableCell align="center">
@@ -125,13 +114,12 @@ export function Table({ rows, columns, showPopover = false }: TableProps) {
                       width: 24,
                       height: 24,
                       cursor: "pointer",
-                      color: row.active ? "green" : "red",
                     }}
                   >
                     {row.active ? (
-                      <Iconify icon="mynaui:check-circle" />
+                      <Iconify icon="mynaui:check-circle" color="green" />
                     ) : (
-                      <Iconify icon="mynaui:info-circle" />
+                      <Iconify icon="mynaui:x-circle" color="red" />
                     )}
                   </Box>
                 </TableCell>
@@ -141,7 +129,7 @@ export function Table({ rows, columns, showPopover = false }: TableProps) {
                     component="span"
                     sx={{ cursor: "pointer" }}
                   >
-                    {row.phone}
+                    {row.type}
                   </Typography>
                 </TableCell>
                 <TableCell align="center">
@@ -149,16 +137,25 @@ export function Table({ rows, columns, showPopover = false }: TableProps) {
                     sx={{ width: 24, height: 24, cursor: "pointer" }}
                     component="span"
                   >
-                    <Iconify icon="mynaui:info-circle" />
+                    {row.discount ?? "-"}
+                  </Box>
+                </TableCell>
+                <TableCell align="center">
+                  <Box
+                    sx={{ width: 24, height: 24, cursor: "pointer" }}
+                    component="span"
+                  >
+                    {row.description ?? "-"}
                   </Box>
                 </TableCell>
                 <TableCell align="center">
                   <Box
                     component="span"
                     sx={{ width: 24, height: 24, mr: 2, cursor: "pointer" }}
-                    onClick={() => onViewOrder(row.id)}
+                    onClick={() => onViewUser(row.id)}
                   >
-                    <Iconify icon="mynaui:pencil" />
+                    <Iconify icon="mynaui:pencil" color="#60a5fa" />
+                    <Iconify icon="mynaui:trash" color="red" />
                   </Box>
                 </TableCell>
               </TableRow>

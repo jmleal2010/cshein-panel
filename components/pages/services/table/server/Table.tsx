@@ -4,8 +4,8 @@ import { ITEMS_X_PAGE } from "@/utils/consts";
 import React, { Suspense } from "react";
 import { OrderTableSkeleton } from "@/components/skeletons";
 import { Paginator } from "@/components/navigation";
-import { CTable as ClientTable } from "@/components/pages/users";
-import { LOAD_USERS_QUERY } from "@/graphql/queries/users";
+import { CTable as ClientTable } from "@/components/pages/services";
+import { LOAD_SERVICES_QUERY } from "@/graphql/queries/services";
 
 const getData = async (
   input:
@@ -18,18 +18,17 @@ const getData = async (
 ) => {
   try {
     return await getClient().query({
-      query: LOAD_USERS_QUERY,
+      query: LOAD_SERVICES_QUERY,
     });
   } catch (e: any) {
     console.log(e);
   }
 };
 
-const filterItems = (items: Order[], query: string) => 
-   items.filter((item: any) =>
-     item.email.toLowerCase().includes(query.toLowerCase())
-   );
-
+const filterItems = (items: Order[], query: string) =>
+  items.filter((item: any) =>
+    item.name.toLowerCase().includes(query.toLowerCase())
+  );
 
 type TableProps = {
   status: string;
@@ -41,43 +40,47 @@ type TableProps = {
 const columns = [
   {
     title: "Nombre",
-    field: "firstName",
+    field: "name",
     type: "string",
   },
   {
-    title: "Apellidos",
-    field: "lastName",
+    title: "Tipo de Paquete",
+    field: "packageType",
     type: "string",
   },
   {
-    title: "Movil",
-    field: "phone",
+    title: "Precio Base",
+    field: "priceBase",
     type: "string",
   },
   {
-    title: "Email",
-    field: "email",
+    title: "Precio Extra",
+    field: "priceExtra",
     type: "string",
   },
-
   {
     title: "Activo",
     field: "active",
     type: "string",
   },
   {
-    title: "Teléfono",
-    field: "phone",
+    title: "Tipo",
+    field: "type",
+    type: "string",
+  },
+  {
+    title: "Descuento",
+    field: "discount",
+    type: "string",
+  },
+  {
+    title: "Descripción",
+    field: "description",
     type: "string",
   },
 ];
 
-export async function Table({
-  status,
-  query,
-  currentPage,
-}:
-TableProps) {
+export async function Table({ status, query, currentPage }: TableProps) {
   const input = {
     page: currentPage,
     pageSize: ITEMS_X_PAGE,
@@ -86,10 +89,10 @@ TableProps) {
   let response, data, pageInfo;
 
   response = await getData(input);
-  
+
   if (response?.data) {
-    data = response?.data.adminListUsers;
-    pageInfo = { totalPages: 10} /* response?.data.orders.pageInfo */;
+    data = response?.data.services;
+    pageInfo = { totalPages: 10 } /* response?.data.orders.pageInfo */;
   }
 
   const totalItems = data;

@@ -75,11 +75,7 @@ type TableProps = {
   popover?: boolean;
 };
 
-export async function Table({
-  status,
-  query,
-  currentPage,
-}: TableProps) {
+export async function Table({ status, query, currentPage }: TableProps) {
   const input = {
     page: currentPage,
     pageSize: ITEMS_X_PAGE,
@@ -88,7 +84,7 @@ export async function Table({
   let response, data, pageInfo;
 
   response = await getData(input);
-  
+
   if (response?.data) {
     data = response?.data.orders.edges;
     pageInfo = response?.data.orders.pageInfo;

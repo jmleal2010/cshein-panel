@@ -1,6 +1,6 @@
 import * as React from "react";
 import Container from "@mui/material/Container";
-import {FilterForm} from "@/components/pages/order";
+import { CardTitle, FilterForm } from "@/components/common";
 import {STable as Table} from "@/components/pages/order";
 import { Box, List, Typography } from "@mui/material";
 import EditIcon from "@mui/icons-material/Edit";
@@ -34,20 +34,12 @@ export default function Page() {
   const params = { categoryId: "pending" };
   return (
     <Container maxWidth="xl" sx={{ marginTop: 10 }}>
-      <List>
-        <Typography variant="h4">Usuarios</Typography>
-      </List>
-      {/* <UserCard user={user} />
-        <UserModal/> */}
+      <CardTitle icon="mynaui:users" title={"pageTitle"} />
       <FilterForm placeholder="usuario" />
       <Table
-        type="users"
         query={query}
         currentPage={currentPage}
         status={params.categoryId}
-        columns={tableColumns}
-        icon={EditIcon}
-        popover={true}
       />
     </Container>
   );
