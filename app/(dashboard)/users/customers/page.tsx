@@ -1,10 +1,8 @@
 import * as React from "react";
 import Container from "@mui/material/Container";
-import FilterForm from "@/components/pages/order/table/FilterForm";
-import Table from "@/components/pages/order/table/OrderTable/server/Table";
+import {FilterForm} from "@/components/pages/order";
+import {STable as Table} from "@/components/pages/order";
 import { Box, List, Typography } from "@mui/material";
-import UserCard from "@/components/pages/users/UserCard";
-import UserModal from "@/components/pages/users/UserModal";
 import EditIcon from "@mui/icons-material/Edit";
 
 const tableColumns = [
@@ -30,30 +28,27 @@ const tableColumns = [
   },
 ];
 
-
-export default function Page () { 
-    const query = "";
-    const currentPage = 1;
-    const params = {categoryId: "pending"};
-    return (
-      <Container maxWidth="xl" sx={{ marginTop: 10 }}>
-        <List>
-          <Typography variant="h4">Usuarios</Typography>
-
-        </List>
-        {/* <UserCard user={user} />
+export default function Page() {
+  const query = "";
+  const currentPage = 1;
+  const params = { categoryId: "pending" };
+  return (
+    <Container maxWidth="xl" sx={{ marginTop: 10 }}>
+      <List>
+        <Typography variant="h4">Usuarios</Typography>
+      </List>
+      {/* <UserCard user={user} />
         <UserModal/> */}
-        <FilterForm placeholder="usuario" />
-        <Table
-          type="users"
-          query={query}
-          currentPage={currentPage}
-          status={params.categoryId}
-          columns={tableColumns}
-          icon={EditIcon}
-          popover={true}
-        />
-      </Container>
-    );
+      <FilterForm placeholder="usuario" />
+      <Table
+        type="users"
+        query={query}
+        currentPage={currentPage}
+        status={params.categoryId}
+        columns={tableColumns}
+        icon={EditIcon}
+        popover={true}
+      />
+    </Container>
+  );
 }
-

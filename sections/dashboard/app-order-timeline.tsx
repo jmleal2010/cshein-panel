@@ -21,7 +21,7 @@ type AnalyticsOrderTimelineProps = {
 
 export function AnalyticsOrderTimeline({ title, subheader, list, ...other }: AnalyticsOrderTimelineProps & any) {
   return (
-    <Card {...other}>
+    <Card {...other} className="cshein-card">
       <CardHeader title={title} subheader={subheader} />
 
       <Timeline
@@ -35,7 +35,11 @@ export function AnalyticsOrderTimeline({ title, subheader, list, ...other }: Ana
         }}
       >
         {list.map((item: any, index: number) => (
-          <OrderItem key={item.id} item={item} lastTimeline={index === list.length - 1} />
+          <OrderItem
+            key={item.id}
+            item={item}
+            lastTimeline={index === list.length - 1}
+          />
         ))}
       </Timeline>
     </Card>

@@ -1,5 +1,5 @@
 'use client'
-import ErrorComponent from "@/components/common/error";
+import {ErrorComponent} from "@/components/common";
 import { routes } from "@/utils/consts";
 import Link from "next/link";
 import { redirect } from "next/navigation";

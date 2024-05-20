@@ -72,13 +72,7 @@ const updateStatus = async (data: {}) => {
 };
 
 export async function changeStatus(status: string, pathname: string, id: string) {
-  console.log("Changing status to", status, id);
   const response = await updateStatus({ status, id });
-  console.log(response);
-  // console.log("Changing status to", status);
-  //await setTimeout(() => { console.log("4 sec")}, 4000);
+  
   revalidatePath(pathname);
-  //redirect(pathname);
-
-  // Navigate to the new post page
 }

@@ -1,3 +1,5 @@
+import { StatusType } from "@/interfaces";
+
 const DASHBOARD: string = "/dashboard";
 export const AUTH: string = "/auth";
 const ORDERS: string = "/orders";
@@ -15,6 +17,7 @@ export const routes = {
   forgotPassword: `${AUTH}/forgot-password`,
   verificationCode: `${AUTH}/verification-code`,
   orders: {
+    index: `${ORDERS}`,
     pending: `${ORDERS}/pending`,
     completed: `${ORDERS}/completed`,
   },
@@ -36,3 +39,33 @@ export const NAV = {
 };
 
 export const SPACING = 8;
+export const statusTypes: StatusType[] = [
+  {
+    label: "ACCEPTED",
+    value: "ACCEPTED",
+  },
+  {
+    label: "PENDING",
+    value: "PENDING",
+  },
+  {
+    label: "OUT FOR DELIVERY",
+    value: "OUT_FOR_DELIVERY",
+  },
+  {
+    label: "PICKED UP",
+    value: "PICKED_UP",
+  },
+  {
+    label: "DELIVERED",
+    value: "DELIVERED",
+  },
+  {
+    label: "CANCELLED",
+    value: "CANCELLED",
+  },
+  {
+    label: "IN PROGRESS",
+    value: "IN_PROGRESS",
+  },
+];

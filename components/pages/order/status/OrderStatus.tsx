@@ -7,53 +7,57 @@ import {
   FormControlLabel,
   IconButton,
   Paper,
-  Switch,
-  useTheme,
 } from "@mui/material";
 import React from "react";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
-import OrderStatusSelect from "./OrderStatusSelect";
 import "/theme/palette.js";
+import { statusTypes } from "@/utils/consts";
+import { StatusType } from "@/interfaces";
+import { usePathname } from "next/navigation";
+import { changeStatus } from "@/lib/actions/order";
 
-const statusTypes = [
-  "ACCEPTED",
-  "PENDING",
-  "OUT_FOR_DELIVERY",
-  "PICKED_UP",
-  "DELIVERED",
-  "CANCELLED",
-  "IN_PROGRESS",
-];
 
-const OrderStatus = ({
-  status,
-  checked,
-  orderId,
-}: {
+type OrderStatusProps = {
   status: string;
   checked: boolean;
   orderId: string;
-}) => {
+};
+
+type OrderStatusSelectProps = {
+  ignoreStatus: string;
+  handleClick: () => void;
+  setIsLoading: (value: boolean) => void;
+  orderId: string;
+  statusTypes: StatusType[];
+};
+
+
+export const OrderStatus = ({ status, checked, orderId }: OrderStatusProps) => {
   const [isChecked, setIsChecked] = React.useState(checked);
   const [isLoading, setIsLoading] = React.useState(false);
-  // const theme = useTheme();
-
+ 
   const handleClick = () => {
-    console.log("clicked");
     setIsChecked((prev) => !prev);
   };
+
+  const getStatus = statusTypes.find((s) => s.value === status);
+  
   return (
     <Box style={{ position: "relative", display: "flex" }}>
       {isChecked ? (
         <Button
           variant="outlined"
-          style={{ height: 30, alignSelf: "center", color: "grey", borderColor: "grey"}}
+          style={{
+            height: 30,
+            alignSelf: "center",
+            color: "grey",
+            borderColor: "grey",
+          }}
           size="small"
         >
-          {" "}
-          {status}
+          {!isLoading ? getStatus!.label : "Cargando..."}
         </Button>
-      ) : (
+      ) : !isLoading ? (
         <Button
           variant="outlined"
           style={{ height: 30, alignSelf: "center" }}
@@ -75,7 +79,20 @@ const OrderStatus = ({
           }
         >
           {" "}
-          {status}
+          {!isLoading ? getStatus!.label : "Cargando.."}
+        </Button>
+      ) : (
+        <Button
+          variant="outlined"
+          style={{
+            height: 30,
+            alignSelf: "center",
+            color: "grey",
+            borderColor: "grey",
+          }}
+          size="small"
+        >
+          {"Cargando..."}
         </Button>
       )}
 
@@ -109,7 +126,7 @@ const OrderStatus = ({
             gap: 4,
           }}
         >
-          <OrderStatusSelect
+          <StatusSelect
             ignoreStatus={status}
             handleClick={handleClick}
             setIsLoading={setIsLoading}
@@ -122,4 +139,39 @@ const OrderStatus = ({
   );
 };
 
-export default OrderStatus;
+export const StatusSelect = ({
+  ignoreStatus,
+  handleClick,
+  setIsLoading,
+  orderId,
+  statusTypes,
+}: OrderStatusSelectProps) => {
+  const pathname = usePathname();
+
+  return (
+    <>
+      {statusTypes.map((status) => {
+        if (status.value !== ignoreStatus) {
+          return (
+            <Button
+              key={status.value}
+              variant="outlined"
+              size="small"
+              style={{ minWidth: 150 }}
+              onClick={async (e) => {
+                setIsLoading(true);
+                await changeStatus(status.value, pathname, orderId);
+                setTimeout(() => {
+                  setIsLoading(false);
+                }, 1200);
+                handleClick();
+              }}
+            >
+              {status.label}
+            </Button>
+          );
+        }
+      })}
+    </>
+  );
+};

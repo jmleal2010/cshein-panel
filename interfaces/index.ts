@@ -9,7 +9,7 @@ export interface dataType {
 }
 
 export interface columnType {
-  name: string;
+  field: string;
   title: string;
   type?: string | "text";
 }
@@ -97,6 +97,10 @@ export interface DeliveryOrder {
   updatedAt: string;
 }
 
+export interface StatusType {
+  label: string;
+  value: string;
+}
 
 export interface User {
   firstName: string;

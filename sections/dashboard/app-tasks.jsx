@@ -26,7 +26,7 @@ export function AnalyticsTasks({ title, subheader, list, ...other }) {
   };
 
   return (
-    <Card {...other}>
+    <Card {...other} className="cshein-card">
       <CardHeader title={title} subheader={subheader} />
 
       {list.map((task) => (

@@ -47,7 +47,9 @@ export const OrderHistory = ({data: order}: any) => {
   };
 
   return (
-    <Paper sx={{ maxWidth: 400 }} className="cshein-card">
+    <Paper sx={{ maxWidth: 400 }} className="cshein-card" style={{
+      padding: 16
+    }}>
       <Stepper activeStep={1} orientation="vertical" >
         {steps.map((step, index) => (
           <Step key={step.label}>

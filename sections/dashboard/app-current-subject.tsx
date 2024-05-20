@@ -59,7 +59,7 @@ export function AppCurrentSubject({ title, subheader, chart, ...other }: AppCurr
   });
 
   return (
-    <Card {...other}>
+    <Card {...other} className="cshein-card">
       <CardHeader title={title} subheader={subheader} sx={{ mb: 5 }} />
 
       <StyledChart

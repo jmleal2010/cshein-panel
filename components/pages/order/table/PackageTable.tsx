@@ -89,15 +89,14 @@ const getCategory = (category: string) => {
       return "POR DEFECTO";
   }
 };
-export default function PackageTable({ items }: { items: Package[] }) {
+export function PackageTable({ items }: { items: Package[] }) {
 
   const invoiceSubtotal = subtotal(items);
-  const invoiceTaxes = TAX_RATE * invoiceSubtotal;
   const invoiceTotal =  invoiceSubtotal;
 
   return (
     <React.Fragment>
-      <TableContainer elevation={0} component={Paper} className="cshein-card">
+      <TableContainer elevation={0} component={Paper} className="cshein-card" style={{padding: '16px'}}>
         <Table sx={{ minWidth: 650 }} aria-label="order table" size="small">
           <TableHead>
             <TableRow>

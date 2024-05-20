@@ -15,7 +15,7 @@ import useMediaQuery from "@mui/material/useMediaQuery";
 import { useTheme } from "@mui/material/styles";
 import moment, { Moment } from "moment/moment";
 
-const FilterForm = ({ placeholder }: { placeholder: string }) => {
+export const FilterForm = ({ placeholder }: { placeholder: string }) => {
   /* State */
   const [startDate, setStartDate] = React.useState<Moment | null>(moment());
   const [endDate, setEndDate] = React.useState<Moment | null>(moment());
@@ -72,13 +72,7 @@ const FilterForm = ({ placeholder }: { placeholder: string }) => {
             onChange={(e) => handleSearch(e.target.value)} //(e) => setQuery(e.target.value)
             startAdornment={
               <InputAdornment position="start">
-                {/* <IconButton
-                  aria-label="search orders"
-                  edge="start"
-                  onClick={(e) => handleSearch(query)}
-                > */}
                 <Search />
-                {/* </IconButton> */}
               </InputAdornment>
             }
             label="Búsqueda"
@@ -103,4 +97,3 @@ const FilterForm = ({ placeholder }: { placeholder: string }) => {
   );
 };
 
-export default FilterForm;
