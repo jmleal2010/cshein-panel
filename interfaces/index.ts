@@ -96,3 +96,13 @@ export interface DeliveryOrder {
   status: string;
   updatedAt: string;
 }
+
+
+export interface User {
+  firstName: string;
+  lastName: string;
+  email: string;
+  phone: string;
+  role: string;
+  emailNotifications: boolean;
+};

@@ -1,6 +1,5 @@
-import { Button, CircularProgress } from "@mui/material";
+import { Button } from "@mui/material";
 
-import { startTransition, useState } from "react";
 import { usePathname } from "next/navigation";
 import { changeStatus } from "@/lib/actions/order";
 
@@ -45,15 +44,6 @@ const OrderStatusSelect = ({
                   ? "inherit"
                   : "error"
               }
-              // sx={{
-              //   color: "black",
-              //   borderColor: "black",
-              //   margin: "5px",
-              //   ":hover": { backgroundColor: "black", color: "white" },
-              // }}
-              // type="submit"
-              // name="status"
-              // value={status}
               onClick={async (e) => {
                 setIsLoading(true);
                 await changeStatus(status, pathname, orderId);
