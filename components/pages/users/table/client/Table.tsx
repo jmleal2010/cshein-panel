@@ -126,13 +126,12 @@ export function Table({ rows, columns, showPopover = false }: TableProps) {
                       width: 24,
                       height: 24,
                       cursor: "pointer",
-                      color: row.active ? "green" : "red",
                     }}
                   >
                     {row.active ? (
-                      <Iconify icon="mynaui:check-circle" />
+                      <Iconify icon="mynaui:check-circle" color="green" />
                     ) : (
-                      <Iconify icon="mynaui:info-circle" />
+                      <Iconify icon="mynaui:x-circle" color="red" />
                     )}
                   </Box>
                 </TableCell>
@@ -159,7 +158,8 @@ export function Table({ rows, columns, showPopover = false }: TableProps) {
                     sx={{ width: 24, height: 24, mr: 2, cursor: "pointer" }}
                     onClick={() => onViewUser(row.id)}
                   >
-                    <Iconify icon="mynaui:pencil" />
+                    <Iconify icon="mynaui:pencil" color="#60a5fa" />
+                    <Iconify icon="mynaui:trash" color="red" />
                   </Box>
                 </TableCell>
               </TableRow>

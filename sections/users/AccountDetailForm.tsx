@@ -112,7 +112,7 @@ export function AccountDetailsForm({ user }: { user: User }) {
                 <InputLabel>Email</InputLabel>
                 <OutlinedInput
                   defaultValue={user.email}
-                  label="Email address"
+                  label="Email"
                   name="email"
                 />
               </FormControl>
@@ -122,7 +122,7 @@ export function AccountDetailsForm({ user }: { user: User }) {
                 <InputLabel>Número</InputLabel>
                 <OutlinedInput
                   defaultValue={user.phone}
-                  label="phone"
+                  label="numero"
                   name="phone"
                   type="tel"
                 />
