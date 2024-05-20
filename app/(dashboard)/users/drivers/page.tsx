@@ -43,6 +43,7 @@ export default function Page () {
           status={params.categoryId}
           columns={tableColumns}
           icon={EditIcon}
+          popover={true}
         />
       </Container>
     );

@@ -33,6 +33,32 @@ const getFilterOrders = (orders: Order[], query: string) =>
     order.code.toLowerCase().includes(query.toLowerCase())
   );
 
+const users2 = {
+  data: [
+    {
+      firstName: "John",
+      lastName: "Doe",
+      email: "johndoe@example.com",
+      phone: "1234567890",
+      verified: true,
+    },
+    {
+      firstName: "Jane",
+      lastName: "Smith",
+      email: "janesmith@example.com",
+      phone: "9876543210",
+      verified: false,
+    },
+    {
+      firstName: "Alice",
+      lastName: "Johnson",
+      email: "alice@email",
+      phone: "1234567890",
+      verified: true,
+    },
+  ],
+};
+
 const users = {
   data: [
     {
@@ -244,14 +270,16 @@ export default async function Table({
   currentPage,
   columns,
   icon,
- // iconFunction,
-}: {
+  popover = false,
+}: // iconFunction,
+{
   type: string;
   status: string;
   query?: string;
   currentPage: number;
   columns: any[];
-  icon: any;
+    icon: any;
+  popover?: boolean;
   //iconFunction: () => void;
 }) {
   const input = {
@@ -269,7 +297,7 @@ export default async function Table({
       }
       break;
     case "users":
-      data = users.data.map((user: any) => {
+      data = users2.data.map((user: any) => {
         return {
           fullName: `${user.firstName} ${user.lastName}`,
           email: user.email,
@@ -310,6 +338,7 @@ export default async function Table({
             columns={columns}
             currentPage={currentPage}
             rowIcon={icon}
+            popover={popover}
           />
         </Suspense>
         <Paginator currentPage={currentPage} totalPages={totalPages} />
