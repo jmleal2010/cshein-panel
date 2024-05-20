@@ -96,3 +96,8 @@ export interface DeliveryOrder {
   status: string;
   updatedAt: string;
 }
+
+export interface StatusType {
+  label: string;
+  value: string;
+}

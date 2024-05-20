@@ -7,7 +7,7 @@ import {
   Typography,
 } from "@mui/material";
 import { getClient } from "@/config/apollo";
-import {PackageTable} from "@/components/pages/order";
+import { PackageTable, OrderStatus } from "@/components/pages/order";
 import { OrderHistory, OrderInfo } from "@/sections/orders";
 import Grid2 from "@mui/material/Unstable_Grid2/Grid2";
 import { Iconify } from "@/components/common";
@@ -30,21 +30,6 @@ const getOrder = async (params: any) => {
   } catch (err) {}
 };
 
-const Header = async () => {
-  return (
-    <Box sx={{ flexGrow: 2 }}>
-      <Grid2
-        container
-        spacing={{ xs: 2, md: 3 }}
-        direction={{
-          xs: "row",
-          md: "column",
-        }}
-      ></Grid2>
-    </Box>
-  );
-};
-
 const boxStyle = {
   mt: 4,
   display: "flex",
@@ -52,12 +37,13 @@ const boxStyle = {
   alignItems: "center",
   gap: 1,
 };
+type OrderProps = {
+  params: { orderId: string };
+};
 
 export default async function OrderId({
   params,
-}: {
-  params: { orderId: string };
-}) {
+}: OrderProps) {
   const response = await getOrder(params);
   const order = response?.data.order || {};
 
@@ -88,7 +74,7 @@ export default async function OrderId({
                 {"#"} {order.code}
               </Typography>
             </Typography>
-            {/* <OrderStatus status={order.status} checked={false} /> */}
+            <OrderStatus status={order.status} checked={false} orderId={ order.id} />
           </Box>
         </Grid2>
         <Grid2 xs={8}>

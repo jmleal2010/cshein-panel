@@ -41,3 +41,12 @@ mutation UpdateOrder($input: UpdateOrderInput!) {
     }
     }
   `
+
+
+
+export const ADMIN_UPDATE_ORDER_MUTATION = gql`
+    mutation adminUpdateOrder($input: AdminUpdateOrderInput!) {
+    adminUpdateOrder(input: $input) {
+        status
+    }
+}`
