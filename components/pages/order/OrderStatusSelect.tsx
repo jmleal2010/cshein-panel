@@ -7,10 +7,12 @@ const OrderStatusSelect = ({
   ignore,
   handleClick,
   setIsLoading,
+  orderId,
 }: {
   ignore: string;
   handleClick: () => void;
   setIsLoading: (value: boolean) => void;
+  orderId: string;
 }) => {
   const pathname = usePathname();
   const orderstatus = ["ACCEPTED", "REJECTED", "PENDING"];
@@ -30,7 +32,7 @@ const OrderStatusSelect = ({
               // value={status}
               onClick={async (e) => {
                 setIsLoading(true);
-                await changeStatus(status, pathname);
+                changeStatus(status, pathname);
                 setIsLoading(false);
                 handleClick();
               }}

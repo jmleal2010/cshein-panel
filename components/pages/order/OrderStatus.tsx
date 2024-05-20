@@ -19,9 +19,11 @@ import { height } from "@fortawesome/free-brands-svg-icons/fa42Group";
 const OrderStatus = ({
   status,
   checked,
+  orderId,
 }: {
   status: string;
-  checked: boolean;
+    checked: boolean;
+    orderId: string;
 }) => {
   const [isChecked, setIsChecked] = React.useState(checked);
   const [isLoading, setIsLoading] = React.useState(false);

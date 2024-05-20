@@ -1,10 +1,13 @@
-'use server'
+"use server";
 import * as z from "zod";
 import { FetchResult } from "@apollo/client";
 import { getClient } from "@/config/apollo";
 import { routes } from "@/utils/consts";
 import { revalidatePath } from "next/cache";
-import { UPDATE_ORDER_MUTATION } from "@/graphql/mutations/order";
+import {
+  ADMIN_UPDATE_ORDER_MUTATION,
+  UPDATE_ORDER_MUTATION,
+} from "@/graphql/mutations/order";
 
 export async function updateOrder(prevState: any, formData: FormData) {
   const formSchema = z.object({
@@ -53,23 +56,29 @@ export async function updateOrder(prevState: any, formData: FormData) {
 
   revalidatePath(routes.dashboard);
 }
-const updateStatus = async (params: any) => {
-//   try {
-//     return await getClient().mutate({
-//       mutation: UPDATE_ORDER_STATUS_MUTATION,
-//       variables: {
-//         orderId: params.orderId,
-//       },
-//     });
-//   } catch (err) {}
+const updateStatus = async (data: {}) => {
+  try {
+    return await getClient().mutate({
+      mutation: ADMIN_UPDATE_ORDER_MUTATION,
+      variables: {
+        input: {
+          ...data,
+        },
+      },
+    });
+  } catch (err) {
+    console.log(err);
+  }
 };
 
-export async function changeStatus(status: string, pathname: string) {
-    // console.log("Changing status to", status);
-    //await setTimeout(() => { console.log("4 sec")}, 4000);
-    revalidatePath(pathname);
-    //redirect(pathname);
-  
- // Navigate to the new post page
-}
+export async function changeStatus(status: string, pathname: string, id: string) {
+  console.log("Changing status to", status, id);
+  const response = await updateStatus({ status, id });
+  console.log(response);
+  // console.log("Changing status to", status);
+  //await setTimeout(() => { console.log("4 sec")}, 4000);
+  revalidatePath(pathname);
+  //redirect(pathname);
 
+  // Navigate to the new post page
+}

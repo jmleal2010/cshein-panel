@@ -30,7 +30,6 @@ import { faPencil } from "@fortawesome/free-solid-svg-icons";
 import { Visibility, VisibilityOff } from "@mui/icons-material";
 import UserCard from "@/components/pages/users/UserCard";
 
-
 const WAIT_BETWEEN_CHANGE = 1000;
 
 interface User {
@@ -57,7 +56,7 @@ export default function Table({
 }) {
   /*States*/
   const [open, setOpen] = React.useState(false);
-  const handleOpen = () => setOpen(true);
+  //const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
   const [mousePosition, setMousePosition] = React.useState({ left: 0, top: 0 });
   const [actualUser, setActualUser] = React.useState<User | undefined>(
@@ -72,7 +71,10 @@ export default function Table({
 
   /*Functions*/
   const onViewOrder = (id: string) => {
-    router.push(`${pathname}/${id}`);
+    console.log(pathname)
+    if (pathname === "/users/drivers") {
+      router.push(`/users/${id}`);
+    } else router.push(`${pathname}/${id}`);
   };
 
   const style = {
@@ -123,7 +125,6 @@ export default function Table({
   };
   const showPopover = () => {
     if (popoverRef.current) {
-      console.log("show");
       popoverRef.current.classList.remove("hidePopover");
       popoverRef.current.classList.add("showPopover");
     }
@@ -207,9 +208,9 @@ export default function Table({
                     <IconButton onClick={() => onViewOrder(row.id)}>
                       <IconComponent />
                     </IconButton>
-                    <IconButton onClick={handleOpen}>
+                    {/* <IconButton onClick={handleOpen}>
                       <FontAwesomeIcon size="xs" icon={faPencil} />
-                    </IconButton>
+                    </IconButton> */}
                   </TableCell>
                 </TableRow>
               ))}
@@ -233,7 +234,7 @@ export default function Table({
             left: 0,
             opacity: 0,
             display: "block",
-            // zIndex: 9999, 
+            // zIndex: 9999,
             overflow: "hidden",
             transform: `translate(${mousePosition.left}px, ${mousePosition.top}px)`,
             transition: `transform .15s ease-out, opacity .4s ease-out`,

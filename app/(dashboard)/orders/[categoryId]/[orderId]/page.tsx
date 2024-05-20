@@ -19,6 +19,7 @@ import SpanningTable from "@/components/pages/order/table/PackageTable";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCartShopping } from "@fortawesome/free-solid-svg-icons";
 import { OrderHistory, OrderInfo } from "@/sections/orders";
+import OrderStatus from "@/components/pages/order/status/OrderStatus";
 
 const activity = [
   { id: 1, type: "creada", date: "7d ago", dateTime: "2023-01-23T10:32" },
@@ -68,7 +69,7 @@ export default async function OrderId({
 }) {
   const response = await getOrder(params);
   const order = response?.data.order || {};
-
+  console.log(order);
   return (
     <Container sx={{ mt: 5 }} maxWidth="xl">
       <Grid container sx={{ gap: 2 }}>
@@ -91,7 +92,7 @@ export default async function OrderId({
                 {"#"} {order.code}
               </Typography>
             </Typography>
-            {/* <OrderStatus status={order.status} checked={false} /> */}
+            <OrderStatus status={order.status} checked={false} orderId={ order.id} />
           </Box>
         </Grid>
         <Grid xs={8}>
