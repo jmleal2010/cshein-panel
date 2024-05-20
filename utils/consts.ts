@@ -24,6 +24,7 @@ export const routes = {
   users: {
     drivers: `${USERS}/drivers`,
     customers: `${USERS}/customers`,
+    index: `${USERS}`,
   },
   tools: {
     index: `${TOOLS}`,
