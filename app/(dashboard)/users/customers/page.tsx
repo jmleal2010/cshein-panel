@@ -34,7 +34,7 @@ export default function Page() {
   const params = { categoryId: "pending" };
   return (
     <Container maxWidth="xl" sx={{ marginTop: 10 }}>
-      <CardTitle icon="mynaui:users" title={"pageTitle"} />
+      <CardTitle icon="mynaui:users" title="Usuarios" subtitle="pageTitle" />
       <FilterForm placeholder="usuario" />
       <Table
         query={query}

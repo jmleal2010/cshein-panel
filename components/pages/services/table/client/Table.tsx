@@ -3,7 +3,6 @@ import * as React from "react";
 import { usePathname, useRouter } from "next/navigation";
 import Typography from "@mui/material/Typography";
 import {
-  Button,
   Paper,
   Table as MTable,
   TableBody,
@@ -34,7 +33,7 @@ export function Table({ rows, columns, showPopover = false }: TableProps) {
   /* Consts */
 
   /*Functions*/
-  const onViewOrder = (id: string) => {
+  const onView = (id: string) => {
     router.push(`${pathname}/${id}`);
   };
 

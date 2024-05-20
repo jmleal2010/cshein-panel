@@ -16,7 +16,7 @@ export default function OrdersPage({ params, searchParams }: OrderPageProps) {
 
   return (
     <Container maxWidth="xl">
-      <CardTitle icon="mynaui:clipboard" title={pageTitle} />
+      <CardTitle icon="mynaui:clipboard" title="Ordenes" subtitle={pageTitle} />
       <FilterForm placeholder="orden" />
 
       <Table

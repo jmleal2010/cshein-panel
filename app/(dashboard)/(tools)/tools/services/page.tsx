@@ -2,8 +2,6 @@ import * as React from "react";
 import Container from "@mui/material/Container";
 import { CardTitle, FilterForm } from "@/components/common";
 import { STable as Table } from "@/components/pages/services";
-import { Box, List, Typography } from "@mui/material";
-import { Iconify } from "@/components/common";
 
 type PageProps = {
   params: { categoryId: string };
@@ -16,7 +14,7 @@ export default function Page({ params, searchParams }: PageProps) {
 
   return (
     <Container maxWidth="xl">
-      <CardTitle icon="mynaui:cog" title="Services" />
+      <CardTitle icon="mynaui:cog" title="Herramientas" subtitle="Services" />
 
       <FilterForm placeholder="servicios" />
       <Table

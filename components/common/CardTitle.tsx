@@ -4,6 +4,7 @@ import { Iconify } from "./iconify";
 
 type cardTitleProps = {
   title: string;
+  subtitle: string;
   icon: string
 };
 
@@ -15,7 +16,7 @@ const boxStyle = {
   alignItems: "center",
 }
 
-export function CardTitle({ title, icon }: cardTitleProps) {
+export function CardTitle({ title,subtitle, icon }: cardTitleProps) {
   return (
     <Box sx={boxStyle}>
       <Iconify
@@ -26,7 +27,7 @@ export function CardTitle({ title, icon }: cardTitleProps) {
         }}
       />
       <Typography variant="h4" component="h1" align="left" color="#6b7280">
-        Orders
+        {title}
       </Typography>
       <Iconify icon="mynaui:arrow-right" width={16} color="#6b7280" />
       <Typography
@@ -36,7 +37,7 @@ export function CardTitle({ title, icon }: cardTitleProps) {
         color="#6b7280"
         style={{ marginLeft: 4 }}
       >
-        {title}
+        {subtitle}
       </Typography>
     </Box>
   );

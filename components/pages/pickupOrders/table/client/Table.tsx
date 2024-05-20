@@ -1,8 +1,9 @@
 "use client";
 import * as React from "react";
-import { usePathname, useRouter, useSearchParams } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import Typography from "@mui/material/Typography";
 import {
+  Button,
   Paper,
   Table as MTable,
   TableBody,
@@ -11,17 +12,20 @@ import {
   TableHead,
   TableRow,
   Box,
+  Avatar,
 } from "@mui/material";
-import moment from "moment";
+
 import { Order, columnType } from "@/interfaces";
-import { Iconify } from "@/components/common";
+import { Iconify, Popover } from "@/components/common";
+import Image from "next/image";
+
+const WAIT_BETWEEN_CHANGE = 1000;
 
 type TableProps = {
   rows: Order[];
   columns: columnType[];
   showPopover?: boolean;
 };
-
 export function Table({ rows, columns, showPopover = false }: TableProps) {
   /*States*/
 
@@ -66,17 +70,6 @@ export function Table({ rows, columns, showPopover = false }: TableProps) {
                   </Typography>
                 </TableCell>
               ))}
-              <TableCell align="center">
-                {" "}
-                <Typography
-                  component="span"
-                  fontWeight={700}
-                  color="#6b7280"
-                  variant="caption"
-                >
-                  Info
-                </Typography>
-              </TableCell>
               <TableCell align="center"></TableCell>
             </TableRow>
           </TableHead>
@@ -86,28 +79,15 @@ export function Table({ rows, columns, showPopover = false }: TableProps) {
                 key={index}
                 sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
               >
-                <TableCell align="center">{row.code}</TableCell>
+                <TableCell align="center">{row.addressLine1 ?? "-"}</TableCell>
+                <TableCell align="center">{row.addressLine2 ?? "-"}</TableCell>
                 <TableCell align="center">
                   <Typography
                     variant="caption"
                     component="span"
-                    color="primary"
                     sx={{ cursor: "pointer" }}
                   >
-                    {row.serviceType}
-                  </Typography>
-                </TableCell>
-                <TableCell align="center">
-                  <Typography
-                    border="thin"
-                    borderColor="error"
-                    variant="caption"
-                    component="span"
-                    sx={{ cursor: "pointer" }}
-                    fontWeight="bold"
-                    color={row.status === "PENDING" ? "error" : "black"}
-                  >
-                    {row.status}
+                    {row.city ?? "-"}
                   </Typography>
                 </TableCell>
                 <TableCell align="center">
@@ -116,7 +96,7 @@ export function Table({ rows, columns, showPopover = false }: TableProps) {
                     component="span"
                     sx={{ cursor: "pointer" }}
                   >
-                    {moment(row.createdAt).format("YYYY-MM-DD")}
+                    {row.country ?? "-"}
                   </Typography>
                 </TableCell>
                 <TableCell align="center">
@@ -125,24 +105,31 @@ export function Table({ rows, columns, showPopover = false }: TableProps) {
                     component="span"
                     sx={{ cursor: "pointer" }}
                   >
-                    {moment(row.deliveredAt).format("YYYY-MM-DD")}
+                    {row.description ?? "-"}
                   </Typography>
                 </TableCell>
                 <TableCell align="center">
-                  <Typography
-                    variant="caption"
+                  <Box
                     component="span"
-                    sx={{ cursor: "pointer" }}
+                    sx={{
+                      width: 24,
+                      height: 24,
+                      cursor: "pointer",
+                    }}
                   >
-                    {row.beneficiary.firstName} {row.beneficiary.lastName}
-                  </Typography>
+                    {row.active ? (
+                      <Iconify icon="mynaui:check-circle" color="green" />
+                    ) : (
+                      <Iconify icon="mynaui:x-circle" color="red" />
+                    )}
+                  </Box>
                 </TableCell>
                 <TableCell align="center">
                   <Box
                     sx={{ width: 24, height: 24, cursor: "pointer" }}
                     component="span"
                   >
-                    <Iconify icon="mynaui:info-circle" />
+                    {row.postalCode ?? "-"}
                   </Box>
                 </TableCell>
                 <TableCell align="center">
@@ -151,7 +138,8 @@ export function Table({ rows, columns, showPopover = false }: TableProps) {
                     sx={{ width: 24, height: 24, mr: 2, cursor: "pointer" }}
                     onClick={() => onView(row.id)}
                   >
-                    <Iconify icon="mynaui:pencil" />
+                    <Iconify icon="mynaui:pencil" color="#60a5fa" />
+                    <Iconify icon="mynaui:trash" color="red" />
                   </Box>
                 </TableCell>
               </TableRow>
@@ -159,7 +147,6 @@ export function Table({ rows, columns, showPopover = false }: TableProps) {
           </TableBody>
         </MTable>
       </TableContainer>
-
     </React.Fragment>
   );
 }

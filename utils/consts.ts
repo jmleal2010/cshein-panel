@@ -40,7 +40,7 @@ export const routes = {
   beneficiaries: {
     index: `${BENEFICIARIES}`,
     addresses: `${BENEFICIARIES}/addresses`,
-    pickUpPoints: `${BENEFICIARIES}/pickup`,
+    pickUpPoints: `${BENEFICIARIES}/pickup-orders`,
   },
 };
 

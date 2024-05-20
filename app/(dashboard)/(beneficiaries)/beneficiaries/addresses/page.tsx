@@ -1,24 +1,26 @@
 import * as React from "react";
 import Container from "@mui/material/Container";
 import { CardTitle, FilterForm } from "@/components/common";
-import { STable as Table } from "@/components/pages/users/";
-import { Box, Typography } from "@mui/material";
-import { Iconify } from "@/components/common";
+import { STable as Table } from "@/components/pages/addresses";
 
-type UserPageProps = {
+type PageProps = {
   params: { categoryId: string };
   searchParams?: { query?: string; page?: string; rows?: string };
 };
 
-export default function OrdersPage({ params, searchParams }: UserPageProps) {
+export default function Page({ params, searchParams }: PageProps) {
   const currentPage = Number(searchParams?.page) || 1;
   const query = searchParams?.query || "";
-  const pageTitle = `Drivers`;
 
   return (
     <Container maxWidth="xl">
-      <CardTitle icon="mynaui:users" title="Usuarios" subtitle={pageTitle} />
-      <FilterForm placeholder="usuario" />
+      <CardTitle
+        icon="mynaui:dollar-square"
+        title="Beneficiarios"
+        subtitle="Direcciones"
+      />
+
+      <FilterForm placeholder="direcciones" />
       <Table
         query={query}
         currentPage={currentPage}
