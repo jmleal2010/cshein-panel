@@ -1,10 +1,13 @@
 import { StatusType } from "@/interfaces";
+import { dir } from "console";
+import { pick } from "lodash";
 
 const DASHBOARD: string = "/dashboard";
 const ORDERS: string = "/orders";
 const NOTIFICATIONS: string = "/notifications";
 const USERS: string = "/users";
 const TOOLS: string = "/tools";
+const BENEFICIARIES: string = "/beneficiaries";
 
 export const AUTH: string = "/auth";
 export const AUTH_TOKEN: string = "AUTH_TOKEN";
@@ -33,7 +36,12 @@ export const routes = {
     promos: `${TOOLS}/promos`,
     offers: `${TOOLS}/offers`,
   },
-  notifications:  NOTIFICATIONS,
+  notifications: NOTIFICATIONS,
+  beneficiaries: {
+    index: `${BENEFICIARIES}`,
+    addresses: `${BENEFICIARIES}/addresses`,
+    pickUpPoints: `${BENEFICIARIES}/pickup`,
+  },
 };
 
 export const HEADER = {

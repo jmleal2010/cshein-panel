@@ -51,7 +51,7 @@ export default function Page({
           <Grid lg={4} md={6} xs={12}>
             <AccountInfo user={user}  />
           </Grid>
-          <Grid lg={7} md={6} xs={12}>
+          <Grid lg={7} md={5} xs={12}>
             <AccountDetailsForm user={user} />
           </Grid>
         </Grid>
