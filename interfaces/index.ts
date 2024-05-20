@@ -9,7 +9,7 @@ export interface dataType {
 }
 
 export interface columnType {
-  name: string;
+  field: string;
   title: string;
   type?: string | "text";
 }

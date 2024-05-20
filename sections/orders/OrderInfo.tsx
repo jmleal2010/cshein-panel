@@ -62,14 +62,9 @@ export const OrderInfo = ({
     }
   };
 
-  console.log(data);
-
   return !editing ? (
     <Box
-      sx={{ ml: 2, p: 2 }}
-      style={{
-        backgroundColor: "#fcfbfd",
-      }}
+      
     >
       <Box display="flex" justifyContent="space-between" alignItems="center">
         <Typography variant="h6" component="p" marginBottom={1} color="#6b7280">

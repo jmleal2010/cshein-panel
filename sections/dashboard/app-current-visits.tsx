@@ -81,7 +81,7 @@ export function AppCurrentVisits({ title, subheader, chart, ...other }: AppCurre
   });
 
   return (
-    <Card {...other}>
+    <Card {...other} className="cshein-card">
       <CardHeader title={title} subheader={subheader} sx={{ mb: 5 }} />
 
       <StyledChart

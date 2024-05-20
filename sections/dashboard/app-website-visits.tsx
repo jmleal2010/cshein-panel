@@ -51,7 +51,7 @@ export function AppWebsiteVisits({
   });
 
   return (
-    <Card {...other}>
+    <Card {...other} className="cshein-card">
       <CardHeader title={title} subheader={subheader} />
 
       <Box sx={{ p: 3, pb: 1 }}>

@@ -17,28 +17,28 @@ type AppTrafficBySiteProps = {
 
 export function AppTrafficBySite({ title, subheader, list, ...other }: any) {
   return (
-    <Card {...other}>
+    <Card {...other} className="cshein-card">
       <CardHeader title={title} subheader={subheader} />
 
       <Box
         sx={{
           p: 3,
           gap: 2,
-          display: 'grid',
-          gridTemplateColumns: 'repeat(2, 1fr)',
+          display: "grid",
+          gridTemplateColumns: "repeat(2, 1fr)",
         }}
       >
         {list.map((site: any) => (
           <Paper
             key={site.name}
             variant="outlined"
-            sx={{ py: 2.5, textAlign: 'center', borderStyle: 'dashed' }}
+            sx={{ py: 2.5, textAlign: "center", borderStyle: "dashed" }}
           >
             <Box sx={{ mb: 0.5 }}>{site.icon}</Box>
 
             <Typography variant="h6">{fShortenNumber(site.value)}</Typography>
 
-            <Typography variant="body2" sx={{ color: 'text.secondary' }}>
+            <Typography variant="body2" sx={{ color: "text.secondary" }}>
               {site.name}
             </Typography>
           </Paper>

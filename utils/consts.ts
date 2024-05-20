@@ -15,6 +15,7 @@ export const routes = {
   forgotPassword: `${AUTH}/forgot-password`,
   verificationCode: `${AUTH}/verification-code`,
   orders: {
+    index: `${ORDERS}`,
     pending: `${ORDERS}/pending`,
     completed: `${ORDERS}/completed`,
   },

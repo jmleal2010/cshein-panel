@@ -142,7 +142,7 @@ export function NavItem({ item }: { item: Navigation }) {
 
   const pathSplit = pathname.split("/");
   const path = pathSplit[pathSplit.length - 1];
-  const active = item.selected || item.slug?.includes(path);
+  const active = item.selected /* || item.slug?.includes(path) */;
 
   /* Functions */
   const handleListItemClick = (item: Navigation) => {
@@ -225,7 +225,7 @@ export function NavItem({ item }: { item: Navigation }) {
                 key={i}
                 href={child.href}
                 onClick={(e) => handleListItemClick(child)}
-                selected={child.selected && child.slug?.includes(path)}
+                selected={child.selected}
                 dense
                 sx={{
                   pl: 4,
@@ -234,6 +234,19 @@ export function NavItem({ item }: { item: Navigation }) {
                   mr: 2,
                   mb: 0.5,
                   mt: 0.5,
+                  ...(active && {
+                    color: "primary.main",
+                    fontWeight: "fontWeightSemiBold",
+                    bgcolor: (theme) => alpha(theme.palette.primary.main, 0.08),
+                    "&:hover": {
+                      bgcolor: (theme) =>
+                        alpha(theme.palette.primary.main, 0.16),
+                    },
+                  }),
+                  "& .MuiListItemIcon-root": {
+                    minWidth: 0,
+                    color: active ? "white" : "",
+                  },
                 }}
               >
                 {/* <ListItemIcon>

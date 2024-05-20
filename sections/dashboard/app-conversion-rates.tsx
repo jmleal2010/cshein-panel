@@ -43,7 +43,7 @@ export function AppConversionRates({ title, subheader, chart, ...other }: AppCon
   });
 
   return (
-    <Card {...other}>
+    <Card {...other} className="cshein-card">
       <CardHeader title={title} subheader={subheader} />
 
       <Box sx={{ mx: 3 }}>

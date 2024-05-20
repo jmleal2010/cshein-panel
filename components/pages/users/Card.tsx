@@ -15,7 +15,7 @@ const bull = (
   </Box>
 );
 
-export default function UserCard({
+export function UserCard({
   user,
 }: {
   user?: { fullName: string; email: string; phone: string; verified: boolean };

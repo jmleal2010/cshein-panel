@@ -3,7 +3,8 @@ import { ErrorComponent } from "./error";
 import { Iconify } from "./iconify";
 import { LanguagePopover } from "./language-popover";
 import { Searchbar } from "./searchbar";
-import {Main} from "./main";
+import { Main } from "./main";
+import {Popover} from './popover'
 
 export {
     AccountPopover,
@@ -11,5 +12,6 @@ export {
     Iconify,
     LanguagePopover,
     Searchbar,
-    Main
+    Main,
+    Popover
 }

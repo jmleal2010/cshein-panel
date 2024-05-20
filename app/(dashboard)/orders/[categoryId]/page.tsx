@@ -2,72 +2,21 @@ import * as React from "react";
 import Container from "@mui/material/Container";
 import Typography from "@mui/material/Typography";
 import Box from "@mui/material/Box";
-import {OrderTableSkeleton} from "@/components/skeletons";
-import Table from "@/components/pages/order/table/OrderTable/server/Table";
-import FilterForm from "@/components/pages/order/table/FilterForm";
-import {Iconify} from "@/components/common";
-import VisibilityIcon from "@mui/icons-material/Visibility";
+import { STable as Table } from "@/components/pages/order";
+import { FilterForm } from "@/components/pages/order";
+import { Iconify } from "@/components/common";
 
-
-const tableColumns = [
-  {
-    title: "Code",
-    field: "code",
-    type: "string",
-  },
-  {
-    title: "Service Type",
-    field: "serviceType",
-    type: "string",
-  },
-  {
-    title: "Status",
-    field: "status",
-    type: "string",
-  },
-  {
-    title: "Created At",
-    field: "createdAt",
-    type: "date",
-    format: "YYYY-MM-DD HH:mm:ss",
-  },
-  {
-    title: "Updated At",
-    field: "updatedAt",
-    type: "date",
-    format: "YYYY-MM-DD HH:mm:ss",
-  },
-  {
-    title: "Beneficiary",
-    field: "beneficiary.firstName",
-    type: "string",
-  },
-];
-
-{
-  /* <FontAwesomeIcon size="xs" icon={faEye} /> */
-}
-
-export default function OrdersPage({
-  params,
-  searchParams,
-}: {
-  params: {
-    categoryId: string;
-  };
-  searchParams?: {
-    query?: string;
-    page?: string;
-    rows?: string;
-  };
-}) {
-  //console.log(params, searchParams);
+type OrderPageProps = {
+  params: { categoryId: string };
+  searchParams?: { query?: string; page?: string; rows?: string };
+};
+export default function OrdersPage({ params, searchParams }: OrderPageProps) {
   const currentPage = Number(searchParams?.page) || 1;
   const query = searchParams?.query || "";
   const pageTitle = `${params.categoryId
     ?.charAt(0)
     .toUpperCase()}${params.categoryId?.slice(1)}`;
-  const rows = searchParams?.rows || "10";
+
   const boxStyle = {
     my: 4,
     display: "flex",
@@ -103,12 +52,9 @@ export default function OrdersPage({
       <FilterForm placeholder="orden" />
 
       <Table
-        type="orders"
         query={query}
         currentPage={currentPage}
         status={params.categoryId}
-        columns={tableColumns}
-        icon={VisibilityIcon} //<FontAwesomeIcon size="xs" icon={faEye} />
       />
     </Container>
   );

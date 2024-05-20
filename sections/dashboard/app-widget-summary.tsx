@@ -28,13 +28,14 @@ export function AppWidgetSummary({ title, total, icon, color = 'primary', sx, ..
         ...sx,
       }}
       {...other}
+      className="cshein-card"
     >
       {icon && <Box sx={{ width: 64, height: 64 }}>{icon}</Box>}
 
       <Stack spacing={0.5}>
         <Typography variant="h4">{fShortenNumber(total)}</Typography>
 
-        <Typography variant="subtitle2" sx={{ color: 'text.disabled' }}>
+        <Typography variant="subtitle2" sx={{ color: "text.disabled" }}>
           {title}
         </Typography>
       </Stack>

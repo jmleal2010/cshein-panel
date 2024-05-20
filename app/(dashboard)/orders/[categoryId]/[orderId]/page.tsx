@@ -2,23 +2,15 @@ import { LOAD_ORDER_QUERY } from "@/graphql/queries/order";
 import * as React from "react";
 import Box from "@mui/material/Box";
 import {
-  Button,
   Container,
-  FormControlLabel,
-  Grid,
   Paper,
-  Step,
-  StepContent,
-  StepLabel,
-  Stepper,
-  Switch,
   Typography,
 } from "@mui/material";
 import { getClient } from "@/config/apollo";
-import SpanningTable from "@/components/pages/order/table/PackageTable";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faCartShopping } from "@fortawesome/free-solid-svg-icons";
+import {PackageTable} from "@/components/pages/order";
 import { OrderHistory, OrderInfo } from "@/sections/orders";
+import Grid2 from "@mui/material/Unstable_Grid2/Grid2";
+import { Iconify } from "@/components/common";
 
 const activity = [
   { id: 1, type: "creada", date: "7d ago", dateTime: "2023-01-23T10:32" },
@@ -41,24 +33,24 @@ const getOrder = async (params: any) => {
 const Header = async () => {
   return (
     <Box sx={{ flexGrow: 2 }}>
-      <Grid
+      <Grid2
         container
         spacing={{ xs: 2, md: 3 }}
         direction={{
           xs: "row",
           md: "column",
         }}
-      ></Grid>
+      ></Grid2>
     </Box>
   );
 };
 
 const boxStyle = {
-  my: 4,
+  mt: 4,
   display: "flex",
   flexDirection: "row",
   alignItems: "center",
-  gap: 4,
+  gap: 1,
 };
 
 export default async function OrderId({
@@ -70,17 +62,22 @@ export default async function OrderId({
   const order = response?.data.order || {};
 
   return (
-    <Container sx={{ mt: 5 }} maxWidth="xl">
-      <Grid container sx={{ gap: 2 }}>
-        <Grid xs={12}>
+    <Container maxWidth="xl">
+      <Grid2 container sx={{ gap: 2 }}>
+        <Grid2 xs={12}>
           <Box sx={boxStyle}>
+            <Iconify
+              icon="mynaui:cart"
+              width={48}
+              color="#6b7280"
+            />
             <Typography
               variant="h4"
               component="h1"
               align="left"
               color="#6b7280"
             >
-              <FontAwesomeIcon icon={faCartShopping} /> Order
+              Order
               <Typography
                 variant="h5"
                 component="span"
@@ -93,13 +90,19 @@ export default async function OrderId({
             </Typography>
             {/* <OrderStatus status={order.status} checked={false} /> */}
           </Box>
-        </Grid>
-        <Grid xs={8}>
-          <SpanningTable items={order.packages}></SpanningTable>
+        </Grid2>
+        <Grid2 xs={8}>
+          <PackageTable items={order.packages}></PackageTable>
           <Box sx={{ mt: 2 }}>{order && <OrderHistory data={order} />}</Box>
-        </Grid>
-        <Grid xs={3}>
-          <Paper elevation={0} className="cshein-card">
+        </Grid2>
+        <Grid2 xs={3}>
+          <Paper
+            elevation={0}
+            className="cshein-card"
+            style={{
+              padding: 16,
+            }}
+          >
             <OrderInfo
               avatar
               title="Información del beneficiario"
@@ -112,8 +115,8 @@ export default async function OrderId({
               <OrderInfo title="Recogida" data={order.pickupOrder}></OrderInfo>
             )}
           </Paper>
-        </Grid>
-      </Grid>
+        </Grid2>
+      </Grid2>
     </Container>
   );
 }

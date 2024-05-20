@@ -18,7 +18,7 @@ const style = {
   p: 4,
 };
 
-export default function UserModal() {
+export function UserModal() {
   const [open, setOpen] = React.useState(false);
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);

@@ -31,7 +31,7 @@ export function Main({ children, sx, ...other }: MainProps & any) {
       }}
       {...other}
     >
-      <BreadcrumbsNav />
+      {/* <BreadcrumbsNav /> */}
       {children}
     </Box>
   );
