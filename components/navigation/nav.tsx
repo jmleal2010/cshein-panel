@@ -65,7 +65,7 @@ export function Nav({ openNav, onCloseNav }: NavProps) {
   );
 
   const renderMenu = (
-    <Stack component="nav" spacing={0.5} sx={{ px: 2 }}>
+    <Stack className="menu" component="nav" spacing={0.5} sx={{ px: 2 }}>
       {navItems.map((item: Navigation) => (
         <NavItem key={item.title} item={item} />
       ))}

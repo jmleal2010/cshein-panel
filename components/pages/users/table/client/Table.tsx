@@ -16,6 +16,7 @@ import {
 
 import { Order, columnType } from "@/interfaces";
 import { Iconify, Popover } from "@/components/common";
+import { routes } from "@/utils/consts";
 
 const WAIT_BETWEEN_CHANGE = 1000;
 
@@ -34,8 +35,8 @@ export function Table({ rows, columns, showPopover = false }: TableProps) {
   /* Consts */
 
   /*Functions*/
-  const onViewOrder = (id: string) => {
-    router.push(`${pathname}/${id}`);
+  const onViewUser = (id: string) => {
+    router.push(`${routes.users.index}/${id}`);
   };
 
   return (
@@ -125,13 +126,12 @@ export function Table({ rows, columns, showPopover = false }: TableProps) {
                       width: 24,
                       height: 24,
                       cursor: "pointer",
-                      color: row.active ? "green" : "red",
                     }}
                   >
                     {row.active ? (
-                      <Iconify icon="mynaui:check-circle" />
+                      <Iconify icon="mynaui:check-circle" color="green" />
                     ) : (
-                      <Iconify icon="mynaui:info-circle" />
+                      <Iconify icon="mynaui:x-circle" color="red" />
                     )}
                   </Box>
                 </TableCell>
@@ -156,9 +156,10 @@ export function Table({ rows, columns, showPopover = false }: TableProps) {
                   <Box
                     component="span"
                     sx={{ width: 24, height: 24, mr: 2, cursor: "pointer" }}
-                    onClick={() => onViewOrder(row.id)}
+                    onClick={() => onViewUser(row.id)}
                   >
-                    <Iconify icon="mynaui:pencil" />
+                    <Iconify icon="mynaui:pencil" color="#60a5fa" />
+                    <Iconify icon="mynaui:trash" color="red" />
                   </Box>
                 </TableCell>
               </TableRow>

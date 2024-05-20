@@ -1,3 +1,4 @@
+"use client"
 import * as React from "react";
 import Avatar from "@mui/material/Avatar";
 import Button from "@mui/material/Button";
@@ -7,8 +8,10 @@ import CardContent from "@mui/material/CardContent";
 import Divider from "@mui/material/Divider";
 import Stack from "@mui/material/Stack";
 import Typography from "@mui/material/Typography";
+import { User } from "@/interfaces/index";
+import { useTheme } from "@mui/material/styles";
 
-const user = {
+const userr = {
   name: "Sofia Rivers",
   avatar: "/assets/avatar.png",
   jobTitle: "Senior Developer",
@@ -17,21 +20,29 @@ const user = {
   timezone: "GTM-7",
 };
 
-export function AccountInfo(){
+export function AccountInfo({ user }: { user: User }) {
+  const theme = useTheme();
   return (
-    <Card>
+    <Card className="cshein-card">
       <CardContent>
         <Stack spacing={2} sx={{ alignItems: "center" }}>
           <div>
-            <Avatar src={user.avatar} sx={{ height: "80px", width: "80px" }} />
+            <Avatar
+              src={"/assets/images/avatars/avatar_14.jpg"}
+              sx={{ height: "80px", width: "80px" }}
+            />
           </div>
           <Stack spacing={1} sx={{ textAlign: "center" }}>
-            <Typography variant="h5">{user.name}</Typography>
+            <Typography variant="h5">{`${user.firstName} ${user.lastName}`}</Typography>
             <Typography color="text.secondary" variant="body2">
-              {user.city} {user.country}
+              {user.role === "admin"
+                ? "Administrador"
+                : user.role === "driver"
+                ? "Driver"
+                : "Cliente"}
             </Typography>
             <Typography color="text.secondary" variant="body2">
-              {user.timezone}
+              {user.email}
             </Typography>
           </Stack>
         </Stack>
@@ -39,7 +50,7 @@ export function AccountInfo(){
       <Divider />
       <CardActions>
         <Button fullWidth variant="text">
-          Upload picture
+          Cambiar foto de perfil
         </Button>
       </CardActions>
     </Card>

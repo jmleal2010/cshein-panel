@@ -33,7 +33,7 @@
   height: 7px;
 }
 
-ul.MuiList-root .Mui-selected {
+.menu .Mui-selected {
   border-radius: 12px;
   background-color: #0369a1 !important;
   color: white !important;
