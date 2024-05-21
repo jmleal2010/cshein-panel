@@ -1,4 +1,4 @@
-import { AccountDetailsForm } from "@/sections/users/AccountDetailForm";
+import { AccountDetailsForm } from "@/components/common/PageForm";
 import { AccountInfo } from "@/sections/users/AccountInfo";
 import ManageAccountsIcon from "@mui/icons-material/ManageAccounts";
 import { Box, Container, Grid, Stack, Typography } from "@mui/material";
@@ -15,7 +15,7 @@ export default function Page({
   params: { userId },
 }: {
   params: { userId: string };
-  }) {
+}) {
   console.log(userId);
   return (
     <Container sx={{ mt: 5 }} maxWidth="xl">

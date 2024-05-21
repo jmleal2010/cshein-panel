@@ -110,3 +110,18 @@ export interface User {
   role: string;
   emailNotifications: boolean;
 };
+
+ interface Field {
+  type: string;
+  required: boolean;
+   name: string;
+  label: string;
+  defaultValue?: string | boolean;
+   options?: {}[];
+}
+
+export interface FormData {
+  action: any;
+  inputs: Field[];
+}
+

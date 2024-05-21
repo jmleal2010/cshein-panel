@@ -1,4 +1,3 @@
-
 import * as React from "react";
 import Avatar from "@mui/material/Avatar";
 import Button from "@mui/material/Button";
@@ -8,44 +7,41 @@ import CardContent from "@mui/material/CardContent";
 import Divider from "@mui/material/Divider";
 import Stack from "@mui/material/Stack";
 import Typography from "@mui/material/Typography";
-import { User } from "@/interfaces/index";
 
-type Props = {
-  user: User;
+type Info = {
+  addressLine1: string;
+  city: string;
+  country: string;
+  postalCode: string;
+  state: string;
 }
 
-export function AccountInfo({ user }: Props) {
+
+export function AddressInfo({ addressInfo }: { addressInfo: Info }) {
   return (
     <Card className="cshein-card">
       <CardContent>
         <Stack spacing={2} sx={{ alignItems: "center" }}>
           <div>
             <Avatar
-              src={"/assets/images/avatars/avatar_14.jpg"}
+              src={"/assets/images/pages/mapa-ciudad-calles.jpg"}
               sx={{ height: "80px", width: "80px" }}
             />
           </div>
           <Stack spacing={1} sx={{ textAlign: "center" }}>
-            <Typography variant="h5">{`${user.firstName} ${user.lastName}`}</Typography>
+            <Typography variant="h5">{`${addressInfo.city}, ${addressInfo.state}`}</Typography>
             <Typography color="text.secondary" variant="body2">
-              {user.role === "admin"
-                ? "Administrador"
-                : user.role === "driver"
-                ? "Driver"
-                : "Cliente"}
+              {addressInfo.country}
             </Typography>
             <Typography color="text.secondary" variant="body2">
-              {user.email}
+              {addressInfo.addressLine1}
+            </Typography>
+            <Typography color="text.secondary" variant="body2">
+              {addressInfo.postalCode}
             </Typography>
           </Stack>
         </Stack>
       </CardContent>
-      <Divider />
-      <CardActions>
-        <Button fullWidth variant="text">
-          Cambiar foto de perfil
-        </Button>
-      </CardActions>
     </Card>
   );
 }
