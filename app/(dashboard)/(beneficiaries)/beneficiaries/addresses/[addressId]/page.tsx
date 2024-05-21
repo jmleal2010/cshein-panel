@@ -5,36 +5,32 @@ import { Iconify } from "@/components/common";
 import { getClient } from "@/config/apollo";
 import { LOAD_ADDRESS_QUERY } from "@/graphql/queries/addresses";
 import { TypeSpecimen } from "@mui/icons-material";
-import { AddressInfo } from "@/sections/addresses/AddressInfo";
 import { FormData } from "@/interfaces";
 import { PageForm } from "@/components/common/PageForm";
 import { usaStates } from "@/utils/data";
 import { updateAddress } from "@/lib/actions/address";
+import { FormPageInfo } from "@/components/common/FormPageInfo";
 
-type PageProps = {
+type Props = {
   params: { addressId: string };
 };
 
-type Address  = {
-  id: string,
-  userId: string,
-  state: string,
-  postalCode: string,
-  longitude: string,
-  latitude: string,
-  isDefault: boolean,
-  description: string,
-  country: string,
-  city: string,
-  addressLine1: string,
-  addressLine2: string,
-}
- 
+type Address = {
+  id: string;
+  userId: string;
+  state: string;
+  postalCode: string;
+  longitude: string;
+  latitude: string;
+  isDefault: boolean;
+  description: string;
+  country: string;
+  city: string;
+  addressLine1: string;
+  addressLine2: string;
+};
 
-
-const getData = async (
-  input: {}
-) => {
+const getData = async (input: {}) => {
   try {
     return await getClient().query({
       query: LOAD_ADDRESS_QUERY,
@@ -47,7 +43,7 @@ const getData = async (
   }
 };
 
-export default async function Page({ params: { addressId } }: PageProps) {
+export default async function Page({ params: { addressId } }: Props) {
   const response: any = await getData({ id: addressId });
   const address: Address = response?.data?.address;
   const formData: FormData = {
@@ -127,6 +123,11 @@ export default async function Page({ params: { addressId } }: PageProps) {
       },
     ],
   };
+  const addressInfo = {
+    title: `${address.city} ${address.state}`,
+    avatarSrc: "/assets/images/pages/mapa-ciudad-calles.jpg",
+    rest: [address.country, address.addressLine1, address.postalCode],
+  };
   return (
     <Container sx={{ mt: 5 }} maxWidth="xl">
       <Stack spacing={5}>
@@ -147,15 +148,7 @@ export default async function Page({ params: { addressId } }: PageProps) {
         </Box>
         <Grid container gap={5}>
           <Grid lg={4} md={6} xs={12}>
-            <AddressInfo addressInfo={
-              {
-                addressLine1: address.addressLine1,
-                city: address.city,
-                country: address.country,
-                postalCode: address.postalCode,
-                state: address.state,
-              }
-            } />
+            <FormPageInfo info={addressInfo} />
           </Grid>
           <Grid lg={7} md={5} xs={12}>
             <PageForm formData={formData} />

@@ -14,6 +14,7 @@ const getData = async (
       }
     | undefined
 ) => {
+  console.log(input)
   try {
     return await getClient().query({
       query: LOAD_PICKUP_ORDERS_QUERY,

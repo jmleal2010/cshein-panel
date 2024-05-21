@@ -8,37 +8,35 @@ import Divider from "@mui/material/Divider";
 import Stack from "@mui/material/Stack";
 import Typography from "@mui/material/Typography";
 
-type Info = {
-  addressLine1: string;
-  city: string;
-  country: string;
-  postalCode: string;
-  state: string;
+type Props = {
+  info: {
+    title: string;
+    avatarSrc: string;
+    rest: string[]
+  }
 }
 
 
-export function AddressInfo({ addressInfo }: { addressInfo: Info }) {
+export function FormPageInfo({ info }: Props) {
   return (
     <Card className="cshein-card">
       <CardContent>
         <Stack spacing={2} sx={{ alignItems: "center" }}>
           <div>
             <Avatar
-              src={"/assets/images/pages/mapa-ciudad-calles.jpg"}
+              src={info.avatarSrc}
               sx={{ height: "80px", width: "80px" }}
             />
           </div>
           <Stack spacing={1} sx={{ textAlign: "center" }}>
-            <Typography variant="h5">{`${addressInfo.city}, ${addressInfo.state}`}</Typography>
-            <Typography color="text.secondary" variant="body2">
-              {addressInfo.country}
-            </Typography>
-            <Typography color="text.secondary" variant="body2">
-              {addressInfo.addressLine1}
-            </Typography>
-            <Typography color="text.secondary" variant="body2">
-              {addressInfo.postalCode}
-            </Typography>
+
+            <Typography variant="h5">{info.title}</Typography>
+            {info.rest.map((elem, index) => (
+              <Typography key={index} color="text.secondary" variant="body2">
+                {elem}
+              </Typography>
+            ))}
+
           </Stack>
         </Stack>
       </CardContent>

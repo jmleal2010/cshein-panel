@@ -102,14 +102,7 @@ export interface StatusType {
   value: string;
 }
 
-export interface User {
-  firstName: string;
-  lastName: string;
-  email: string;
-  phone: string;
-  role: string;
-  emailNotifications: boolean;
-};
+
 
  interface Field {
   type: string;
