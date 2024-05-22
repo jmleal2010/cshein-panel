@@ -1,20 +1,14 @@
 import { PageForm } from "@/components/common/PageForm";
-import {
-  Box,
-  Container,
-  Grid,
-  Stack,
-  Typography,
-} from "@mui/material";
+import { Box, Container, Grid, Stack, Typography } from "@mui/material";
 import { Iconify } from "@/components/common";
 import { updateUser } from "@/lib/actions/user";
 import { FormData } from "@/interfaces/index";
 import { FormPageInfo } from "@/components/common/FormPageInfo";
+import { PAGE_IMAGES } from "@/utils/consts";
 
 type Props = {
   params: { userId: string };
 };
-
 
 const formData: FormData = {
   action: updateUser,
@@ -71,7 +65,7 @@ const formData: FormData = {
 export default async function Page({ params: { userId } }: Props) {
   const userInfo = {
     title: "Juan Miguel",
-    avatarSrc: "/assets/images/avatars/avatar_10.jpg",
+    avatarSrc: `${PAGE_IMAGES}/avatar_10.jpg`,
     rest: ["juancho@gmail", "1234567890"],
   };
   return (

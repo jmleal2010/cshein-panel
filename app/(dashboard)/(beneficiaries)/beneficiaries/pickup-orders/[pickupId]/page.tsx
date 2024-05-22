@@ -13,6 +13,7 @@ import { FormPageInfo } from "@/components/common/FormPageInfo";
 import { getClient } from "@/config/apollo";
 import { LOAD_PICKUP_ORDER_QUERY } from "@/graphql/queries/pickupOrders";
 import { usaStates } from "@/utils/data";
+import { PAGE_IMAGES } from "@/utils/consts";
 
 type Props = {
   params: { pickupId: string };
@@ -125,7 +126,7 @@ export default async function Page({ params: { pickupId } }: Props) {
 
   const pickUpInfo = {
     title: `${pickUpOrder.id}`,
-    avatarSrc: "/assets/images/pages/pickup-order.jpg",
+    avatarSrc: `${PAGE_IMAGES}/pickup-order.jpg`,
     rest: [ pickUpOrder.city, pickUpOrder.country, pickUpOrder.description],
   };
   return (

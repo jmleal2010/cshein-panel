@@ -12,6 +12,7 @@ const BENEFICIARIES: string = "/beneficiaries";
 export const AUTH: string = "/auth";
 export const AUTH_TOKEN: string = "AUTH_TOKEN";
 export const ITEMS_X_PAGE = 5;
+export const PAGE_IMAGES = "/public/assets/images/pages"
 export const routes = {
   dashboard: DASHBOARD,
   auth: AUTH,
