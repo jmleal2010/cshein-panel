@@ -2,7 +2,7 @@ import { PageForm } from "@/components/common/PageForm";
 import { Box, Container, Grid, Stack, Typography } from "@mui/material";
 import { Iconify } from "@/components/common";
 import { updateUser } from "@/lib/actions/user";
-import { FormData } from "@/interfaces/index";
+import { FormPageData } from "@/interfaces/index";
 import { FormPageInfo } from "@/components/common/FormPageInfo";
 import { PAGE_IMAGES } from "@/utils/consts";
 
@@ -10,7 +10,7 @@ type Props = {
   params: { userId: string };
 };
 
-const formData: FormData = {
+const formData: FormPageData = {
   action: updateUser,
   inputs: [
     {
@@ -62,6 +62,8 @@ const formData: FormData = {
   ],
 };
 
+
+
 export default async function Page({ params: { userId } }: Props) {
   const userInfo = {
     title: "Juan Miguel",
@@ -70,6 +72,8 @@ export default async function Page({ params: { userId } }: Props) {
   };
   return (
     <Container sx={{ mt: 5 }} maxWidth="xl">
+    
+
       <Stack spacing={5}>
         <Box
           sx={{
@@ -83,7 +87,7 @@ export default async function Page({ params: { userId } }: Props) {
         >
           <Iconify icon="mdi:account-cog-outline" width={30} />
           <Typography variant="h4" component="h1" align="left" color="#6b7280">
-            Actualizar Usuario
+            Actualizar Direccion
           </Typography>
         </Box>
         <Grid container gap={5}>
@@ -91,7 +95,9 @@ export default async function Page({ params: { userId } }: Props) {
             <FormPageInfo info={userInfo} />
           </Grid>
           <Grid lg={7} md={5} xs={12}>
-            <PageForm formData={formData} />
+            <PageForm
+              formPageData={formData}
+            />
           </Grid>
         </Grid>
       </Stack>

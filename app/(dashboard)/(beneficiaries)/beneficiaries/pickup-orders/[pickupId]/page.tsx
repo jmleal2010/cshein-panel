@@ -1,19 +1,13 @@
-import { PageForm } from "@/components/common/PageForm";
-import {
-  Box,
-  Container,
-  Grid,
-  Stack,
-  Typography,
-} from "@mui/material";
-import { Iconify } from "@/components/common";
-import { updateUser } from "@/lib/actions/user";
-import { FormData } from "@/interfaces/index";
-import { FormPageInfo } from "@/components/common/FormPageInfo";
+
+import { FormPageData } from "@/interfaces/index";
 import { getClient } from "@/config/apollo";
 import { LOAD_PICKUP_ORDER_QUERY } from "@/graphql/queries/pickupOrders";
 import { usaStates } from "@/utils/data";
 import { PAGE_IMAGES } from "@/utils/consts";
+import { Alert, Box, Container, Grid, Stack, Typography } from "@mui/material";
+import { Iconify } from "@/components/common";
+import { FormPageInfo } from "@/components/common/FormPageInfo";
+import { PageForm } from "@/components/common/PageForm";
 
 type Props = {
   params: { pickupId: string };
@@ -54,7 +48,7 @@ const getData = async (input: {}) => {
 export default async function Page({ params: { pickupId } }: Props) {
   const response: any = await getData({ id: pickupId });
   const pickUpOrder: PickUpOrder = response?.data?.address;
-  const formData: FormData = {
+  const formData: FormPageData = {
     action: "updateOrder",
     inputs: [
       {
@@ -129,33 +123,37 @@ export default async function Page({ params: { pickupId } }: Props) {
     avatarSrc: `${PAGE_IMAGES}/pickup-order.jpg`,
     rest: [ pickUpOrder.city, pickUpOrder.country, pickUpOrder.description],
   };
-  return (
-    <Container sx={{ mt: 5 }} maxWidth="xl">
-      <Stack spacing={5}>
-        <Box
-          sx={{
-            my: 4,
-            display: "flex",
-            flexDirection: "row",
-            alignItems: "center",
-            gap: 1,
-          }}
-          color="#6b7280"
-        >
-          <Iconify icon="mdi:account-cog-outline" width={30} />
-          <Typography variant="h4" component="h1" align="left" color="#6b7280">
-            Actualizar Pickup Order
-          </Typography>
-        </Box>
-        <Grid container gap={5}>
-          <Grid lg={4} md={6} xs={12}>
-            <FormPageInfo info={pickUpInfo} />
-          </Grid>
-          <Grid lg={7} md={5} xs={12}>
-            <PageForm formData={formData} />
-          </Grid>
-        </Grid>
-      </Stack>
-    </Container>
-  );
+ return (
+   <Container sx={{ mt: 5 }} maxWidth="xl">
+    
+
+     <Stack spacing={5}>
+       <Box
+         sx={{
+           my: 4,
+           display: "flex",
+           flexDirection: "row",
+           alignItems: "center",
+           gap: 1,
+         }}
+         color="#6b7280"
+       >
+         <Iconify icon="mdi:account-cog-outline" width={30} />
+         <Typography variant="h4" component="h1" align="left" color="#6b7280">
+           Actualizar Direccion
+         </Typography>
+       </Box>
+       <Grid container gap={5}>
+         <Grid lg={4} md={6} xs={12}>
+           <FormPageInfo info={pickUpInfo} />
+         </Grid>
+         <Grid lg={7} md={5} xs={12}>
+           <PageForm
+             formPageData={formData}
+           />
+         </Grid>
+       </Grid>
+     </Stack>
+   </Container>
+ );
 }

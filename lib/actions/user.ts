@@ -1,8 +1,7 @@
 "use server"
-import { User } from "@/interfaces";
 
 
 export async function updateUser(formData: FormData) {
 
-    console.log(formData.get("movie"));
+   return { successMessage: "La operacion se ha realizado con exito" };
 }

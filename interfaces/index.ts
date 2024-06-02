@@ -113,7 +113,7 @@ export interface StatusType {
    options?: {}[];
 }
 
-export interface FormData {
+export interface FormPageData {
   action: any;
   inputs: Field[];
 }

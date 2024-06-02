@@ -10,22 +10,37 @@ import MenuItem from "@mui/material/MenuItem";
 import OutlinedInput from "@mui/material/OutlinedInput";
 import Select from "@mui/material/Select";
 import Grid from "@mui/material/Unstable_Grid2";
-import { FormData, User } from "@/interfaces/index";
-import { styled, useTheme } from "@mui/material/styles";
+import { FormPageData } from "@/interfaces/index";
 import FormControlLabel from "@mui/material/FormControlLabel";
-import Switch, { SwitchProps } from "@mui/material/Switch";
 import { IosSwitch } from "@/components/common/IosSwitch";
-import { FileDownload } from "@mui/icons-material";
-import { Autocomplete, Box, Popper, TextField } from "@mui/material";
+import { Alert, AlertTitle, Autocomplete, TextField } from "@mui/material";
+import {toast} from "react-hot-toast";
 
+type Props = {
+  formPageData: FormPageData;
+};
 
-export function PageForm({ formData }: { formData: FormData }) {
+export function PageForm({ formPageData }: Props) {
+
+  async function clientAction(formData: FormData) {
+    // setAlertMessage(null);
+    const response: any = await formPageData.action(formData);
+    if (response.errorMessage) {
+      toast.error(response.errorMessage);
+     // setAlertMessage({severity: "Error", message: response.errorMessage});
+    } else {
+      toast.success(response.successMessage);
+      //setAlertMessage({severity: "Éxito", message: response.successMessage});
+    }
+  }
+
   return (
-    <form action={formData.action}>
+    <form action={clientAction}>
+     
       <Card className="cshein-card">
         <CardContent sx={{ mt: 3 }}>
           <Grid container spacing={3}>
-            {formData.inputs.map((field: any, index: number) => {
+            {formPageData.inputs.map((field: any, index: number) => {
               return (
                 <Grid md={6} xs={12} key={index}>
                   {field.type == "select" ? (
@@ -58,8 +73,7 @@ export function PageForm({ formData }: { formData: FormData }) {
                       label={field.label}
                     />
                   ) : field.type == "autocomplete" ? (
-                        <Autocomplete
-                          
+                    <Autocomplete
                       disablePortal
                       defaultValue={field.defaultValue}
                       id="combo-box-demo"

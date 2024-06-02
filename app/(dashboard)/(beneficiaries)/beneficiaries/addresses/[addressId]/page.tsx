@@ -1,15 +1,13 @@
 import * as React from "react";
-import Container from "@mui/material/Container";
-import { Box, Grid, Stack, Typography } from "@mui/material";
-import { Iconify } from "@/components/common";
 import { getClient } from "@/config/apollo";
 import { LOAD_ADDRESS_QUERY } from "@/graphql/queries/addresses";
-import { TypeSpecimen } from "@mui/icons-material";
-import { FormData } from "@/interfaces";
-import { PageForm } from "@/components/common/PageForm";
+import { FormPageData } from "@/interfaces";
 import { usaStates } from "@/utils/data";
 import { updateAddress } from "@/lib/actions/address";
+import { Box, Container, Grid, Stack, Typography } from "@mui/material";
+import { Iconify } from "@/components/common";
 import { FormPageInfo } from "@/components/common/FormPageInfo";
+import { PageForm } from "@/components/common/PageForm";
 
 type Props = {
   params: { addressId: string };
@@ -46,7 +44,7 @@ const getData = async (input: {}) => {
 export default async function Page({ params: { addressId } }: Props) {
   const response: any = await getData({ id: addressId });
   const address: Address = response?.data?.address;
-  const formData: FormData = {
+  const formData: FormPageData = {
     action: updateAddress,
     inputs: [
       {
@@ -128,33 +126,37 @@ export default async function Page({ params: { addressId } }: Props) {
     avatarSrc: "/assets/images/pages/mapa-ciudad-calles.jpg",
     rest: [address.country, address.addressLine1, address.postalCode],
   };
-  return (
-    <Container sx={{ mt: 5 }} maxWidth="xl">
-      <Stack spacing={5}>
-        <Box
-          sx={{
-            my: 4,
-            display: "flex",
-            flexDirection: "row",
-            alignItems: "center",
-            gap: 1,
-          }}
-          color="#6b7280"
-        >
-          <Iconify icon="mdi:account-cog-outline" width={30} />
-          <Typography variant="h4" component="h1" align="left" color="#6b7280">
-            Actualizar Direccion
-          </Typography>
-        </Box>
-        <Grid container gap={5}>
-          <Grid lg={4} md={6} xs={12}>
-            <FormPageInfo info={addressInfo} />
-          </Grid>
-          <Grid lg={7} md={5} xs={12}>
-            <PageForm formData={formData} />
-          </Grid>
-        </Grid>
-      </Stack>
-    </Container>
-  );
+ return (
+   <Container sx={{ mt: 5 }} maxWidth="xl">
+     
+
+     <Stack spacing={5}>
+       <Box
+         sx={{
+           my: 4,
+           display: "flex",
+           flexDirection: "row",
+           alignItems: "center",
+           gap: 1,
+         }}
+         color="#6b7280"
+       >
+         <Iconify icon="mdi:account-cog-outline" width={30} />
+         <Typography variant="h4" component="h1" align="left" color="#6b7280">
+           Actualizar Direccion
+         </Typography>
+       </Box>
+       <Grid container gap={5}>
+         <Grid lg={4} md={6} xs={12}>
+           <FormPageInfo info={addressInfo} />
+         </Grid>
+         <Grid lg={7} md={5} xs={12}>
+           <PageForm
+             formPageData={formData}
+           />
+         </Grid>
+       </Grid>
+     </Stack>
+   </Container>
+ );
 }

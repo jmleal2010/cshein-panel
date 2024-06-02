@@ -112,3 +112,26 @@
     display: none;
   }
 }
+
+.showAlert{
+    animation: caerYRebotar .7s ease-out forwards;
+    
+     
+}
+@keyframes caerYRebotar {
+    0% {
+        top: 0;
+    }
+    30% {
+        top: 120px;
+    }
+    50% {
+        top: 100px;
+    }
+    75% {
+        top: 110px;
+    }
+    100% {
+        top: 100px;
+    }
+}

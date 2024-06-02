@@ -46,6 +46,7 @@
     "react-apexcharts": "^1.4.1",
     "react-dom": "^18.2.0",
     "react-helmet-async": "^2.0.4",
+    "react-hot-toast": "^2.4.1",
     "react-loading-skeleton": "^3.4.0",
     "simplebar-react": "^3.2.5",
     "use-debounce": "^10.0.0",
